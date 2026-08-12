@@ -1,0 +1,61 @@
+@use './variables' as v;
+@use './breakpoints' as b;
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  background: v.$color-background;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+.app-container {
+  width: 100%;
+  min-height: 100vh;
+}
+
+.page-container {
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: v.$space-5;
+}
+
+@media (min-width: b.$breakpoint-md) {
+
+  .page-container {
+    padding: v.$space-6;
+  }
+}
+
+@media (min-width: b.$breakpoint-lg) {
+
+  .page-container {
+    padding: v.$space-7;
+  }
+}

@@ -1,0 +1,48 @@
+@use './variables' as v;
+
+.dp-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.dp-label {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: v.$color-text;
+}
+
+.dp-input {
+  width: 100%;
+  min-height: 46px;
+
+  padding: 0 14px;
+
+  border: 1px solid v.$color-border;
+  border-radius: v.$radius-md;
+
+  background: v.$color-surface;
+  color: v.$color-text;
+
+  outline: none;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.dp-input::placeholder {
+  color: v.$color-text-light;
+}
+
+.dp-input:focus {
+  border-color: v.$color-primary-light;
+
+  box-shadow:
+    0 0 0 3px rgba(85, 117, 99, 0.12);
+}
+
+.dp-error {
+  font-size: 0.75rem;
+  color: v.$color-error;
+}

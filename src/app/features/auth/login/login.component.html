@@ -1,0 +1,169 @@
+<div class="login-page">
+
+  <div class="login-card">
+
+    <!-- BRAND -->
+
+    <div class="login-brand">
+
+      <img
+        src="/images/denge-pilates-logo.png"
+        alt="Denge Pilates"
+        class="logo"
+      >
+
+      <p class="brand-subtitle">
+        Pilates & Reformer
+      </p>
+
+    </div>
+
+
+    <!-- CONTENT -->
+
+    <div class="login-content">
+
+      <div class="login-heading">
+
+        <span class="eyebrow">
+          HOŞ GELDİNİZ
+        </span>
+
+        <h1>
+          Hesabınıza giriş yapın
+        </h1>
+
+        <p>
+          Denge Pilates hesabınıza devam etmek için
+          bilgilerinizi girin.
+        </p>
+
+      </div>
+
+
+      <!-- FORM -->
+
+      <form
+        [formGroup]="loginForm"
+        (ngSubmit)="login()"
+        class="login-form"
+      >
+
+        <!-- EMAIL -->
+
+        <div class="form-group">
+
+          <label for="email">
+            E-posta
+          </label>
+
+          <input
+            id="email"
+            type="email"
+            pInputText
+            formControlName="email"
+            autocomplete="email"
+            placeholder="ornek@email.com"
+          >
+
+          @if (
+            loginForm.controls.email.invalid &&
+            loginForm.controls.email.touched
+            ) {
+
+            <small class="error">
+              Geçerli bir e-posta adresi girin.
+            </small>
+
+          }
+
+        </div>
+
+
+        <!-- PASSWORD -->
+
+        <div class="form-group">
+
+          <div class="password-label">
+
+            <label for="password">
+              Şifre
+            </label>
+
+            <a href="/forgot-password">
+              Şifremi unuttum
+            </a>
+
+          </div>
+
+          <p-password
+            formControlName="password"
+            [feedback]="false"
+            [toggleMask]="true"
+            inputId="password"
+            placeholder="Şifrenizi girin"
+          />
+
+        </div>
+
+
+        <!-- ERROR -->
+
+        @if (errorMessage) {
+
+          <div class="login-error">
+            {{ errorMessage }}
+          </div>
+
+        }
+
+
+        <!-- SUBMIT -->
+
+        <button
+          pButton
+          type="submit"
+          class="login-button"
+          [disabled]="loginForm.invalid || loading"
+        >
+
+          @if (loading) {
+
+            <i class="pi pi-spin pi-spinner"></i>
+
+          } @else {
+
+            <span>Giriş Yap</span>
+
+          }
+
+        </button>
+
+      </form>
+
+
+      <!-- FOOTER -->
+
+      <div class="login-footer">
+
+        <span>
+          Denge Pilates
+        </span>
+
+        <span class="separator">
+          •
+        </span>
+
+        <span>
+          Sağlıklı yaşam, dengeli beden.
+        </span>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<p-toast position="top-right"></p-toast>

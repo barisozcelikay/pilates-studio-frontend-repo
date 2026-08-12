@@ -2,11 +2,12 @@
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
   "cli": {
-    "packageManager": "npm"
+    "packageManager": "npm",
+    "analytics": false
   },
   "newProjectRoot": "projects",
   "projects": {
-    "pilates-studio-web": {
+    "pilates-studio-frontend": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -61,10 +62,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "pilates-studio-web:build:production"
+              "buildTarget": "pilates-studio-frontend:build:production"
             },
             "development": {
-              "buildTarget": "pilates-studio-web:build:development"
+              "buildTarget": "pilates-studio-frontend:build:development"
             }
           },
           "defaultConfiguration": "development"
