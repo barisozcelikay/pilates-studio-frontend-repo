@@ -3,6 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 import { LoginRequest } from '../model/login-request';
 import { LoginResponse } from '../model/login-response';
+import { ResetPasswordRequest } from '../model/reset-password-request';
+import { SetPasswordRequest } from '../model/set-password-request';
 
 
 @Injectable({
@@ -23,6 +25,14 @@ export class AuthService {
 
   forgotPassword(email: string): Observable<void> {
     return this.http.post<void>(`${this.apiUrl}/forgot-password`, { email });
+  }
+
+  resetPassword(request: ResetPasswordRequest): Observable<void> {
+    return this.http.post<void>(`${this.apiUrl}/reset-password`, request);
+  }
+
+  setPassword(request: SetPasswordRequest): Observable<void> {
+    return this.http.post<void>(`${this.apiUrl}/set-password`, request);
   }
 
   logout(): void {
