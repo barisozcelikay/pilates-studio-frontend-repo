@@ -1,0 +1,165 @@
+<!--
+<div class="role-selection">
+
+  <div class="role-selection-heading">
+
+    <span class="eyebrow">
+      PROFİL SEÇİMİ
+    </span>
+
+    <div class="eyebrow-line"></div>
+
+    <h1>
+      Nasıl devam etmek istersiniz?
+    </h1>
+
+    <p>
+      Hesabınızda birden fazla profil bulunuyor.<br />
+      Devam etmek istediğiniz profili seçin.
+    </p>
+
+  </div>
+
+
+  <div class="role-list">
+
+    @for (role of roles; track role) {
+
+      <button
+        type="button"
+        class="role-option"
+        [disabled]="loadingRole !== ''"
+        (click)="selectRole(role)"
+      >
+
+        <div class="role-option-icon">
+
+          @if (loadingRole === role) {
+            <i class="pi pi-spin pi-spinner"></i>
+          } @else {
+            <i [class]="getRoleIcon(role)"></i>
+          }
+
+        </div>
+
+
+        <div class="role-option-content">
+
+          <span class="role-option-title">
+            {{ getRoleLabel(role) }}
+          </span>
+
+          <span class="role-option-description">
+            {{ getRoleDescription(role) }}
+          </span>
+
+        </div>
+
+
+        <div class="role-option-arrow">
+          <i class="pi pi-chevron-right"></i>
+        </div>
+
+      </button>
+
+    }
+
+  </div>
+
+
+  <div class="role-divider">
+    <span></span>
+
+    <div class="lotus">
+      <i class="pi pi-sparkles"></i>
+    </div>
+
+    <span></span>
+  </div>
+
+</div>
+-->
+
+<div class="role-selection-card">
+
+  <div class="role-selection">
+
+    <div class="role-selection-heading">
+
+      <span class="eyebrow">
+        PROFİL SEÇİMİ
+      </span>
+
+      <div class="eyebrow-line"></div>
+
+      <h1>
+        Nasıl devam etmek istersiniz?
+      </h1>
+
+      <p>
+        Hesabınızda birden fazla profil bulunuyor.<br />
+        Devam etmek istediğiniz profili seçin.
+      </p>
+
+    </div>
+
+
+    <div class="role-list">
+
+      @for (role of roles; track role) {
+
+        <button
+          type="button"
+          class="role-option"
+          [disabled]="loadingRole !== ''"
+          (click)="selectRole(role)"
+        >
+
+          <div class="role-option-icon">
+
+            @if (loadingRole === role) {
+              <i class="pi pi-spin pi-spinner"></i>
+            } @else {
+              <i [class]="getRoleIcon(role)"></i>
+            }
+
+          </div>
+
+
+          <div class="role-option-content">
+
+            <span class="role-option-title">
+              {{ getRoleLabel(role) }}
+            </span>
+
+            <span class="role-option-description">
+              {{ getRoleDescription(role) }}
+            </span>
+
+          </div>
+
+
+          <div class="role-option-arrow">
+            <i class="pi pi-chevron-right"></i>
+          </div>
+
+        </button>
+
+      }
+
+    </div>
+
+
+    <div class="role-divider">
+      <span></span>
+
+      <div class="lotus">
+        <i class="pi pi-sparkles"></i>
+      </div>
+
+      <span></span>
+    </div>
+
+  </div>
+
+</div>

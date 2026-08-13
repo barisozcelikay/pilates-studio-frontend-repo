@@ -5,6 +5,7 @@ import { LoginRequest } from '../model/login-request';
 import { LoginResponse } from '../model/login-response';
 import { ResetPasswordRequest } from '../model/reset-password-request';
 import { SetPasswordRequest } from '../model/set-password-request';
+import { SelectRoleRequest } from '../model/select-role-request';
 
 
 @Injectable({
@@ -12,13 +13,24 @@ import { SetPasswordRequest } from '../model/set-password-request';
 })
 export class AuthService {
   private readonly http = inject(HttpClient);
-
   private readonly apiUrl = 'http://localhost:8080/api/auth';
 
   login(request: LoginRequest): Observable<LoginResponse> {
     return this.http.post<LoginResponse>(`${this.apiUrl}/login`, request).pipe(
       tap((response) => {
-        localStorage.setItem('access_token', response.accessToken);
+        if (response.accessToken) {
+          localStorage.setItem('access_token', response.accessToken);
+        }
+      }),
+    );
+  }
+
+  selectRole(request: SelectRoleRequest): Observable<LoginResponse> {
+    return this.http.post<LoginResponse>(`${this.apiUrl}/select-role`, request).pipe(
+      tap((response) => {
+        if (response.accessToken) {
+          localStorage.setItem('access_token', response.accessToken);
+        }
       }),
     );
   }

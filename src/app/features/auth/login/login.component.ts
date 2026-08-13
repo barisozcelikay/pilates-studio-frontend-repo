@@ -1,15 +1,15 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { finalize } from 'rxjs';
 
 import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
 import { ToastModule } from 'primeng/toast';
-import { RouterLink } from '@angular/router';
 import { AuthService } from '../../../core/auth/service/auth-service';
 import { LoginRequest } from '../../../core/auth/model/login-request';
+import { Router } from '@angular/router';
+import { SelectRoleComponent } from './select-role/select-role.component';
 
 
 
@@ -22,6 +22,7 @@ import { LoginRequest } from '../../../core/auth/model/login-request';
     InputTextModule,
     PasswordModule,
     ToastModule,
+    SelectRoleComponent,
   ],
   providers: [MessageService],
   templateUrl: './login.component.html',
@@ -34,10 +35,17 @@ export class LoginComponent {
 
   loginForm;
 
+  // Role selection
+  showRoleSelection = false;
+  roles: string[] = [];
+  roleSelectionToken = '';
+
   constructor(
     private readonly formBuilder: FormBuilder,
     private readonly authService: AuthService,
     private readonly messageService: MessageService,
+    private readonly router: Router,
+    private readonly cdr: ChangeDetectorRef,
   ) {
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
@@ -46,7 +54,7 @@ export class LoginComponent {
     });
   }
 
-  login(): void {
+  /*login(): void {
     if (this.loginForm.invalid) {
       this.loginForm.markAllAsTouched();
       return;
@@ -96,5 +104,44 @@ export class LoginComponent {
           });
         },
       });
+  }*/
+
+  login(): void {
+    if (this.loginForm.invalid) {
+      this.loginForm.markAllAsTouched();
+      return;
+    }
+
+    this.loading = true;
+    this.errorMessage = '';
+
+    const request: LoginRequest = {
+      email: this.loginForm.controls.email.value!,
+      password: this.loginForm.controls.password.value!,
+    };
+
+    this.authService.login(request).subscribe({
+      next: (response) => {
+        this.loading = false;
+
+        if (response.roleSelectionRequired) {
+          this.roles = response.roles ?? [];
+          this.roleSelectionToken = response.roleSelectionToken ?? '';
+
+          this.showRoleSelection = true;
+          this.cdr.detectChanges()
+
+          return;
+        }
+
+        this.router.navigate(['/dashboard']);
+      },
+
+      error: (error) => {
+        this.loading = false;
+
+        this.errorMessage = error?.error?.message ?? 'E-posta veya şifre hatalı.';
+      },
+    });
   }
 }

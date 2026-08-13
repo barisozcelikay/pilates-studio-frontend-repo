@@ -484,3 +484,9 @@
     font-size: 30px;
   }
 }
+
+.login-page.role-selection-mode {
+  app-select-role {
+    width: auto;
+  }
+}

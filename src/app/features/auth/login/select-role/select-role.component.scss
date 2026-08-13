@@ -1,0 +1,590 @@
+/*
+@use '../../../../../styles/variables' as v;
+
+.role-selection {
+  width: 100%;
+  padding: 4px 0 0;
+}
+
+
+// --------------------------------------------------
+// Heading
+// --------------------------------------------------
+
+.role-selection-heading {
+  margin-bottom: 30px;
+  text-align: center;
+
+  .eyebrow {
+    display: block;
+
+    color: v.$color-accent;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    line-height: 1;
+  }
+
+  .eyebrow-line {
+    width: 34px;
+    height: 2px;
+    margin: 11px auto 18px;
+
+    background: v.$color-accent;
+    border-radius: 2px;
+  }
+
+  h1 {
+    margin: 0;
+
+    color: v.$color-primary-dark;
+    font-size: 1.55rem;
+    font-weight: 700;
+    line-height: 1.25;
+    letter-spacing: -0.025em;
+  }
+
+  p {
+    margin: 12px 0 0;
+
+    color: v.$color-text-secondary;
+    font-size: 0.82rem;
+    font-weight: 400;
+    line-height: 1.6;
+  }
+}
+
+
+// --------------------------------------------------
+// Role list
+// --------------------------------------------------
+
+.role-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+
+// --------------------------------------------------
+// Role option
+// --------------------------------------------------
+
+.role-option {
+  display: flex;
+  align-items: center;
+
+  width: 100%;
+  min-height: 86px;
+  padding: 14px 18px;
+
+  background: v.$color-surface;
+
+  border: 1px solid v.$color-border;
+  border-radius: 14px;
+
+  box-shadow: 0 2px 6px rgba(38, 59, 48, 0.03);
+
+  text-align: left;
+  cursor: pointer;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease,
+    background-color 0.2s ease;
+
+  &:hover:not(:disabled) {
+    background: #fdfefd;
+
+    border-color: v.$color-primary-light;
+
+    box-shadow: 0 7px 18px rgba(38, 59, 48, 0.08);
+
+    transform: translateY(-1px);
+
+    .role-option-icon {
+      background: rgba(63, 102, 82, 0.13);
+    }
+
+    .role-option-arrow {
+      color: v.$color-accent;
+      transform: translateX(3px);
+    }
+  }
+
+  &:active:not(:disabled) {
+    transform: translateY(0);
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.65;
+  }
+}
+
+
+// --------------------------------------------------
+// Icon
+// --------------------------------------------------
+
+.role-option-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex: 0 0 46px;
+
+  width: 46px;
+  height: 46px;
+
+  margin-right: 16px;
+
+  background: rgba(63, 102, 82, 0.07);
+
+  border-radius: 12px;
+
+  color: v.$color-primary;
+
+  font-size: 1rem;
+
+  transition: background-color 0.2s ease;
+}
+
+
+// --------------------------------------------------
+// Content
+// --------------------------------------------------
+
+.role-option-content {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+
+  min-width: 0;
+}
+
+.role-option-title {
+  color: v.$color-primary-dark;
+
+  font-size: 0.93rem;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.role-option-description {
+  margin-top: 5px;
+
+  color: v.$color-text-secondary;
+
+  font-size: 0.76rem;
+  font-weight: 400;
+  line-height: 1.35;
+}
+
+
+// --------------------------------------------------
+// Arrow
+// --------------------------------------------------
+
+.role-option-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex: 0 0 28px;
+
+  width: 28px;
+  height: 28px;
+
+  margin-left: 12px;
+
+  color: #a9b2ac;
+
+  font-size: 0.72rem;
+
+  transition:
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+
+// --------------------------------------------------
+// Bottom divider
+// --------------------------------------------------
+
+.role-divider {
+  display: flex;
+  align-items: center;
+
+  width: 100%;
+
+  margin-top: 30px;
+  padding: 0 12px;
+
+  span {
+    flex: 1;
+
+    height: 1px;
+
+    background: v.$color-accent-light;
+    opacity: 0.65;
+  }
+}
+
+.lotus {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 34px;
+  height: 24px;
+  margin: 0 12px;
+
+  color: v.$color-accent;
+
+  font-size: 0.9rem;
+}
+*/
+
+@use '../../../../../styles/variables' as v;
+
+:host {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  min-height: 100vh;
+}
+
+
+// --------------------------------------------------
+// Main card
+// --------------------------------------------------
+
+.role-selection-card {
+  width: min(560px, calc(100vw - 40px));
+
+  padding: 48px 52px 40px;
+
+  background: v.$color-surface;
+
+  border: 1px solid rgba(220, 229, 222, 0.8);
+  border-radius: 24px;
+
+  box-shadow:
+    0 24px 60px rgba(38, 59, 48, 0.10),
+    0 8px 24px rgba(38, 59, 48, 0.05);
+
+  box-sizing: border-box;
+}
+
+
+// --------------------------------------------------
+// Content
+// --------------------------------------------------
+
+.role-selection {
+  width: 100%;
+}
+
+
+// --------------------------------------------------
+// Heading
+// --------------------------------------------------
+
+.role-selection-heading {
+  margin-bottom: 32px;
+
+  text-align: center;
+
+  .eyebrow {
+    display: block;
+
+    color: v.$color-accent;
+
+    font-size: 0.72rem;
+    font-weight: 700;
+
+    letter-spacing: 0.22em;
+    line-height: 1;
+  }
+
+  .eyebrow-line {
+    width: 36px;
+    height: 2px;
+
+    margin: 12px auto 20px;
+
+    background: v.$color-accent;
+
+    border-radius: 2px;
+  }
+
+  h1 {
+    margin: 0;
+
+    color: v.$color-primary-dark;
+
+    font-size: 1.65rem;
+    font-weight: 700;
+
+    line-height: 1.25;
+    letter-spacing: -0.025em;
+  }
+
+  p {
+    margin: 14px 0 0;
+
+    color: v.$color-text-secondary;
+
+    font-size: 0.84rem;
+    font-weight: 400;
+
+    line-height: 1.6;
+  }
+}
+
+
+// --------------------------------------------------
+// Role list
+// --------------------------------------------------
+
+.role-list {
+  display: flex;
+  flex-direction: column;
+
+  gap: 14px;
+}
+
+
+// --------------------------------------------------
+// Role option
+// --------------------------------------------------
+
+.role-option {
+  display: flex;
+  align-items: center;
+
+  width: 100%;
+  min-height: 88px;
+
+  padding: 16px 18px;
+
+  background: #fff;
+
+  border: 1px solid v.$color-border;
+  border-radius: 14px;
+
+  box-sizing: border-box;
+
+  text-align: left;
+
+  cursor: pointer;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease,
+    background-color 0.2s ease;
+
+  &:hover:not(:disabled) {
+    border-color: v.$color-primary-light;
+
+    background: #fcfdfc;
+
+    box-shadow:
+      0 8px 20px rgba(38, 59, 48, 0.08);
+
+    transform: translateY(-2px);
+
+    .role-option-icon {
+      background: rgba(63, 102, 82, 0.12);
+    }
+
+    .role-option-arrow {
+      color: v.$color-accent;
+
+      transform: translateX(3px);
+    }
+  }
+
+  &:active:not(:disabled) {
+    transform: translateY(0);
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.65;
+  }
+}
+
+
+// --------------------------------------------------
+// Icon
+// --------------------------------------------------
+
+.role-option-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex: 0 0 48px;
+
+  width: 48px;
+  height: 48px;
+
+  margin-right: 18px;
+
+  background: rgba(63, 102, 82, 0.07);
+
+  border-radius: 13px;
+
+  color: v.$color-primary;
+
+  font-size: 1.05rem;
+
+  transition:
+    background-color 0.2s ease;
+}
+
+
+// --------------------------------------------------
+// Content
+// --------------------------------------------------
+
+.role-option-content {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+
+  min-width: 0;
+}
+
+.role-option-title {
+  color: v.$color-primary-dark;
+
+  font-size: 0.96rem;
+  font-weight: 700;
+
+  line-height: 1.35;
+}
+
+.role-option-description {
+  margin-top: 5px;
+
+  color: v.$color-text-secondary;
+
+  font-size: 0.78rem;
+  font-weight: 400;
+
+  line-height: 1.4;
+}
+
+
+// --------------------------------------------------
+// Arrow
+// --------------------------------------------------
+
+.role-option-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex: 0 0 30px;
+
+  width: 30px;
+  height: 30px;
+
+  margin-left: 12px;
+
+  color: #aab3ad;
+
+  font-size: 0.72rem;
+
+  transition:
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+
+// --------------------------------------------------
+// Decorative divider
+// --------------------------------------------------
+
+.role-divider {
+  display: flex;
+  align-items: center;
+
+  width: 100%;
+
+  margin-top: 34px;
+
+  span {
+    flex: 1;
+
+    height: 1px;
+
+    background: v.$color-accent-light;
+
+    opacity: 0.65;
+  }
+}
+
+.lotus {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 34px;
+  height: 24px;
+
+  margin: 0 14px;
+
+  color: v.$color-accent;
+
+  font-size: 0.85rem;
+}
+
+
+// --------------------------------------------------
+// Mobile
+// --------------------------------------------------
+
+@media (max-width: 600px) {
+
+  .role-selection-card {
+    width: calc(100vw - 28px);
+
+    padding: 36px 22px 30px;
+
+    border-radius: 20px;
+  }
+
+  .role-selection-heading {
+
+    h1 {
+      font-size: 1.4rem;
+    }
+
+    p {
+      font-size: 0.8rem;
+    }
+  }
+
+  .role-option {
+    min-height: 78px;
+
+    padding: 13px 14px;
+  }
+
+  .role-option-icon {
+    flex-basis: 44px;
+
+    width: 44px;
+    height: 44px;
+
+    margin-right: 14px;
+  }
+}
