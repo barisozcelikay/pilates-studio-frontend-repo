@@ -1,73 +1,86 @@
 @use './variables' as v;
 
-.dp-button {
-  min-height: 44px;
-  padding: 0 20px;
-
-  border: 0;
-  border-radius: v.$radius-md;
-
-  font-size: 0.875rem;
-  font-weight: 600;
-
+.btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: v.$space-2;
 
+  min-height: 44px;
+  padding: 0 v.$space-5;
+
+  border: 1px solid transparent;
+  border-radius: v.$radius-md;
+
+  font-family: v.$font-family-base;
+  font-size: 0.95rem;
+  font-weight: 600;
+
+  cursor: pointer;
   transition:
     background-color 0.2s ease,
+    border-color 0.2s ease,
     box-shadow 0.2s ease,
     transform 0.15s ease;
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+  }
 }
 
-.dp-button:active {
-  transform: translateY(1px);
-}
-
-.dp-button-primary {
+// Primary
+.btn-primary {
   color: #ffffff;
-
-  background:
-    linear-gradient(
-      135deg,
-      v.$color-primary-dark 0%,
-      v.$color-primary-light 100%
-    );
-
+  background: v.$color-primary-dark;
   box-shadow: v.$shadow-sm;
+
+  &:hover:not(:disabled) {
+    background: v.$color-primary;
+    box-shadow: v.$shadow-md;
+    transform: translateY(-1px);
+  }
+
+  &:active:not(:disabled) {
+    transform: translateY(0);
+  }
 }
 
-.dp-button-primary:hover {
-  box-shadow: v.$shadow-md;
+// Accent
+.btn-accent {
+  color: v.$color-primary-dark;
+  background: v.$color-accent;
+
+  &:hover:not(:disabled) {
+    background: v.$color-accent-light;
+    box-shadow: v.$shadow-sm;
+  }
 }
 
-.dp-button-secondary {
-  color: v.$color-primary;
+// Secondary
+.btn-secondary {
+  color: v.$color-primary-dark;
   background: v.$color-surface;
-  border: 1px solid v.$color-border;
+  border-color: v.$color-border;
+
+  &:hover:not(:disabled) {
+    background: v.$color-surface-soft;
+    border-color: v.$color-primary-light;
+  }
 }
 
-.dp-button-secondary:hover {
-  background: v.$color-surface-soft;
+// Ghost
+.btn-ghost {
+  color: v.$color-primary;
+  background: transparent;
+
+  &:hover:not(:disabled) {
+    background: v.$color-surface-soft;
+  }
 }
 
-.dp-button-accent {
-  color: #ffffff;
-
-  background:
-    linear-gradient(
-      135deg,
-      #a18755 0%,
-      v.$color-accent 100%
-    );
-}
-
-.dp-button-danger {
-  color: #ffffff;
-  background: v.$color-error;
-}
-
-.dp-button-full {
+// Full width
+.btn-full {
   width: 100%;
 }
