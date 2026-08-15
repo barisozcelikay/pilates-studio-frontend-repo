@@ -1,86 +1,132 @@
 @use './variables' as v;
 
-.btn {
+.primary-button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: v.$space-2;
 
-  min-height: 44px;
+  min-height: 42px;
   padding: 0 v.$space-5;
 
-  border: 1px solid transparent;
+  border: 0;
   border-radius: v.$radius-md;
 
-  font-family: v.$font-family-base;
-  font-size: 0.95rem;
+  background: v.$color-primary;
+  color: v.$color-surface;
+
+  font-family: inherit;
+  font-size: 12px;
   font-weight: 600;
 
   cursor: pointer;
+  box-shadow: v.$shadow-sm;
+
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+
+  i {
+    font-size: 12px;
+  }
+
+  &:hover {
+    background: v.$color-primary-dark;
+    transform: translateY(-1px);
+    box-shadow: v.$shadow-md;
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  &:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+}
+
+.secondary-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: v.$space-2;
+
+  min-height: 40px;
+  padding: 0 v.$space-5;
+
+  border: 1px solid v.$color-border;
+  border-radius: v.$radius-md;
+
+  background: v.$color-surface;
+  color: v.$color-text-secondary;
+
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 600;
+
+  cursor: pointer;
+
   transition:
     background-color 0.2s ease,
     border-color 0.2s ease,
-    box-shadow 0.2s ease,
-    transform 0.15s ease;
+    color 0.2s ease;
 
-  &:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-    transform: none;
-  }
-}
-
-// Primary
-.btn-primary {
-  color: #ffffff;
-  background: v.$color-primary-dark;
-  box-shadow: v.$shadow-sm;
-
-  &:hover:not(:disabled) {
-    background: v.$color-primary;
-    box-shadow: v.$shadow-md;
-    transform: translateY(-1px);
-  }
-
-  &:active:not(:disabled) {
-    transform: translateY(0);
-  }
-}
-
-// Accent
-.btn-accent {
-  color: v.$color-primary-dark;
-  background: v.$color-accent;
-
-  &:hover:not(:disabled) {
-    background: v.$color-accent-light;
-    box-shadow: v.$shadow-sm;
-  }
-}
-
-// Secondary
-.btn-secondary {
-  color: v.$color-primary-dark;
-  background: v.$color-surface;
-  border-color: v.$color-border;
-
-  &:hover:not(:disabled) {
+  &:hover {
     background: v.$color-surface-soft;
     border-color: v.$color-primary-light;
+    color: v.$color-text;
+  }
+
+  &:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
   }
 }
 
-// Ghost
-.btn-ghost {
-  color: v.$color-primary;
-  background: transparent;
+.button-group {
+  display: inline-flex;
+  align-items: center;
+  gap: v.$space-4;
+}
 
-  &:hover:not(:disabled) {
+.icon-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 32px;
+  height: 32px;
+  padding: 0;
+
+  border: 1px solid v.$color-border;
+  border-radius: v.$radius-sm;
+
+  background: v.$color-surface;
+  color: v.$color-text-muted;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+
+  i {
+    font-size: 12px;
+  }
+
+  &:hover {
     background: v.$color-surface-soft;
+    border-color: v.$color-primary-light;
+    color: v.$color-primary;
   }
-}
 
-// Full width
-.btn-full {
-  width: 100%;
+  &:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
 }

@@ -1,0 +1,231 @@
+@use './variables' as v;
+
+.data-table {
+  width: 100%;
+  font-family: inherit;
+  font-size: 12px;
+  color: var(--color-text);
+
+  .p-datatable-table {
+    border-collapse: collapse;
+  }
+
+  .p-datatable-thead > tr > th {
+    padding: 14px 18px;
+
+    background: var(--color-surface-soft);
+    border: 0;
+    border-bottom: 1px solid var(--color-border);
+
+    color: var(--color-text-secondary);
+
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+
+    white-space: nowrap;
+  }
+
+  .p-datatable-tbody > tr {
+    background: var(--color-surface);
+
+    transition:
+      background-color 0.15s ease,
+      color 0.15s ease;
+
+    &:hover {
+      background: var(--color-surface-soft);
+    }
+
+    > td {
+      padding: 15px 18px;
+
+      border: 0;
+      border-bottom: 1px solid var(--color-border-light);
+
+      background: transparent;
+      color: var(--color-text-secondary);
+
+      font-size: 12px;
+    }
+
+    &:last-child > td {
+      border-bottom: 0;
+    }
+  }
+
+  /* Paginator */
+  .p-paginator {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+
+    padding: 12px 14px;
+
+    border: 0;
+    border-top: 1px solid var(--color-border-light);
+
+    background: var(--color-surface);
+
+    color: var(--color-text-muted);
+
+    font-family: inherit;
+    font-size: 12px;
+  }
+
+  .p-paginator-element {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 32px;
+    height: 32px;
+    padding: 0 8px;
+
+    border: 1px solid transparent;
+    border-radius: v.$radius-sm;
+
+    background: transparent;
+    color: var(--color-text-muted);
+
+    font-family: inherit;
+    font-size: 12px;
+
+    cursor: pointer;
+
+    transition:
+      background-color 0.2s ease,
+      border-color 0.2s ease,
+      color 0.2s ease;
+
+    &:hover:not(.p-disabled) {
+      background: var(--color-surface-soft);
+      border-color: var(--color-border);
+      color: var(--color-primary);
+    }
+
+    &.p-paginator-page.p-highlight {
+      background: var(--color-primary);
+      border-color: var(--color-primary);
+      color: #ffffff;
+    }
+
+    &.p-disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+  }
+
+  .p-paginator-prev,
+  .p-paginator-next,
+  .p-paginator-first,
+  .p-paginator-last {
+    color: var(--color-text-muted);
+
+    &:hover:not(.p-disabled) {
+      color: var(--color-primary);
+    }
+  }
+
+  /* Rows per page */
+  .p-paginator .p-select {
+    min-height: 32px;
+    margin-left: 8px;
+
+    border: 1px solid var(--color-border) !important;
+    border-radius: v.$radius-sm !important;
+
+    background: var(--color-surface) !important;
+    color: var(--color-text-secondary) !important;
+
+    font-family: inherit;
+    font-size: 11px;
+  }
+
+  .p-paginator .p-select-label {
+    padding: 0.45rem 0.65rem;
+
+    background: transparent !important;
+    color: var(--color-text-secondary) !important;
+  }
+
+  .p-paginator .p-select-dropdown {
+    color: var(--color-text-muted) !important;
+  }
+
+  .p-paginator .p-select:not(.p-disabled):hover {
+    border-color: var(--color-primary-light) !important;
+  }
+
+  .p-paginator .p-select:not(.p-disabled).p-focus {
+    border-color: var(--color-primary-light) !important;
+    box-shadow: 0 0 0 2px rgba(63, 102, 82, 0.10) !important;
+  }
+}
+
+.table-container {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.table-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: v.$space-3;
+}
+
+.table-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 34px;
+  height: 34px;
+  padding: 0;
+
+  border: 1px solid var(--color-border);
+  border-radius: v.$radius-sm;
+
+  background: var(--color-surface);
+  color: var(--color-text-muted);
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
+
+  i {
+    font-size: 13px;
+  }
+
+  &:hover {
+    transform: translateY(-1px);
+  }
+
+  &:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+    transform: none;
+  }
+}
+
+.table-action-edit {
+  &:hover {
+    background: var(--color-surface-soft);
+    border-color: var(--color-primary-light);
+    color: var(--color-primary);
+  }
+}
+
+.table-action-delete {
+  &:hover {
+    background: rgba(220, 70, 70, 0.10);
+    border-color: rgba(220, 70, 70, 0.30);
+    color: var(--color-error);
+  }
+}

@@ -6,6 +6,7 @@ import { LoginResponse } from '../model/login-response';
 import { ResetPasswordRequest } from '../model/reset-password-request';
 import { SetPasswordRequest } from '../model/set-password-request';
 import { SelectRoleRequest } from '../model/select-role-request';
+import { AccountDto } from '../model/account-dto';
 
 
 @Injectable({
@@ -56,6 +57,58 @@ export class AuthService {
   }
 
   isAuthenticated(): boolean {
-    return !!this.getToken();
+    const token = this.getToken();
+
+    if (!token) {
+      return false;
+    }
+
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+
+      if (!payload.exp) {
+        return false;
+      }
+
+      const expirationTime = payload.exp * 1000;
+
+      if (Date.now() >= expirationTime) {
+        this.logout();
+        return false;
+      }
+
+      return true;
+    } catch {
+      this.logout();
+      return false;
+    }
+  }
+
+  getCurrentAccount(): Observable<AccountDto> {
+    return this.http.get<AccountDto>(
+      `${this.apiUrl.replace('/auth', '')}/accounts/me`
+    );
+  }
+
+  getActiveRole(): string | null {
+    const token = this.getToken();
+
+    if (!token) {
+      return null;
+    }
+
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+
+      const roles = payload.roles;
+
+      if (!roles || !Array.isArray(roles) || roles.length === 0) {
+        return null;
+      }
+
+      return roles[0];
+    } catch {
+      return null;
+    }
   }
 }

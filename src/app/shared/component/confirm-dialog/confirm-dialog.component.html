@@ -1,0 +1,47 @@
+<div
+  class="confirm-backdrop"
+  *ngIf="visible"
+  (click)="close()"
+></div>
+
+<div
+  class="confirm-dialog"
+  *ngIf="visible"
+  role="dialog"
+  aria-modal="true"
+  [attr.aria-label]="title"
+>
+  <div class="confirm-header">
+    <div class="confirm-icon">
+      <i class="pi pi-exclamation-triangle"></i>
+    </div>
+
+    <div>
+      <h2 class="confirm-title">
+        {{ title }}
+      </h2>
+
+      <p class="confirm-message">
+        {{ message }}
+      </p>
+    </div>
+  </div>
+
+  <div class="confirm-footer">
+    <button
+      type="button"
+      class="secondary-button"
+      (click)="close()"
+    >
+      {{ cancelText }}
+    </button>
+
+    <button
+      type="button"
+      class="primary-button"
+      (click)="onConfirm()"
+    >
+      {{ confirmText }}
+    </button>
+  </div>
+</div>

@@ -6,7 +6,7 @@ html {
 
 body {
   font-family: v.$font-family-base;
-  color: v.$color-text;
+  color: var(--color-text);
 }
 
 h1,
@@ -17,7 +17,7 @@ h5,
 h6 {
   margin: 0;
   font-family: v.$font-family-heading;
-  color: v.$color-text;
+  color: var(--color-text);
 }
 
 h1 {
@@ -44,9 +44,9 @@ p {
 }
 
 .text-muted {
-  color: v.$color-text-muted;
+  color: var(--color-text-muted);
 }
 
 .text-secondary {
-  color: v.$color-text-secondary;
+  color: var(--color-text-secondary);
 }

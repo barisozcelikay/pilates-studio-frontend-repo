@@ -1,11 +1,15 @@
 import { Routes } from '@angular/router';
+import { authGuard } from './core/auth/guard/auth.guard';
+import { guestGuard } from './core/auth/guard/guest.guard';
 
 export const routes: Routes = [
   {
     path: 'login',
+    canActivate: [guestGuard],
     loadComponent: () =>
       import('./features/auth/login/login.component').then((m) => m.LoginComponent),
   },
+
   {
     path: 'forgot-password',
     loadComponent: () =>
@@ -13,6 +17,7 @@ export const routes: Routes = [
         (m) => m.ForgotPasswordComponent,
       ),
   },
+
   {
     path: 'reset-password',
     loadComponent: () =>
@@ -20,10 +25,37 @@ export const routes: Routes = [
         (m) => m.ResetPasswordComponent,
       ),
   },
+
   {
-    path: 'dashboard',
+    path: '',
+    canActivate: [authGuard],
     loadComponent: () =>
-      import('./features/dashboard/dashboard.component').then((m) => m.DashboardComponent),
+      import('./features/layout/main-layout/main-layout.component').then(
+        (m) => m.MainLayoutComponent,
+      ),
+    children: [
+      {
+        path: 'dashboard',
+        loadComponent: () =>
+          import('./features/dashboard/dashboard.component').then((m) => m.DashboardComponent),
+      },
+
+      {
+        path: 'members',
+        loadComponent: () =>
+          import('./features/members/members.component').then((m) => m.MembersComponent),
+      },
+      {
+        path: 'settings/accounts',
+        loadComponent: () =>
+          import('./features/accounts/accounts.component').then((m) => m.AccountsComponent),
+      },
+      {
+        path: 'settings/profiles',
+        loadComponent: () =>
+          import('./features/profiles/profiles.component').then((m) => m.ProfilesComponent),
+      },
+    ],
   },
 
   {

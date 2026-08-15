@@ -1,5 +1,11 @@
 @use './variables' as v;
 
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: v.$space-5;
+}
+
 .form-group {
   display: flex;
   flex-direction: column;
@@ -7,18 +13,20 @@
 }
 
 .form-label {
-  color: v.$color-text;
+  color: var(--color-text-secondary);
+
   font-size: 0.9rem;
   font-weight: 600;
 }
 
 .form-help {
-  color: v.$color-text-muted;
+  color: var(--color-text-muted);
   font-size: 0.8rem;
 }
 
 .form-error {
-  color: v.$color-error;
+  color: var(--color-error);
+
   font-size: 0.8rem;
   font-weight: 500;
 }
@@ -27,6 +35,7 @@
   display: flex;
   align-items: center;
   justify-content: flex-end;
+
   gap: v.$space-3;
   margin-top: v.$space-6;
 }
@@ -38,8 +47,236 @@
 .form-row {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
+
   gap: v.$space-4;
 }
+
+
+/* ==============================
+   PRIME INPUT
+   ============================== */
+
+.form {
+  input.p-inputtext,
+  input[type='text'].p-inputtext,
+  input[type='email'].p-inputtext {
+    width: 100%;
+    min-height: 40px;
+
+    padding: 0.65rem 0.75rem;
+
+    border: 1px solid var(--color-border) !important;
+    border-radius: v.$radius-md !important;
+
+    background: var(--color-surface-soft) !important;
+    background-color: var(--color-surface-soft) !important;
+
+    color: var(--color-text) !important;
+    -webkit-text-fill-color: var(--color-text) !important;
+
+    font-family: inherit;
+    font-size: 12px;
+
+    color-scheme: dark;
+
+    transition:
+      border-color 0.2s ease,
+      background-color 0.2s ease,
+      box-shadow 0.2s ease;
+
+    &:enabled:hover {
+      background: var(--color-surface-soft) !important;
+      border-color: var(--color-primary-light) !important;
+    }
+
+    &:enabled:focus {
+      background: var(--color-surface-soft) !important;
+
+      border-color: var(--color-primary-light) !important;
+
+      box-shadow:
+        0 0 0 2px rgba(127, 174, 151, 0.14) !important;
+    }
+
+    &:disabled,
+    &[readonly] {
+      background: var(--color-background) !important;
+
+      color: var(--color-text-muted) !important;
+      -webkit-text-fill-color: var(--color-text-muted) !important;
+    }
+
+    &::placeholder {
+      color: var(--color-text-light) !important;
+      -webkit-text-fill-color: var(--color-text-light) !important;
+
+      opacity: 1 !important;
+    }
+  }
+}
+
+
+/* ==============================
+   PRIME SELECT
+   ============================== */
+
+.form {
+  .p-select {
+    width: 100%;
+    min-height: 40px;
+
+    border: 1px solid var(--color-border);
+    border-radius: v.$radius-md;
+
+    background: var(--color-surface-soft) !important;
+
+    color: var(--color-text) !important;
+
+    font-family: inherit;
+    font-size: 12px;
+
+    color-scheme: dark;
+
+    transition:
+      border-color 0.2s ease,
+      background-color 0.2s ease,
+      box-shadow 0.2s ease;
+
+    &:not(.p-disabled):hover {
+      background: var(--color-surface-soft) !important;
+      border-color: var(--color-primary-light);
+    }
+
+    &:not(.p-disabled).p-focus {
+      border-color: var(--color-primary-light);
+
+      box-shadow:
+        0 0 0 2px rgba(127, 174, 151, 0.14);
+    }
+  }
+
+  .p-select-label {
+    padding: 0.65rem 0.75rem;
+
+    color: var(--color-text);
+  }
+
+  .p-select-placeholder {
+    color: var(--color-text-light);
+  }
+
+  .p-select-dropdown {
+    color: var(--color-text-muted);
+  }
+}
+
+
+/* ==============================
+   SELECT OVERLAY
+   ============================== */
+
+.p-select-overlay {
+  background: var(--color-surface) !important;
+  color: var(--color-text) !important;
+
+  border: 1px solid var(--color-border) !important;
+  border-radius: v.$radius-md !important;
+
+  box-shadow:
+    0 12px 32px rgba(0, 0, 0, 0.28);
+
+  color-scheme: dark;
+}
+
+.p-select-list {
+  background: var(--color-surface) !important;
+  color: var(--color-text) !important;
+}
+
+
+/* ==============================
+   SELECT SEARCH
+   ============================== */
+
+.p-select-filter-container {
+  background: var(--color-surface) !important;
+
+  border-bottom: 1px solid var(--color-border-light) !important;
+
+  padding: 0.5rem !important;
+}
+
+.p-select-filter {
+  width: 100% !important;
+  min-height: 36px !important;
+
+  background: var(--color-surface-soft) !important;
+  background-color: var(--color-surface-soft) !important;
+
+  border: 1px solid var(--color-border) !important;
+  border-radius: v.$radius-md !important;
+
+  color: var(--color-text) !important;
+  -webkit-text-fill-color: var(--color-text) !important;
+
+  font-family: inherit;
+  font-size: 12px;
+
+  color-scheme: dark;
+
+  &:focus {
+    border-color: var(--color-primary-light) !important;
+
+    box-shadow:
+      0 0 0 2px rgba(127, 174, 151, 0.14) !important;
+
+    outline: none !important;
+  }
+
+  &::placeholder {
+    color: var(--color-text-light) !important;
+    -webkit-text-fill-color: var(--color-text-light) !important;
+
+    opacity: 1 !important;
+  }
+}
+
+.p-select-option {
+  background: var(--color-surface) !important;
+  color: var(--color-text) !important;
+
+  &:not(.p-select-option-selected):not(.p-disabled):hover {
+    background: var(--color-surface-soft) !important;
+    color: var(--color-text) !important;
+  }
+
+  &.p-select-option-selected {
+    background: var(--color-primary) !important;
+    color: #ffffff !important;
+  }
+}
+
+
+/* ==============================
+   CHECKBOX
+   ============================== */
+
+.form-checkbox {
+  display: flex;
+  align-items: center;
+
+  gap: v.$space-2;
+
+  .form-label {
+    color: var(--color-text-secondary);
+    cursor: pointer;
+  }
+}
+
+
+/* ==============================
+   RESPONSIVE
+   ============================== */
 
 @media (max-width: 768px) {
   .form-row {

@@ -1,0 +1,208 @@
+@use '../../../styles/variables' as v;
+
+.members-page {
+  display: flex;
+  flex-direction: column;
+  gap: v.$space-6;
+  padding: v.$space-7;
+}
+
+/* ─────────────────────────────────────────────
+   Page Header
+   ───────────────────────────────────────────── */
+
+.page-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: v.$space-5;
+}
+
+.page-eyebrow {
+  display: block;
+  margin-bottom: v.$space-2;
+  color: v.$color-primary;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+}
+
+.page-header h1 {
+  margin: 0;
+  color: v.$color-text;
+  font-size: 26px;
+  font-weight: 650;
+  line-height: 1.2;
+}
+
+.page-header p {
+  margin: v.$space-2 0 0;
+  color: v.$color-text-muted;
+  font-size: 13px;
+}
+
+/* ─────────────────────────────────────────────
+   New Member Button
+   ───────────────────────────────────────────── */
+
+.primary-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: v.$space-2;
+  min-height: 42px;
+  padding: 0 v.$space-5;
+  border: 0;
+  border-radius: v.$radius-md;
+  background: v.$color-primary;
+  color: v.$color-surface;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+
+  box-shadow: v.$shadow-sm;
+
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+
+  i {
+    font-size: 12px;
+  }
+
+  &:hover {
+    background: v.$color-primary-dark;
+    transform: translateY(-1px);
+    box-shadow: v.$shadow-md;
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+/* ─────────────────────────────────────────────
+   Members Card
+   ───────────────────────────────────────────── */
+
+.members-card {
+  overflow: hidden;
+  background: v.$color-surface;
+  border: 1px solid v.$color-border-light;
+  border-radius: v.$radius-lg;
+  box-shadow: v.$shadow-sm;
+}
+
+/* ─────────────────────────────────────────────
+   PrimeNG Table
+   ───────────────────────────────────────────── */
+
+:host ::ng-deep {
+  .p-datatable {
+    font-family: inherit;
+    font-size: 12px;
+  }
+
+  .p-datatable-table {
+    border-collapse: collapse;
+  }
+
+  .p-datatable-thead > tr > th {
+    padding: 14px 18px;
+    background: v.$color-surface-soft;
+    border: 0;
+    border-bottom: 1px solid v.$color-border;
+    color: v.$color-text-secondary;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .p-datatable-tbody > tr {
+    background: v.$color-surface;
+    transition: background-color 0.15s ease;
+
+    &:hover {
+      background: v.$color-background;
+    }
+
+    > td {
+      padding: 15px 18px;
+      border: 0;
+      border-bottom: 1px solid v.$color-border-light;
+      color: v.$color-text-secondary;
+      font-size: 12px;
+    }
+
+    &:last-child > td {
+      border-bottom: 0;
+    }
+  }
+}
+
+/* ─────────────────────────────────────────────
+   Table Action
+   ───────────────────────────────────────────── */
+
+.icon-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 1px solid v.$color-border;
+  border-radius: v.$radius-sm;
+  background: v.$color-surface;
+  color: v.$color-text-muted;
+  cursor: pointer;
+
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+
+  i {
+    font-size: 12px;
+  }
+
+  &:hover {
+    background: v.$color-surface-soft;
+    border-color: v.$color-primary-light;
+    color: v.$color-primary;
+  }
+}
+
+/* ─────────────────────────────────────────────
+   Responsive
+   ───────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+  .members-page {
+    padding: v.$space-5;
+    gap: v.$space-5;
+  }
+
+  .page-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .primary-button {
+    width: 100%;
+  }
+
+  .members-card {
+    overflow-x: auto;
+  }
+
+  :host ::ng-deep {
+    .p-datatable {
+      min-width: 700px;
+    }
+  }
+}

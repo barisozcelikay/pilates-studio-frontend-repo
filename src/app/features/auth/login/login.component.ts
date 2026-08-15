@@ -54,58 +54,6 @@ export class LoginComponent {
     });
   }
 
-  /*login(): void {
-    if (this.loginForm.invalid) {
-      this.loginForm.markAllAsTouched();
-      return;
-    }
-
-    this.errorMessage = '';
-    this.loading = true;
-
-    const request: LoginRequest = {
-      email: this.loginForm.controls.email.value!,
-      password: this.loginForm.controls.password.value!,
-    };
-
-    this.authService
-      .login(request)
-      .pipe(
-        finalize(() => {
-          this.loading = false;
-        }),
-      )
-      .subscribe({
-        next: () => {
-          this.messageService.add({
-            severity: 'success',
-            summary: 'Başarılı',
-            detail: 'Giriş başarılı olmuştur.',
-            life: 3000,
-          });
-        },
-
-        error: (error) => {
-          if (error?.status === 401) {
-            this.errorMessage = 'E-posta veya şifre hatalı.';
-          } else if (error?.status === 403) {
-            this.errorMessage = 'Bu işlem için yetkiniz bulunmuyor.';
-          } else if (error?.status === 0) {
-            this.errorMessage = 'Sunucuya bağlanılamadı.';
-          } else {
-            this.errorMessage = 'Giriş sırasında bir hata oluştu.';
-          }
-
-          this.messageService.add({
-            severity: 'error',
-            summary: 'Giriş başarısız',
-            detail: this.errorMessage,
-            life: 4000,
-          });
-        },
-      });
-  }*/
-
   login(): void {
     if (this.loginForm.invalid) {
       this.loginForm.markAllAsTouched();
@@ -129,7 +77,7 @@ export class LoginComponent {
           this.roleSelectionToken = response.roleSelectionToken ?? '';
 
           this.showRoleSelection = true;
-          this.cdr.detectChanges()
+          this.cdr.detectChanges();
 
           return;
         }

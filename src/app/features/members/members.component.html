@@ -1,0 +1,55 @@
+<div class="members-page">
+
+  <div class="page-header">
+    <div>
+      <span class="page-eyebrow">ÜYELİK YÖNETİMİ</span>
+      <h1>Üyeler</h1>
+      <p>Stüdyonuzdaki üyeleri yönetin.</p>
+    </div>
+
+    <button
+      type="button"
+      class="primary-button"
+    >
+      <i class="pi pi-plus"></i>
+      <span>Yeni Üye</span>
+    </button>
+  </div>
+
+  <div class="members-card">
+
+    <p-table
+      [value]="[]"
+      [tableStyle]="{ 'min-width': '60rem' }"
+    >
+      <ng-template #header>
+        <tr>
+          <th>Üye</th>
+          <th>Telefon</th>
+          <th>E-posta</th>
+          <th>Durum</th>
+          <th>İşlemler</th>
+        </tr>
+      </ng-template>
+
+      <ng-template #body let-member>
+        <tr>
+          <td>{{ member.firstName }} {{ member.lastName }}</td>
+          <td>{{ member.phone }}</td>
+          <td>{{ member.email }}</td>
+          <td>{{ member.status }}</td>
+          <td>
+            <button
+              type="button"
+              class="icon-button"
+            >
+              <i class="pi pi-pencil"></i>
+            </button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+
+  </div>
+
+</div>

@@ -1,9 +1,83 @@
-@use './styles/variables';
+@use './styles/variables' as v;
 @use './styles/breakpoints';
 @use './styles/typography';
 @use './styles/layout';
 @use './styles/buttons';
 @use './styles/forms';
 @use './styles/cards';
+@use './styles/table';
 
 @import "primeicons/primeicons.css";
+
+:root {
+  --color-primary: #{v.$color-primary};
+  --color-primary-light: #{v.$color-primary-light};
+  --color-primary-dark: #{v.$color-primary-dark};
+
+  --color-accent: #{v.$color-accent};
+  --color-accent-light: #{v.$color-accent-light};
+
+  --color-background: #{v.$color-background};
+  --color-surface: #{v.$color-surface};
+  --color-surface-soft: #{v.$color-surface-soft};
+
+  --color-text: #{v.$color-text};
+  --color-text-secondary: #{v.$color-text-secondary};
+  --color-text-muted: #{v.$color-text-muted};
+  --color-text-light: #{v.$color-text-light};
+
+  --color-border: #{v.$color-border};
+  --color-border-light: #{v.$color-border-light};
+
+  --color-success: #{v.$color-success};
+  --color-warning: #{v.$color-warning};
+  --color-error: #{v.$color-error};
+  --color-info: #{v.$color-info};
+
+  --shadow-sm: #{v.$shadow-sm};
+  --shadow-md: #{v.$shadow-md};
+  --shadow-lg: #{v.$shadow-lg};
+}
+
+:root.dark-theme {
+  --color-primary: #{v.$dark-color-primary};
+  --color-primary-light: #{v.$dark-color-primary-light};
+  --color-primary-dark: #{v.$dark-color-primary-dark};
+
+  --color-accent: #{v.$dark-color-accent};
+  --color-accent-light: #{v.$dark-color-accent-light};
+
+  --color-background: #{v.$dark-color-background};
+  --color-surface: #{v.$dark-color-surface};
+  --color-surface-soft: #{v.$dark-color-surface-soft};
+
+  --color-text: #{v.$dark-color-text};
+  --color-text-secondary: #{v.$dark-color-text-secondary};
+  --color-text-muted: #{v.$dark-color-text-muted};
+  --color-text-light: #{v.$dark-color-text-light};
+
+  --color-border: #{v.$dark-color-border};
+  --color-border-light: #{v.$dark-color-border-light};
+
+  --color-success: #{v.$dark-color-success};
+  --color-warning: #{v.$dark-color-warning};
+  --color-error: #{v.$dark-color-error};
+  --color-info: #{v.$dark-color-info};
+
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.20);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.28);
+
+  --shadow-lg:
+    0 20px 50px rgba(0, 0, 0, 0.34),
+    0 5px 18px rgba(0, 0, 0, 0.20);
+}
+
+html,
+body {
+  background: var(--color-background);
+  color: var(--color-text);
+
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+}

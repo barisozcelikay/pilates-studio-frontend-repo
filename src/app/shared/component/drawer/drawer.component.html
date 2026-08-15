@@ -1,0 +1,36 @@
+<div
+  class="drawer-backdrop"
+  *ngIf="visible"
+  (click)="close()"
+></div>
+
+<aside
+  class="drawer"
+  *ngIf="visible"
+  [style.width]="width"
+>
+  <div class="drawer-header">
+    <div class="drawer-title">
+      {{ title }}
+    </div>
+
+    <button
+      type="button"
+      class="drawer-close"
+      aria-label="Kapat"
+      (click)="close()"
+    >
+      <i class="pi pi-times"></i>
+    </button>
+  </div>
+
+  <div class="drawer-content">
+    <ng-content></ng-content>
+  </div>
+
+  <div class="drawer-footer">
+    <div class="drawer-footer-actions">
+      <ng-content select="[drawer-footer]"></ng-content>
+    </div>
+  </div>
+</aside>
