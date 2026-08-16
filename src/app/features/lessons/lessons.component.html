@@ -2,12 +2,12 @@
 
   <div class="page-header">
     <div class="page-header-content">
-      <span class="page-eyebrow">ÜYELİK YÖNETİMİ</span>
+      <span class="page-eyebrow">DERS YÖNETİMİ</span>
 
-      <h1 class="page-title">Üye Listesi</h1>
+      <h1 class="page-title">Ders Listesi</h1>
 
       <p class="page-description">
-        Stüdyonuzdaki üyeleri yönetin.
+        Stüdyonuzdaki dersleri yönetin.
       </p>
     </div>
 
@@ -17,7 +17,7 @@
       (click)="openCreateForm()"
     >
       <i class="pi pi-plus"></i>
-      <span>Yeni Üye</span>
+      <span>Yeni Ders</span>
     </button>
   </div>
 
@@ -31,9 +31,10 @@
 
         <ng-template #header>
           <tr>
-            <th>Üye</th>
-            <th>Telefon</th>
-            <th>E-posta</th>
+            <th>Ders</th>
+            <th>Eğitmen</th>
+            <th>Kontenjan</th>
+            <th>Süre</th>
             <th>Durum</th>
             <th>Oluşturulma Tarihi</th>
             <th>Son Güncellenme Tarihi</th>
@@ -41,35 +42,39 @@
           </tr>
         </ng-template>
 
-        <ng-template #body let-member>
+        <ng-template #body let-class>
           <tr>
 
             <td>
-              <div class="member-info">
-                <span class="member-name">
-                  {{ member.firstName }} {{ member.lastName }}
+              <div class="class-info">
+                <span class="class-name">
+                  {{ class.name }}
                 </span>
               </div>
             </td>
 
             <td>
-              {{ member.phone || '—' }}
+              {{ class.instructorName || '—' }}
             </td>
 
             <td>
-              {{ member.email || '—' }}
+              {{ class.capacity || '—' }}
             </td>
 
             <td>
-              {{ member.active ? 'Aktif' : 'Pasif' }}
+              {{ class.durationMinutes ? class.durationMinutes + ' dk' : '—' }}
             </td>
 
             <td>
-              {{ member.createdAt | date:'dd.MM.yyyy HH:mm' }}
+              {{ class.active ? 'Aktif' : 'Pasif' }}
             </td>
 
             <td>
-              {{ member.updatedAt | date:'dd.MM.yyyy HH:mm' }}
+              {{ class.createdAt | date:'dd.MM.yyyy HH:mm' }}
+            </td>
+
+            <td>
+              {{ class.updatedAt | date:'dd.MM.yyyy HH:mm' }}
             </td>
 
             <td>
@@ -78,8 +83,8 @@
                 <button
                   type="button"
                   class="table-action table-action-edit"
-                  aria-label="Üyeyi düzenle"
-                  (click)="openEditForm(member)"
+                  aria-label="Dersi düzenle"
+                  (click)="openEditForm(class)"
                 >
                   <i class="pi pi-pencil"></i>
                 </button>
@@ -87,8 +92,8 @@
                 <button
                   type="button"
                   class="table-action table-action-delete"
-                  aria-label="Üyeyi sil"
-                  (click)="confirmDelete(member)"
+                  aria-label="Dersi sil"
+                  (click)="confirmDelete(class)"
                 >
                   <i class="pi pi-trash"></i>
                 </button>

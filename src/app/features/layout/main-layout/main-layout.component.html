@@ -15,16 +15,11 @@
   >
 
     <div class="sidebar-brand">
-
-      <div class="brand-mark">
-        D
-      </div>
-
-      <div class="brand-text">
-        <strong>Denge Pilates</strong>
-        <span>Yönetim Paneli</span>
-      </div>
-
+      <img
+        class="brand-logo"
+        src="/images/denge-pilates-logo.png"
+        alt="Denge Pilates"
+      />
     </div>
 
 
@@ -37,8 +32,8 @@
           <button
             type="button"
             class="nav-item nav-parent"
-            [class.expanded]="isMenuExpanded(menu.id)"
-            (click)="toggleMenu(menu.id)"
+            [class.expanded]="isMenuExpanded(menu.id!)"
+            (click)="toggleMenu(menu.id!)"
           >
             @if (menu.icon) {
               <i [class]="menu.icon"></i>
@@ -48,11 +43,11 @@
 
             <i
               class="pi pi-chevron-down nav-arrow"
-              [class.rotated]="isMenuExpanded(menu.id)"
+              [class.rotated]="isMenuExpanded(menu.id!)"
             ></i>
           </button>
 
-          @if (isMenuExpanded(menu.id)) {
+          @if (isMenuExpanded(menu.id!)) {
 
             <div class="nav-children">
 

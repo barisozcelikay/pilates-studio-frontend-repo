@@ -46,9 +46,28 @@ export const routes: Routes = [
           import('./features/members/members.component').then((m) => m.MembersComponent),
       },
       {
+        path: 'instructors',
+        loadComponent: () =>
+          import('./features/instructors/instructors.component').then(
+            (m) => m.InstructorsComponent,
+          ),
+      },
+      {
+        path: 'lessons',
+        loadComponent: () =>
+          import('./features/lessons/lessons.component').then((m) => m.LessonsComponent),
+      },
+      {
+        path: 'calendar',
+        loadComponent: () =>
+          import('./features/calendar/calendar.component').then((m) => m.CalendarComponent),
+      },
+      {
         path: 'settings/menu',
         loadComponent: () =>
-          import('./features/menu-settings/menu-settings.component').then((m) => m.MenuSettingsComponent),
+          import('./features/menu-settings/menu-settings.component').then(
+            (m) => m.MenuSettingsComponent,
+          ),
       },
       {
         path: 'settings/accounts',

@@ -1,0 +1,470 @@
+.calendar-card {
+  padding: 1rem;
+  overflow: hidden;
+
+  /* Calendar palette */
+  --calendar-bg: #ffffff;
+  --calendar-header-bg: #f1f5f2;
+  --calendar-today-bg: #e8f0eb;
+  --calendar-border: #d8e1dc;
+  --calendar-border-light: #e7ece9;
+
+  --calendar-text: #294337;
+  --calendar-muted: #65756d;
+
+  --calendar-primary: #315c49;
+  --calendar-primary-dark: #244936;
+
+  --calendar-gold: #c8a45d;
+  --calendar-event: #91ad9e;
+}
+
+/* =========================================================
+   FULL CALENDAR
+   ========================================================= */
+
+:host ::ng-deep .fc {
+  font-family: inherit;
+  font-size: 0.8rem;
+
+  color: var(--calendar-text) !important;
+  background: var(--calendar-bg);
+}
+
+/* =========================================================
+   TOOLBAR
+   ========================================================= */
+
+:host ::ng-deep .fc-toolbar {
+  margin-bottom: 1rem !important;
+}
+
+:host ::ng-deep .fc-toolbar-title {
+  color: var(--calendar-text) !important;
+  font-size: 1.15rem;
+  font-weight: 600;
+}
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
+
+:host ::ng-deep .fc .fc-button {
+  background: var(--calendar-bg) !important;
+  border: 1px solid #b8c9bf !important;
+
+  color: var(--calendar-primary) !important;
+
+  border-radius: 6px !important;
+
+  box-shadow: none !important;
+
+  font-family: inherit;
+  font-size: 0.8rem;
+  font-weight: 600;
+
+  padding: 0.4rem 0.7rem;
+}
+
+:host ::ng-deep .fc .fc-button:hover {
+  background: var(--calendar-header-bg) !important;
+  border-color: var(--calendar-primary) !important;
+  color: var(--calendar-primary-dark) !important;
+}
+
+:host ::ng-deep .fc .fc-button-active {
+  background: var(--calendar-primary) !important;
+  border-color: var(--calendar-primary) !important;
+  color: #ffffff !important;
+}
+
+:host ::ng-deep .fc .fc-button:focus {
+  box-shadow: none !important;
+}
+
+:host ::ng-deep .fc .fc-button:disabled {
+  opacity: 0.55;
+}
+
+/* =========================================================
+   CALENDAR GRID
+   ========================================================= */
+
+:host ::ng-deep .fc-theme-standard .fc-scrollgrid {
+  border: 1px solid var(--calendar-border) !important;
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--calendar-bg);
+}
+
+:host ::ng-deep .fc-theme-standard td,
+:host ::ng-deep .fc-theme-standard th {
+  border-color: var(--calendar-border-light) !important;
+}
+
+/* =========================================================
+   DAY HEADER
+   ========================================================= */
+
+:host ::ng-deep .fc .fc-col-header-cell {
+  background: var(--calendar-header-bg) !important;
+  padding: 0.65rem 0 !important;
+}
+
+:host ::ng-deep .fc .fc-col-header-cell-cushion {
+  color: var(--calendar-text) !important;
+
+  font-size: 0.78rem;
+  font-weight: 700;
+
+  text-decoration: none !important;
+}
+
+/* =========================================================
+   TODAY HEADER
+   ========================================================= */
+
+:host ::ng-deep .fc .fc-col-header-cell.fc-day-today {
+  background: var(--calendar-today-bg) !important;
+}
+
+:host ::ng-deep
+.fc .fc-col-header-cell.fc-day-today
+.fc-col-header-cell-cushion {
+  color: var(--calendar-primary) !important;
+}
+
+/* =========================================================
+   TIME AXIS
+   ========================================================= */
+
+:host ::ng-deep .fc .fc-timegrid-axis {
+  background: var(--calendar-header-bg) !important;
+}
+
+:host ::ng-deep .fc .fc-timegrid-axis-cushion {
+  color: var(--calendar-text) !important;
+
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+
+:host ::ng-deep .fc .fc-timegrid-slot-label-cushion {
+  color: var(--calendar-muted) !important;
+
+  font-size: 0.72rem;
+  font-weight: 500;
+}
+
+/* =========================================================
+   TIME SLOTS
+   ========================================================= */
+
+:host ::ng-deep .fc .fc-timegrid-slot {
+  height: 2.25rem;
+
+  background: var(--calendar-bg) !important;
+  border-color: var(--calendar-border-light) !important;
+}
+
+:host ::ng-deep .fc .fc-timegrid-slot:hover {
+  background: #f5f8f6 !important;
+}
+
+/* =========================================================
+   TODAY
+   ========================================================= */
+
+:host ::ng-deep .fc .fc-day-today {
+  background: var(--calendar-today-bg) !important;
+}
+
+/* =========================================================
+   MONTH VIEW
+   ========================================================= */
+
+:host ::ng-deep .fc .fc-daygrid-day {
+  background: var(--calendar-bg) !important;
+}
+
+:host ::ng-deep .fc .fc-daygrid-day:hover {
+  background: #f5f8f6 !important;
+}
+
+:host ::ng-deep .fc .fc-daygrid-day-number {
+  color: var(--calendar-text) !important;
+
+  font-weight: 600;
+
+  text-decoration: none !important;
+
+  padding: 0.5rem;
+}
+
+/* =========================================================
+   EVENTS
+   ========================================================= */
+
+:host ::ng-deep .fc .fc-event {
+  background: var(--calendar-event) !important;
+
+  border: none !important;
+  border-left: 3px solid var(--calendar-gold) !important;
+
+  border-radius: 5px !important;
+
+  color: #173528 !important;
+
+  padding: 3px 6px;
+
+  font-size: 0.76rem;
+
+  cursor: pointer;
+}
+
+:host ::ng-deep .fc .fc-event:hover {
+  background: #829f90 !important;
+}
+
+:host ::ng-deep .fc .fc-event-title {
+  color: #173528 !important;
+  font-weight: 700;
+}
+
+:host ::ng-deep .fc .fc-event-time {
+  color: #294337 !important;
+  font-weight: 500;
+}
+
+/* =========================================================
+   CURRENT TIME INDICATOR
+   ========================================================= */
+
+:host ::ng-deep .fc .fc-timegrid-now-indicator-line {
+  border-color: var(--calendar-gold) !important;
+  border-width: 2px !important;
+}
+
+:host ::ng-deep .fc .fc-timegrid-now-indicator-arrow {
+  border-top-color: var(--calendar-gold) !important;
+}
+
+/* =========================================================
+   CLICKABLE AREAS
+   ========================================================= */
+
+:host ::ng-deep .fc .fc-timegrid-col {
+  cursor: pointer;
+}
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+  .calendar-card {
+    padding: 0.5rem;
+  }
+
+  :host ::ng-deep .fc-toolbar {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  :host ::ng-deep .fc-toolbar-chunk {
+    display: flex;
+    justify-content: center;
+  }
+}
+
+/* =========================================================
+   DARK MODE
+   ========================================================= */
+
+:host-context(.dark) .calendar-card,
+:host-context(.dark-theme) .calendar-card {
+  --calendar-bg: #0d2118;
+  --calendar-header-bg: #142c20;
+  --calendar-today-bg: #1b3a2a;
+
+  --calendar-border: #294738;
+  --calendar-border-light: #203b2f;
+
+  --calendar-text: #f1eee4;
+  --calendar-muted: #b8c5bd;
+
+  --calendar-primary: #8fb39e;
+  --calendar-primary-dark: #a9c7b5;
+
+  --calendar-gold: #d5b46a;
+  --calendar-event: #315b45;
+
+  background: var(--calendar-bg);
+}
+
+/* FullCalendar */
+
+:host-context(.dark) .fc,
+:host-context(.dark-theme) .fc {
+  color: #f1eee4 !important;
+  background: #0d2118;
+}
+
+/* Toolbar */
+
+:host-context(.dark) .fc-toolbar-title,
+:host-context(.dark-theme) .fc-toolbar-title {
+  color: #f1eee4 !important;
+}
+
+/* Buttons */
+
+:host-context(.dark) .fc .fc-button,
+:host-context(.dark-theme) .fc .fc-button {
+  background: #10271c !important;
+  border-color: #496957 !important;
+  color: #d5b46a !important;
+}
+
+:host-context(.dark) .fc .fc-button:hover,
+:host-context(.dark-theme) .fc .fc-button:hover {
+  background: #1b3a2a !important;
+  border-color: #d5b46a !important;
+  color: #f1eee4 !important;
+}
+
+:host-context(.dark) .fc .fc-button-active,
+:host-context(.dark-theme) .fc .fc-button-active {
+  background: #315b45 !important;
+  border-color: #315b45 !important;
+  color: #ffffff !important;
+}
+
+/* Calendar grid */
+
+:host-context(.dark) .fc-theme-standard .fc-scrollgrid,
+:host-context(.dark-theme) .fc-theme-standard .fc-scrollgrid {
+  background: #0d2118;
+  border-color: #294738 !important;
+}
+
+:host-context(.dark) .fc-theme-standard td,
+:host-context(.dark) .fc-theme-standard th,
+:host-context(.dark-theme) .fc-theme-standard td,
+:host-context(.dark-theme) .fc-theme-standard th {
+  border-color: #203b2f !important;
+}
+
+/* Day headers */
+
+:host-context(.dark) .fc .fc-col-header-cell,
+:host-context(.dark-theme) .fc .fc-col-header-cell {
+  background: #142c20 !important;
+}
+
+:host-context(.dark) .fc .fc-col-header-cell-cushion,
+:host-context(.dark-theme) .fc .fc-col-header-cell-cushion {
+  color: #e8e5da !important;
+}
+
+/* Today */
+
+:host-context(.dark) .fc .fc-col-header-cell.fc-day-today,
+:host-context(.dark-theme) .fc .fc-col-header-cell.fc-day-today {
+  background: #294c39 !important;
+}
+
+:host-context(.dark) .fc .fc-col-header-cell.fc-day-today
+.fc-col-header-cell-cushion,
+:host-context(.dark-theme) .fc .fc-col-header-cell.fc-day-today
+.fc-col-header-cell-cushion {
+  color: #d5b46a !important;
+}
+
+/* Time axis */
+
+:host-context(.dark) .fc .fc-timegrid-axis,
+:host-context(.dark-theme) .fc .fc-timegrid-axis {
+  background: #142c20 !important;
+}
+
+:host-context(.dark) .fc .fc-timegrid-axis-cushion,
+:host-context(.dark) .fc .fc-timegrid-slot-label-cushion,
+:host-context(.dark-theme) .fc .fc-timegrid-axis-cushion,
+:host-context(.dark-theme) .fc .fc-timegrid-slot-label-cushion {
+  color: #c3cec7 !important;
+}
+
+/* Time slots */
+
+:host-context(.dark) .fc .fc-timegrid-slot,
+:host-context(.dark-theme) .fc .fc-timegrid-slot {
+  background: #0d2118 !important;
+  border-color: #203b2f !important;
+}
+
+:host-context(.dark) .fc .fc-timegrid-slot:hover,
+:host-context(.dark-theme) .fc .fc-timegrid-slot:hover {
+  background: #142c20 !important;
+}
+
+/* Today column */
+
+:host-context(.dark) .fc .fc-day-today,
+:host-context(.dark-theme) .fc .fc-day-today {
+  background: rgba(213, 180, 106, 0.08) !important;
+}
+
+/* Events */
+
+:host-context(.dark) .fc .fc-event,
+:host-context(.dark-theme) .fc .fc-event {
+  background: #315b45 !important;
+  border-left-color: #d5b46a !important;
+  color: #f4f1e8 !important;
+}
+
+:host-context(.dark) .fc .fc-event-title,
+:host-context(.dark-theme) .fc .fc-event-title {
+  color: #f4f1e8 !important;
+}
+
+:host-context(.dark) .fc .fc-event-time,
+:host-context(.dark-theme) .fc .fc-event-time {
+  color: #dce5df !important;
+}
+
+:host-context(.dark) .fc .fc-event:hover,
+:host-context(.dark-theme) .fc .fc-event:hover {
+  background: #3b6b51 !important;
+}
+
+/* Current time */
+
+:host-context(.dark) .fc .fc-timegrid-now-indicator-line,
+:host-context(.dark-theme) .fc .fc-timegrid-now-indicator-line {
+  border-color: #d5b46a !important;
+}
+
+:host-context(.dark) .fc .fc-timegrid-now-indicator-arrow,
+:host-context(.dark-theme) .fc .fc-timegrid-now-indicator-arrow {
+  border-top-color: #d5b46a !important;
+}
+
+/* Month */
+
+:host-context(.dark) .fc .fc-daygrid-day,
+:host-context(.dark-theme) .fc .fc-daygrid-day {
+  background: #0d2118 !important;
+}
+
+:host-context(.dark) .fc .fc-daygrid-day:hover,
+:host-context(.dark-theme) .fc .fc-daygrid-day:hover {
+  background: #142c20 !important;
+}
+
+:host-context(.dark) .fc .fc-daygrid-day-number,
+:host-context(.dark-theme) .fc .fc-daygrid-day-number {
+  color: #e8e5da !important;
+}

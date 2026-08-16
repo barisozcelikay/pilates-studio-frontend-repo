@@ -88,10 +88,35 @@
 // ============================================================
 
 .sidebar-brand {
-  display: flex;
-  align-items: center;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
 
-  padding: 4px 10px 30px;
+  width: 100% !important;
+  height: 80px !important;
+
+  padding: 0 !important;
+  margin: 0 0 12px 0 !important;
+
+  box-sizing: border-box !important;
+  overflow: hidden !important;
+}
+
+.sidebar-brand .brand-logo {
+  display: block !important;
+
+  width: 110px !important;
+  min-width: 110px !important;
+  max-width: 110px !important;
+
+  height: auto !important;
+  max-height: 70px !important;
+
+  margin: 0 !important;
+  padding: 0 !important;
+
+  object-fit: contain !important;
+  flex: 0 0 110px !important;
 }
 
 .brand-mark {

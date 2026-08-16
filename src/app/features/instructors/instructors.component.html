@@ -2,12 +2,12 @@
 
   <div class="page-header">
     <div class="page-header-content">
-      <span class="page-eyebrow">ÜYELİK YÖNETİMİ</span>
+      <span class="page-eyebrow">EĞİTMEN YÖNETİMİ</span>
 
-      <h1 class="page-title">Üye Listesi</h1>
+      <h1 class="page-title">Eğitmen Listesi</h1>
 
       <p class="page-description">
-        Stüdyonuzdaki üyeleri yönetin.
+        Stüdyonuzdaki eğitmenleri yönetin.
       </p>
     </div>
 
@@ -17,7 +17,7 @@
       (click)="openCreateForm()"
     >
       <i class="pi pi-plus"></i>
-      <span>Yeni Üye</span>
+      <span>Yeni Eğitmen</span>
     </button>
   </div>
 
@@ -31,7 +31,7 @@
 
         <ng-template #header>
           <tr>
-            <th>Üye</th>
+            <th>Eğitmen</th>
             <th>Telefon</th>
             <th>E-posta</th>
             <th>Durum</th>
@@ -41,35 +41,35 @@
           </tr>
         </ng-template>
 
-        <ng-template #body let-member>
+        <ng-template #body let-instructor>
           <tr>
 
             <td>
-              <div class="member-info">
-                <span class="member-name">
-                  {{ member.firstName }} {{ member.lastName }}
+              <div class="instructor-info">
+                <span class="instructor-name">
+                  {{ instructor.firstName }} {{ instructor.lastName }}
                 </span>
               </div>
             </td>
 
             <td>
-              {{ member.phone || '—' }}
+              {{ instructor.phone || '—' }}
             </td>
 
             <td>
-              {{ member.email || '—' }}
+              {{ instructor.email || '—' }}
             </td>
 
             <td>
-              {{ member.active ? 'Aktif' : 'Pasif' }}
+              {{ instructor.active ? 'Aktif' : 'Pasif' }}
             </td>
 
             <td>
-              {{ member.createdAt | date:'dd.MM.yyyy HH:mm' }}
+              {{ instructor.createdAt | date:'dd.MM.yyyy HH:mm' }}
             </td>
 
             <td>
-              {{ member.updatedAt | date:'dd.MM.yyyy HH:mm' }}
+              {{ instructor.updatedAt | date:'dd.MM.yyyy HH:mm' }}
             </td>
 
             <td>
@@ -78,8 +78,8 @@
                 <button
                   type="button"
                   class="table-action table-action-edit"
-                  aria-label="Üyeyi düzenle"
-                  (click)="openEditForm(member)"
+                  aria-label="Eğitmeni düzenle"
+                  (click)="openEditForm(instructor)"
                 >
                   <i class="pi pi-pencil"></i>
                 </button>
@@ -87,8 +87,8 @@
                 <button
                   type="button"
                   class="table-action table-action-delete"
-                  aria-label="Üyeyi sil"
-                  (click)="confirmDelete(member)"
+                  aria-label="Eğitmeni sil"
+                  (click)="confirmDelete(instructor)"
                 >
                   <i class="pi pi-trash"></i>
                 </button>

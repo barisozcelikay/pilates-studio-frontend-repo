@@ -1,18 +1,18 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { TableModule } from 'primeng/table';
 import { BaseComponent } from '../../shared/component/base/base-component';
-import { MemberDto } from './model/member-dto';
-import { MemberService } from './service/member-service';
+import { LessonDto } from './model/lesson-dto';
+import { LessonService } from './service/lesson-service';
 import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-members',
   standalone: true,
   imports: [TableModule, DatePipe],
-  templateUrl: './members.component.html',
+  templateUrl: './lessons.component.html',
 })
-export class MembersComponent extends BaseComponent<MemberDto> {
-  constructor(memberService: MemberService, cdr: ChangeDetectorRef) {
-    super(memberService, cdr, MemberDto);
+export class LessonsComponent extends BaseComponent<LessonDto> {
+  constructor(memberService: LessonService, cdr: ChangeDetectorRef) {
+    super(memberService, cdr, LessonDto);
   }
 }
