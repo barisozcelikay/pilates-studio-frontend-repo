@@ -1,0 +1,266 @@
+<div class="page">
+
+  <div class="page-header">
+    <div class="page-header-content">
+
+      <span class="page-eyebrow">
+        YÖNETİM
+      </span>
+
+      <h1 class="page-title">
+        Menü Ayarları
+      </h1>
+
+      <p class="page-description">
+        Menüler ve profil görünürlüklerini yönetin.
+      </p>
+
+    </div>
+  </div>
+
+  <div class="card">
+
+    <div class="table-container">
+
+      <p-treeTable
+        class="data-table menu-tree-table"
+        [value]="nodes"
+        [loading]="loading"
+        [scrollable]="true"
+      >
+
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Menü</th>
+            <th>Kod</th>
+            <th>İkon</th>
+            <th>Sıra</th>
+            <th>Durum</th>
+            <th class="action-column">
+              İşlem
+            </th>
+          </tr>
+        </ng-template>
+
+        <ng-template
+          pTemplate="body"
+          let-rowNode
+          let-rowData="rowData"
+        >
+          <tr>
+
+            <td>
+              <p-treeTableToggler
+                [rowNode]="rowNode"
+              />
+
+              <span class="menu-name">
+                {{ rowData.name }}
+              </span>
+            </td>
+
+            <td>
+              <span class="menu-code">
+                {{ rowData.code }}
+              </span>
+            </td>
+
+            <td>
+              <i
+                *ngIf="rowData.icon"
+                [class]="rowData.icon"
+                class="menu-icon"
+              ></i>
+
+              <span
+                *ngIf="!rowData.icon"
+                class="text-muted"
+              >
+                —
+              </span>
+            </td>
+
+            <td>
+              {{ rowData.sortOrder }}
+            </td>
+
+            <td>
+              <span
+                class="status-badge"
+                [class.status-active]="rowData.active"
+                [class.status-inactive]="!rowData.active"
+              >
+                {{ rowData.active ? 'Aktif' : 'Pasif' }}
+              </span>
+            </td>
+
+            <td class="action-column">
+
+              <div class="table-actions">
+
+                <button
+                  type="button"
+                  class="table-action table-action-edit"
+                  title="Düzenle"
+                  (click)="openEdit(rowData)"
+                >
+                  <i class="pi pi-pencil"></i>
+                </button>
+
+              </div>
+
+            </td>
+
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td
+              colspan="6"
+              class="empty-message"
+            >
+              Menü bulunamadı.
+            </td>
+          </tr>
+        </ng-template>
+
+      </p-treeTable>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<app-drawer
+  [visible]="drawerVisible"
+  [title]="selectedMenu ? selectedMenu.name + ' Menüsü' : 'Menü Düzenle'"
+  [width]="'420px'"
+  (visibleChange)="
+    $event ? drawerVisible = true : closeDrawer()
+  "
+>
+
+  <div
+    class="drawer-form"
+    *ngIf="selectedMenu"
+  >
+
+    <!-- Menü bilgisi -->
+
+    <div class="menu-info">
+
+      <div class="menu-info-icon">
+        <i
+          *ngIf="selectedMenu.icon"
+          [class]="selectedMenu.icon"
+        ></i>
+      </div>
+
+      <div class="menu-info-content">
+
+        <span class="menu-info-name">
+          {{ selectedMenu.name }}
+        </span>
+
+        <span class="menu-info-code">
+          {{ selectedMenu.code }}
+        </span>
+
+      </div>
+
+    </div>
+
+
+    <!-- Profiller -->
+
+    <div class="form-group">
+
+      <label class="form-label">
+        Görüntüleyebilecek Profiller
+      </label>
+
+      <p-multiSelect
+        [options]="profiles"
+        [(ngModel)]="selectedProfileIds"
+        optionLabel="name"
+        optionValue="id"
+        placeholder="Profil seçin"
+        [showClear]="true"
+        [filter]="true"
+        filterPlaceholder="Profil ara"
+        [disabled]="saving"
+        appendTo="self"
+      >
+      </p-multiSelect>
+
+      <span class="form-help">
+        Bu menüyü hangi profillerin görebileceğini belirleyin.
+      </span>
+
+    </div>
+
+
+    <!-- Durum -->
+
+    <div class="form-checkbox">
+      <p-checkbox
+        inputId="menu-active"
+        [(ngModel)]="selectedMenu.active"
+        [binary]="true"
+        [disabled]="saving"
+      />
+
+      <label
+        class="form-label"
+        for="menu-active"
+      >
+        Aktif
+      </label>
+    </div>
+
+  </div>
+
+
+  <!-- Footer -->
+
+  <div drawer-footer>
+
+    <div class="button-group">
+
+      <button
+        type="button"
+        class="secondary-button"
+        [disabled]="saving"
+        (click)="closeDrawer()"
+      >
+        İptal
+      </button>
+
+      <button
+        type="button"
+        class="primary-button"
+        [disabled]="saving"
+        (click)="save()"
+      >
+
+        <i
+          class="pi"
+          [class.pi-check]="!saving"
+          [class.pi-spin]="saving"
+          [class.pi-spinner]="saving"
+        ></i>
+
+        <span>
+          {{ saving ? 'Kaydediliyor...' : 'Kaydet' }}
+        </span>
+
+      </button>
+
+    </div>
+
+  </div>
+
+</app-drawer>

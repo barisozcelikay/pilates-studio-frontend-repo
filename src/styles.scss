@@ -9,6 +9,11 @@
 
 @import "primeicons/primeicons.css";
 
+
+/* =========================================
+   Theme Variables
+   ========================================= */
+
 :root {
   --color-primary: #{v.$color-primary};
   --color-primary-light: #{v.$color-primary-light};
@@ -39,6 +44,7 @@
   --shadow-lg: #{v.$shadow-lg};
 }
 
+
 :root.dark-theme {
   --color-primary: #{v.$dark-color-primary};
   --color-primary-light: #{v.$dark-color-primary-light};
@@ -65,12 +71,14 @@
   --color-info: #{v.$dark-color-info};
 
   --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.20);
+
   --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.28);
 
   --shadow-lg:
     0 20px 50px rgba(0, 0, 0, 0.34),
     0 5px 18px rgba(0, 0, 0, 0.20);
 }
+
 
 html,
 body {
@@ -80,4 +88,173 @@ body {
   transition:
     background-color 0.2s ease,
     color 0.2s ease;
+}
+
+
+/* =========================================
+   PrimeNG 21 - MultiSelect
+   ========================================= */
+
+.p-multiselect {
+  background: var(--color-surface) !important;
+  color: var(--color-text) !important;
+  border-color: var(--color-border) !important;
+}
+
+.p-multiselect-label-container {
+  background: var(--color-surface) !important;
+}
+
+.p-multiselect-label {
+  background: var(--color-surface) !important;
+  color: var(--color-text) !important;
+}
+
+.p-multiselect-label.p-placeholder {
+  color: var(--color-text-light) !important;
+}
+
+
+/* Dropdown */
+
+.p-multiselect-overlay {
+  background: var(--color-surface) !important;
+  color: var(--color-text) !important;
+  border: 1px solid var(--color-border) !important;
+  box-shadow: var(--shadow-md) !important;
+}
+
+
+/* Header */
+
+.p-multiselect-header {
+  background: var(--color-surface) !important;
+  color: var(--color-text) !important;
+  border-bottom: 1px solid var(--color-border-light) !important;
+}
+
+
+/* Search */
+
+.p-multiselect-filter-container {
+  background: var(--color-surface) !important;
+}
+
+.p-multiselect-filter {
+  background: var(--color-surface) !important;
+  color: var(--color-text) !important;
+  border-color: var(--color-border) !important;
+}
+
+.p-multiselect-filter::placeholder {
+  color: var(--color-text-light) !important;
+}
+
+.p-multiselect-filter:focus {
+  border-color: var(--color-primary-light) !important;
+  box-shadow: 0 0 0 2px rgba(63, 102, 82, 0.10) !important;
+}
+
+
+/* List */
+
+.p-multiselect-list-container {
+  background: var(--color-surface) !important;
+}
+
+.p-multiselect-list {
+  background: var(--color-surface) !important;
+}
+
+
+/* Options */
+
+.p-multiselect-option {
+  background: var(--color-surface) !important;
+  color: var(--color-text) !important;
+}
+
+.p-multiselect-option:hover {
+  background: var(--color-surface-soft) !important;
+  color: var(--color-text) !important;
+}
+
+.p-multiselect-option.p-focus {
+  background: var(--color-surface-soft) !important;
+  color: var(--color-text) !important;
+}
+
+.p-multiselect-option.p-multiselect-option-selected {
+  background: var(--color-surface-soft) !important;
+  color: var(--color-text) !important;
+}
+
+.p-multiselect-option.p-multiselect-option-selected.p-focus {
+  background: var(--color-surface-soft) !important;
+  color: var(--color-text) !important;
+}
+
+
+/* =========================================
+   PrimeNG 21 - MultiSelect Checkbox
+   ========================================= */
+
+.p-multiselect-option .p-checkbox {
+  background: transparent !important;
+}
+
+.p-multiselect-option .p-checkbox-box {
+  width: 20px !important;
+  height: 20px !important;
+
+  background: var(--color-surface) !important;
+  border: 1px solid var(--color-border) !important;
+
+  border-radius: 5px !important;
+
+  color: var(--color-primary) !important;
+}
+
+.p-multiselect-option
+.p-checkbox.p-checkbox-checked
+.p-checkbox-box {
+
+  background: var(--color-primary) !important;
+  border-color: var(--color-primary) !important;
+
+  color: #ffffff !important;
+}
+
+
+/* Checkbox icon */
+
+.p-multiselect-option
+.p-checkbox
+.p-checkbox-icon {
+
+  color: #ffffff !important;
+}
+
+
+/* =========================================
+   MultiSelect Dropdown Icon
+   ========================================= */
+
+.p-multiselect-dropdown {
+  background: var(--color-surface) !important;
+  color: var(--color-text-muted) !important;
+}
+
+.p-multiselect-dropdown-icon {
+  color: var(--color-text-muted) !important;
+}
+
+
+/* =========================================
+   MultiSelect Empty Message
+   ========================================= */
+
+.p-multiselect-empty-message {
+  background: var(--color-surface) !important;
+  color: var(--color-text-muted) !important;
 }

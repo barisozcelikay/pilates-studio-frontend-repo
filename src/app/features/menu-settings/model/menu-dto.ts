@@ -1,5 +1,6 @@
-export interface MenuDto {
-  id: number;
+import { BaseDto } from '../../../shared/model/base-dto';
+
+export interface MenuDto extends BaseDto {
   code: string;
   name: string;
   icon: string | null;
@@ -8,4 +9,6 @@ export interface MenuDto {
   sortOrder: number;
   active: boolean;
   children: MenuDto[];
+  profileIds: number[];
 }
+

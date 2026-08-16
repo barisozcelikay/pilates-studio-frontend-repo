@@ -1,0 +1,328 @@
+@use '../../../styles/variables' as v;
+
+.menu-tree-table {
+
+  .menu-name {
+    color: var(--color-text);
+    font-weight: 600;
+  }
+
+  .menu-code {
+    color: var(--color-text-muted);
+    font-family: monospace;
+    font-size: 11px;
+  }
+
+  .menu-icon {
+    color: var(--color-primary);
+    font-size: 14px;
+  }
+
+  .action-column {
+    width: 90px;
+    text-align: center;
+  }
+
+  .status-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 54px;
+    padding: 4px 8px;
+    border-radius: 999px;
+    font-size: 10px;
+    font-weight: 700;
+  }
+
+  .status-active {
+    background: rgba(79, 138, 104, 0.12);
+    color: var(--color-success);
+  }
+
+  .status-inactive {
+    background: rgba(184, 92, 92, 0.10);
+    color: var(--color-error);
+  }
+
+  .empty-message {
+    padding: v.$space-8 !important;
+    text-align: center;
+    color: var(--color-text-muted);
+  }
+}
+
+
+/* =========================================
+   PrimeNG TreeTable
+   ========================================= */
+
+:host ::ng-deep {
+
+  .p-treetable {
+    background: var(--color-surface) !important;
+    color: var(--color-text) !important;
+  }
+
+  .p-treetable-thead > tr > th {
+    background: var(--color-surface-soft) !important;
+    color: var(--color-text-secondary) !important;
+    border-color: var(--color-border-light) !important;
+  }
+
+  .p-treetable-tbody > tr {
+    background: var(--color-surface) !important;
+    color: var(--color-text) !important;
+  }
+
+  .p-treetable-tbody > tr > td {
+    background: var(--color-surface) !important;
+    color: var(--color-text) !important;
+    border-color: var(--color-border-light) !important;
+  }
+
+  .p-treetable-tbody > tr:hover > td {
+    background: var(--color-surface-soft) !important;
+    color: var(--color-text) !important;
+  }
+
+  .p-treetable-toggler {
+    color: var(--color-text-muted) !important;
+
+    &:hover {
+      background: var(--color-surface-soft) !important;
+      color: var(--color-primary) !important;
+    }
+  }
+
+
+  /* =========================================
+     MultiSelect
+     ========================================= */
+
+  .p-multiselect {
+    width: 100%;
+    min-height: 40px;
+
+    background: var(--color-surface) !important;
+    color: var(--color-text) !important;
+    border: 1px solid var(--color-border) !important;
+    border-radius: v.$radius-md;
+
+    &:not(.p-disabled):hover {
+      border-color: var(--color-primary-light) !important;
+    }
+
+    &:not(.p-disabled).p-focus {
+      border-color: var(--color-primary-light) !important;
+      box-shadow: 0 0 0 2px rgba(63, 102, 82, 0.10) !important;
+    }
+  }
+
+  .p-multiselect-label-container {
+    background: var(--color-surface) !important;
+  }
+
+  .p-multiselect-label {
+    background: var(--color-surface) !important;
+    color: var(--color-text) !important;
+  }
+
+  .p-multiselect-placeholder {
+    color: var(--color-text-light) !important;
+  }
+
+  /* Dropdown */
+
+  .p-multiselect-overlay {
+    background: var(--color-surface) !important;
+    color: var(--color-text) !important;
+    border: 1px solid var(--color-border) !important;
+    box-shadow: var(--shadow-md) !important;
+  }
+
+  .p-multiselect-header {
+    background: var(--color-surface) !important;
+    color: var(--color-text) !important;
+    border-bottom: 1px solid var(--color-border-light) !important;
+  }
+
+  .p-multiselect-list-container {
+    background: var(--color-surface) !important;
+  }
+
+  .p-multiselect-list {
+    background: var(--color-surface) !important;
+  }
+
+  /* Options */
+
+  .p-multiselect-option {
+    background: var(--color-surface) !important;
+    color: var(--color-text) !important;
+    font-size: 12px;
+
+    &:hover,
+    &.p-focus {
+      background: var(--color-surface-soft) !important;
+      color: var(--color-text) !important;
+    }
+
+    &.p-multiselect-option-selected {
+      background: var(--color-surface-soft) !important;
+      color: var(--color-text) !important;
+    }
+  }
+
+  /* Search */
+
+  .p-multiselect-filter-container {
+    background: var(--color-surface) !important;
+  }
+
+  .p-multiselect-filter {
+    background: var(--color-surface) !important;
+    color: var(--color-text) !important;
+    border-color: var(--color-border) !important;
+
+    &::placeholder {
+      color: var(--color-text-light) !important;
+    }
+
+    &:focus {
+      border-color: var(--color-primary-light) !important;
+      box-shadow: 0 0 0 2px rgba(63, 102, 82, 0.10) !important;
+    }
+  }
+
+  /* Checkbox */
+
+  .p-checkbox {
+    background: transparent !important;
+
+    .p-checkbox-box {
+      width: 20px !important;
+      height: 20px !important;
+      background: var(--color-surface) !important;
+      border: 1px solid var(--color-border) !important;
+      border-radius: 5px !important;
+      color: var(--color-primary) !important;
+    }
+
+    &.p-checkbox-checked {
+
+      .p-checkbox-box {
+        background: var(--color-primary) !important;
+        border-color: var(--color-primary) !important;
+        color: #ffffff !important;
+      }
+
+      .p-checkbox-icon {
+        color: #ffffff !important;
+      }
+    }
+  }
+
+  /* Select all checkbox */
+
+  .p-multiselect-header {
+
+    .p-checkbox {
+
+      .p-checkbox-box {
+        background: var(--color-surface) !important;
+        border: 1px solid var(--color-border) !important;
+      }
+
+      &.p-checkbox-checked {
+
+        .p-checkbox-box {
+          background: var(--color-primary) !important;
+          border-color: var(--color-primary) !important;
+          color: #ffffff !important;
+        }
+      }
+    }
+  }
+}
+
+
+/* =========================================
+   Drawer
+   ========================================= */
+
+.drawer-form {
+  display: flex;
+  flex-direction: column;
+  gap: v.$space-6;
+}
+
+.icon-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  i {
+    width: 18px;
+    color: var(--color-primary);
+  }
+}
+
+.menu-info {
+  display: flex;
+  align-items: center;
+  gap: v.$space-4;
+  padding: v.$space-4;
+  border: 1px solid var(--color-border-light);
+  border-radius: v.$radius-md;
+  background: var(--color-surface-soft);
+}
+
+.menu-info-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 42px;
+  height: 42px;
+  border-radius: v.$radius-md;
+  background: var(--color-surface);
+  color: var(--color-primary);
+
+  i {
+    font-size: 16px;
+  }
+}
+
+.menu-info-content {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  gap: 3px;
+}
+
+.menu-info-name {
+  color: var(--color-text);
+  font-size: 14px;
+  font-weight: 650;
+}
+
+.menu-info-code {
+  color: var(--color-text-muted);
+  font-family: monospace;
+  font-size: 10px;
+}
+
+
+/* =========================================
+   Responsive
+   ========================================= */
+
+@media (max-width: 768px) {
+
+  .menu-tree-table {
+
+    .action-column {
+      width: 70px;
+    }
+  }
+}

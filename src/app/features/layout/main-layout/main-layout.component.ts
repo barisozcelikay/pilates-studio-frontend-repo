@@ -1,9 +1,9 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
-import { MenuDto } from '../../../core/menu/model/menu-dto';
 import { AccountDto } from '../../../core/auth/model/account-dto';
 import { AuthService } from '../../../core/auth/service/auth-service';
-import { MenuService } from '../../../core/menu/menu-service';
+import { MenuDto } from '../../menu-settings/model/menu-dto';
+import { MenuService } from '../../menu-settings/service/menu-service';
 
 
 @Component({
