@@ -68,6 +68,16 @@ export const routes: Routes = [
           import('./features/calendar/calendar.component').then((m) => m.CalendarComponent),
       },
       {
+        path: 'studio-service',
+        loadComponent: () =>
+          import('./features/services/services.component').then((m) => m.ServicesComponent),
+      },
+      {
+        path: 'calendar',
+        loadComponent: () =>
+          import('./features/calendar/calendar.component').then((m) => m.CalendarComponent),
+      },
+      {
         path: 'settings/menu',
         loadComponent: () =>
           import('./features/menu-settings/menu-settings.component').then(
