@@ -1,9 +1,12 @@
 import { BaseDto } from '../../../shared/model/base-dto';
 
 export class InstructorDto extends BaseDto {
+  accountId?: number;
   firstName = '';
   lastName = '';
   email = '';
   phone = '';
-  active = true;
+  status = '';
+  specialty = '';
+  biography = '';
 }

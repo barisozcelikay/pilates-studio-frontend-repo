@@ -1,0 +1,5 @@
+import { ChangeDetectorRef, Component } from '@angular/core';
+import { TableModule } from 'primeng/table'; import { FormsModule } from '@angular/forms'; import { InputTextModule } from 'primeng/inputtext'; import { CheckboxModule } from 'primeng/checkbox';
+import { BaseComponent } from '../../shared/component/base/base-component'; import { DrawerComponent } from '../../shared/component/drawer/drawer.component'; import { ConfirmDialogComponent } from '../../shared/component/confirm-dialog/confirm-dialog.component'; import { StudioServiceDto } from './model/studio-service-dto'; import { StudioServiceService } from './service/studio-service-service';
+@Component({selector:'app-services',standalone:true,imports:[TableModule,FormsModule,InputTextModule,CheckboxModule,DrawerComponent,ConfirmDialogComponent],templateUrl:'./services.component.html'})
+export class ServicesComponent extends BaseComponent<StudioServiceDto>{constructor(service:StudioServiceService,cdr:ChangeDetectorRef){super(service,cdr,StudioServiceDto);}}

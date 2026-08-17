@@ -62,7 +62,7 @@
             </td>
 
             <td>
-              {{ account.active ? 'Aktif' : 'Pasif' }}
+              {{ account.status === 'PENDING' ? 'Davet Bekliyor' : (account.status === 'ACTIVE' ? 'Aktif' : 'Pasif') }}
             </td>
 
             <td>
@@ -197,23 +197,9 @@
         placeholder="Profil seçin"
         [showClear]="true"
         [filter]="true"
+        [disabled]="editing"
         appendTo="body"
       />
-    </div>
-
-    <div class="form-checkbox">
-      <p-checkbox
-        inputId="account-active"
-        [(ngModel)]="form.active"
-        [binary]="true"
-      />
-
-      <label
-        class="form-label"
-        for="account-active"
-      >
-        Aktif
-      </label>
     </div>
 
   </div>

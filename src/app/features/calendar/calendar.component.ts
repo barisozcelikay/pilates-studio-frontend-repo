@@ -59,8 +59,8 @@ export class CalendarComponent implements OnInit {
         const events: EventInput[] = lessons.map((lesson) => ({
           id: String(lesson.id),
           title: lesson.name,
-          start: lesson.startAt,
-          end: lesson.endAt,
+          start: lesson.startAt ?? undefined,
+          end: lesson.endAt ?? undefined,
           backgroundColor: lesson.status === 'CANCELLED' ? '#b45f5f' : undefined,
           borderColor: lesson.status === 'CANCELLED' ? '#b45f5f' : undefined,
         }));

@@ -6,9 +6,8 @@ import { MemberService } from './service/member-service';
 import { DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
-import { CheckboxModule } from 'primeng/checkbox';
 import { DrawerComponent } from '../../shared/component/drawer/drawer.component';
-import { ConfirmDialogComponent } from '../../shared/component/confirm-dialog/confirm-dialog.component';
+import { DatePicker } from 'primeng/datepicker';
 
 @Component({
   selector: 'app-members',
@@ -18,14 +17,23 @@ import { ConfirmDialogComponent } from '../../shared/component/confirm-dialog/co
     DatePipe,
     FormsModule,
     InputTextModule,
-    CheckboxModule,
     DrawerComponent,
-    ConfirmDialogComponent,
+    DatePicker,
   ],
   templateUrl: './members.component.html',
 })
 export class MembersComponent extends BaseComponent<MemberDto> {
   constructor(memberService: MemberService, cdr: ChangeDetectorRef) {
     super(memberService, cdr, MemberDto);
+  }
+
+  protected override save(): void {
+    this.form.membershipStartDate = this.toDateValue(this.form.membershipStartDate);
+    this.form.membershipEndDate = this.toDateValue(this.form.membershipEndDate);
+    super.save();
+  }
+
+  private toDateValue(value: Date | string | null): string | null {
+    return value instanceof Date ? value.toISOString().slice(0, 10) : value;
   }
 }

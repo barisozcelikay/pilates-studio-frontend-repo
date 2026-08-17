@@ -10,7 +10,6 @@ import { DrawerComponent } from '../../shared/component/drawer/drawer.component'
 import { ProfileDto } from '../../core/auth/model/profile-dto';
 import { ProfileService } from '../profiles/service/profile-service';
 import { InputTextModule } from 'primeng/inputtext';
-import { CheckboxModule } from 'primeng/checkbox';
 import { Select } from 'primeng/select';
 
 
@@ -25,7 +24,6 @@ import { Select } from 'primeng/select';
     FormsModule,
     DrawerComponent,
     InputTextModule,
-    CheckboxModule,
     Select,
   ],
   templateUrl: './accounts.component.html',

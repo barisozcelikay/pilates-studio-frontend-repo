@@ -58,6 +58,11 @@ export const routes: Routes = [
           import('./features/lessons/lessons.component').then((m) => m.LessonsComponent),
       },
       {
+        path: 'services',
+        loadComponent: () =>
+          import('./features/services/services.component').then((m) => m.ServicesComponent),
+      },
+      {
         path: 'calendar',
         loadComponent: () =>
           import('./features/calendar/calendar.component').then((m) => m.CalendarComponent),
