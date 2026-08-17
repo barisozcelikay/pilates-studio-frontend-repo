@@ -15,4 +15,3 @@ export class MemberService extends BaseService<MemberDto> {
     super(http);
   }
 }
-

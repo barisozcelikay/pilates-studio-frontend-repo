@@ -27,6 +27,10 @@
       <p-table
         class="data-table"
         [value]="items"
+        [loading]="loading"
+        [paginator]="true"
+        [rows]="10"
+        [rowsPerPageOptions]="[10, 25, 50]"
       >
 
         <ng-template #header>
@@ -54,7 +58,7 @@
             </td>
 
             <td>
-              {{ class.instructorName || '—' }}
+              {{ class.instructorNames?.join(', ') || '—' }}
             </td>
 
             <td>
@@ -62,11 +66,11 @@
             </td>
 
             <td>
-              {{ class.durationMinutes ? class.durationMinutes + ' dk' : '—' }}
+              {{ class.startAt | date:'dd.MM.yyyy HH:mm' }}
             </td>
 
             <td>
-              {{ class.active ? 'Aktif' : 'Pasif' }}
+              {{ class.status === 'ACTIVE' ? 'Aktif' : (class.status === 'CANCELLED' ? 'İptal Edildi' : 'Tamamlandı') }}
             </td>
 
             <td>
@@ -110,3 +114,70 @@
   </div>
 
 </div>
+
+<app-drawer [(visible)]="drawerVisible" [title]="editing ? 'Dersi Düzenle' : 'Yeni Ders'">
+  <div class="form">
+    <div class="form-group">
+      <label class="form-label" for="lesson-name">Ders Adı</label>
+      <input id="lesson-name" type="text" pInputText [(ngModel)]="form.name" placeholder="Örn. Reformer Pilates" />
+    </div>
+
+    <div class="form-group">
+      <label class="form-label" for="lesson-description">Açıklama</label>
+      <input id="lesson-description" type="text" pInputText [(ngModel)]="form.description" placeholder="Ders açıklaması" />
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label" for="lesson-start-at">Başlangıç</label>
+        <input id="lesson-start-at" type="datetime-local" pInputText [(ngModel)]="form.startAt" />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="lesson-end-at">Bitiş</label>
+        <input id="lesson-end-at" type="datetime-local" pInputText [(ngModel)]="form.endAt" />
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label" for="lesson-capacity">Kontenjan</label>
+        <input id="lesson-capacity" type="number" min="1" pInputText [(ngModel)]="form.capacity" />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="lesson-status">Durum</label>
+        <p-select inputId="lesson-status" [options]="statusOptions" optionLabel="label" optionValue="value" [(ngModel)]="form.status" />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label" for="lesson-instructors">Eğitmenler</label>
+      <select id="lesson-instructors" class="lesson-instructor-select" multiple [(ngModel)]="form.instructorIds">
+        @for (instructor of instructors; track instructor.id) {
+          <option [ngValue]="instructor.id">{{ instructor.firstName }} {{ instructor.lastName }}</option>
+        }
+      </select>
+      <small class="form-help">Birden fazla eğitmen seçebilirsiniz.</small>
+    </div>
+  </div>
+
+  <div drawer-footer>
+    <div class="button-group">
+      <button type="button" class="secondary-button" [disabled]="saving" (click)="drawerVisible = false">İptal</button>
+      <button type="button" class="primary-button" [disabled]="saving" (click)="save()">
+        <i class="pi" [class.pi-check]="!saving" [class.pi-spin]="saving" [class.pi-spinner]="saving"></i>
+        <span>{{ saving ? 'Kaydediliyor...' : (editing ? 'Güncelle' : 'Kaydet') }}</span>
+      </button>
+    </div>
+  </div>
+</app-drawer>
+
+<app-confirm-dialog
+  [(visible)]="confirmVisible"
+  title="Dersi Sil"
+  [message]="itemToDelete ? '“' + itemToDelete.name + '” dersini silmek istediğinize emin misiniz?' : ''"
+  confirmText="Sil"
+  cancelText="İptal"
+  (confirm)="delete()"
+/>

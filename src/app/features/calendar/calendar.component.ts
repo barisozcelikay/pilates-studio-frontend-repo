@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FullCalendarModule } from '@fullcalendar/angular';
 
-import { CalendarOptions } from '@fullcalendar/core';
+import { CalendarOptions, EventInput } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
+import { CalendarService } from './service/calendar-service';
 
 @Component({
   selector: 'app-calendar',
@@ -13,7 +14,7 @@ import interactionPlugin from '@fullcalendar/interaction';
   templateUrl: './calendar.component.html',
   styleUrl: './calendar.component.scss',
 })
-export class CalendarComponent {
+export class CalendarComponent implements OnInit {
   calendarOptions: CalendarOptions = {
     plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
 
@@ -37,11 +38,6 @@ export class CalendarComponent {
       center: 'title',
       right: 'dayGridMonth,timeGridWeek,timeGridDay',
     },
-    dateClick: (info) => {
-      console.log('Tıklanan tarih:', info.date);
-      console.log('Tıklanan saat:', info.dateStr);
-    },
-
     buttonText: {
       today: 'Bugün',
       month: 'Ay',
@@ -49,37 +45,29 @@ export class CalendarComponent {
       day: 'Gün',
     },
 
-    events: [
-      {
-        id: '1',
-        title: 'Pilates Başlangıç',
-        start: '2026-08-17T10:00:00',
-        end: '2026-08-17T11:00:00',
-      },
-      {
-        id: '2',
-        title: 'Mat Pilates',
-        start: '2026-08-17T14:00:00',
-        end: '2026-08-17T15:00:00',
-      },
-      {
-        id: '3',
-        title: 'Reformer Pilates',
-        start: '2026-08-18T18:00:00',
-        end: '2026-08-18T19:00:00',
-      },
-      {
-        id: '4',
-        title: 'Hamile Pilatesi',
-        start: '2026-08-19T11:00:00',
-        end: '2026-08-19T12:00:00',
-      },
-      {
-        id: '5',
-        title: 'Reformer Pilates',
-        start: '2026-08-20T17:00:00',
-        end: '2026-08-20T18:00:00',
-      },
-    ],
+    events: [],
   };
+
+  constructor(
+    private readonly calendarService: CalendarService,
+    private readonly cdr: ChangeDetectorRef,
+  ) {}
+
+  ngOnInit(): void {
+    this.calendarService.findLessons().subscribe({
+      next: (lessons) => {
+        const events: EventInput[] = lessons.map((lesson) => ({
+          id: String(lesson.id),
+          title: lesson.name,
+          start: lesson.startAt,
+          end: lesson.endAt,
+          backgroundColor: lesson.status === 'CANCELLED' ? '#b45f5f' : undefined,
+          borderColor: lesson.status === 'CANCELLED' ? '#b45f5f' : undefined,
+        }));
+
+        this.calendarOptions = { ...this.calendarOptions, events };
+        this.cdr.markForCheck();
+      },
+    });
+  }
 }

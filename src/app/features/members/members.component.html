@@ -27,6 +27,10 @@
       <p-table
         class="data-table"
         [value]="items"
+        [loading]="loading"
+        [paginator]="true"
+        [rows]="10"
+        [rowsPerPageOptions]="[10, 25, 50]"
       >
 
         <ng-template #header>
@@ -105,3 +109,106 @@
   </div>
 
 </div>
+
+<app-drawer
+  [(visible)]="drawerVisible"
+  [title]="editing ? 'Üyeyi Düzenle' : 'Yeni Üye'"
+>
+  <div class="form">
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label" for="member-first-name">Ad</label>
+        <input
+          id="member-first-name"
+          type="text"
+          pInputText
+          [(ngModel)]="form.firstName"
+          placeholder="Ad"
+        />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="member-last-name">Soyad</label>
+        <input
+          id="member-last-name"
+          type="text"
+          pInputText
+          [(ngModel)]="form.lastName"
+          placeholder="Soyad"
+        />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label" for="member-email">E-posta</label>
+      <input
+        id="member-email"
+        type="email"
+        pInputText
+        [(ngModel)]="form.email"
+        placeholder="ornek@email.com"
+      />
+    </div>
+
+    <div class="form-group">
+      <label class="form-label" for="member-phone">Telefon</label>
+      <input
+        id="member-phone"
+        type="text"
+        pInputText
+        [(ngModel)]="form.phone"
+        placeholder="05xx xxx xx xx"
+      />
+    </div>
+
+    <div class="form-checkbox">
+      <p-checkbox
+        inputId="member-active"
+        [(ngModel)]="form.active"
+        [binary]="true"
+      />
+      <label class="form-label" for="member-active">Aktif</label>
+    </div>
+  </div>
+
+  <div drawer-footer>
+    <div class="button-group">
+      <button
+        type="button"
+        class="secondary-button"
+        [disabled]="saving"
+        (click)="drawerVisible = false"
+      >
+        İptal
+      </button>
+
+      <button
+        type="button"
+        class="primary-button"
+        [disabled]="saving"
+        (click)="save()"
+      >
+        <i
+          class="pi"
+          [class.pi-check]="!saving"
+          [class.pi-spin]="saving"
+          [class.pi-spinner]="saving"
+        ></i>
+        <span>{{ saving ? 'Kaydediliyor...' : (editing ? 'Güncelle' : 'Kaydet') }}</span>
+      </button>
+    </div>
+  </div>
+</app-drawer>
+
+<app-confirm-dialog
+  [(visible)]="confirmVisible"
+  title="Üyeyi Sil"
+  [message]="
+    itemToDelete
+      ? '“' + itemToDelete.firstName + ' ' + itemToDelete.lastName + '” üyesini silmek istediğinize emin misiniz?'
+      : ''
+  "
+  confirmText="Sil"
+  cancelText="İptal"
+  (confirm)="delete()"
+/>
