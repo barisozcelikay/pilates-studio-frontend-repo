@@ -1,0 +1,48 @@
+<div class="page lesson-detail-page">
+  <a routerLink="/lessons" class="page-eyebrow">← DERS LİSTESİNE DÖN</a>
+
+  <section class="lesson-hero" *ngIf="lesson as selectedLesson">
+    <div>
+      <span class="page-eyebrow">DERS DETAYI</span>
+      <h1>{{ selectedLesson.name }}</h1>
+      <p>{{ selectedLesson.description || 'Ders açıklaması girilmemiş.' }}</p>
+      <p *ngIf="selectedLesson.serviceNames.length"><strong>Hizmetler:</strong> {{ selectedLesson.serviceNames.join(', ') }}</p>
+    </div>
+    <div class="reservation-summary">
+      <strong>{{ selectedLesson.reservationCount }} / {{ selectedLesson.capacity }}</strong>
+      <span>Katılımcı</span>
+    </div>
+  </section>
+
+  <section class="card attendee-card">
+    <div class="section-heading">
+      <div>
+        <h2>Katılan Üyeler</h2>
+        <p>Onaylanmış ders rezervasyonları burada görünür.</p>
+      </div>
+      <span class="lesson-date" *ngIf="lesson">{{ lesson.startAt | date:'dd.MM.yyyy HH:mm' }}</span>
+    </div>
+
+    <div class="table-container">
+      <table class="attendee-table">
+        <thead><tr><th>Üye</th><th>E-posta</th><th>Telefon</th><th>Rezervasyon Tarihi</th><th>Durum</th><th>İşlemler</th></tr></thead>
+        <tbody>
+          <tr *ngFor="let reservation of reservations">
+            <td><strong>{{ reservation.memberName }}</strong></td>
+            <td>{{ reservation.memberEmail || '—' }}</td>
+            <td>{{ reservation.memberPhone || '—' }}</td>
+            <td>{{ reservation.createdAt | date:'dd.MM.yyyy HH:mm' }}</td>
+            <td><span class="status-pill">{{ reservation.status === 'CONFIRMED' ? 'Onaylandı' : (reservation.status === 'ATTENDED' ? 'Katıldı' : 'İptal Edildi') }}</span></td>
+            <td>
+              <div class="table-actions" *ngIf="reservation.status === 'CONFIRMED'">
+                <button type="button" class="table-action table-action-edit" [disabled]="processingReservationId === reservation.id" (click)="markAttended(reservation)" aria-label="Katıldı olarak işaretle"><i class="pi pi-check"></i></button>
+                <button type="button" class="table-action table-action-delete" [disabled]="processingReservationId === reservation.id" (click)="cancel(reservation)" aria-label="Rezervasyonu iptal et"><i class="pi pi-times"></i></button>
+              </div>
+            </td>
+          </tr>
+          <tr *ngIf="!loading && !reservations.length"><td colspan="6" class="empty-row">Bu derse henüz üye katılmadı.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</div>

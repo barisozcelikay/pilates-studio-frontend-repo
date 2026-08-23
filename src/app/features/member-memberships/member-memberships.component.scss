@@ -1,0 +1,12 @@
+.member-detail-page { max-width: 1180px; margin: 0 auto; }
+.member-hero { display:flex; align-items:center; gap:16px; margin:20px 0 28px; }.member-hero h1 { margin:3px 0; color:var(--color-text); }.member-hero p { margin:0; color:var(--color-text-muted); }.member-avatar { width:56px;height:56px;border-radius:50%;display:grid;place-items:center;background:var(--color-primary);color:#fff;font-weight:700;font-size:18px; }.member-status { margin-left:auto;padding:7px 10px;border-radius:20px;background:rgba(91,143,112,.16);color:var(--color-primary-light);font-size:12px; }.member-status.pending { background:rgba(193,142,57,.14);color:#b9832e; }
+.member-tabs { display:block; }
+.history-card { padding:8px 24px; background:var(--color-surface); color:var(--color-text); }
+.membership-table { width:100%; border-collapse:collapse; color:var(--color-text); }
+.membership-table th,.membership-table td { padding:15px 12px; border-bottom:1px solid var(--color-border-light); text-align:left; background:transparent; }
+.membership-table th { color:var(--color-text-muted); font-size:11px; text-transform:uppercase; }
+.membership-table td { color:var(--color-text-secondary); }
+.membership-table td strong { color:var(--color-text); }
+.membership-table tbody tr:last-child td { border-bottom:0; }
+.membership-table tbody tr:hover { background:var(--color-surface-soft); }
+.section-heading { display:flex;align-items:center;justify-content:space-between;margin:24px 0 14px; }.section-heading h2 { margin:0;color:var(--color-text);font-size:18px; }.section-heading p { margin:5px 0 0;color:var(--color-text-muted);font-size:13px; }.status-pill { color:var(--color-primary-light);font-size:12px;font-weight:600; }.empty-state { padding:64px 24px;text-align:center; }.empty-state i { font-size:30px;color:var(--color-primary-light); }.empty-state h2 { color:var(--color-text); }.empty-state p { color:var(--color-text-muted);margin-bottom:22px; } @media(max-width:700px){.section-heading{align-items:flex-start;gap:14px;flex-direction:column}.member-status{display:none}}

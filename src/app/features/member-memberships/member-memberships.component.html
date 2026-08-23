@@ -1,0 +1,38 @@
+<div class="page member-detail-page">
+  <a routerLink="/members" class="page-eyebrow">← ÜYE LİSTESİNE DÖN</a>
+
+  <div class="member-hero">
+    <div class="member-avatar">{{ member?.firstName?.[0] }}{{ member?.lastName?.[0] }}</div>
+    <div>
+      <span class="page-eyebrow">ÜYE DETAYI</span>
+      <h1>{{ member?.firstName }} {{ member?.lastName }}</h1>
+      <p>{{ member?.email || 'E-posta bilgisi yok' }} · {{ member?.phone || 'Telefon bilgisi yok' }}</p>
+    </div>
+    <span class="member-status" [class.pending]="member?.status === 'PENDING'">{{ member?.status === 'PENDING' ? 'Davet Bekliyor' : member?.status }}</span>
+  </div>
+
+  <p-tabs value="memberships" class="member-tabs" (valueChange)="onTabChange($event)">
+    <p-tablist>
+      <p-tab value="memberships"><i class="pi pi-id-card"></i> Üyelikler</p-tab>
+      <p-tab value="measurements"><i class="pi pi-chart-line"></i> Ölçümler</p-tab>
+      <p-tab value="lessons"><i class="pi pi-calendar"></i> Katıldığı Dersler</p-tab>
+    </p-tablist>
+
+    <p-tabpanels>
+      <p-tabpanel value="memberships">
+        <div class="section-heading"><div><h2>Üyelik Listesi</h2><p>Yeni üyelik önceki paketin bitiminden sonra başlar.</p></div><button class="primary-button" (click)="openPackageDrawer()"><i class="pi pi-plus"></i> Üyelik Ekle</button></div>
+        <div class="card history-card"><div class="table-container"><table class="membership-table"><thead><tr><th>Paket</th><th>Ders Hakkı</th><th>İptal Hakkı</th><th>Başlangıç</th><th>Bitiş</th><th>Durum</th><th>İşlemler</th></tr></thead><tbody><tr *ngFor="let item of memberships"><td><strong>{{ item.packageName }}</strong></td><td><strong>{{ item.remainingSessionCount }}</strong> / {{ item.totalSessionCount }}</td><td><strong>{{ item.remainingCancellationRightCount }}</strong> / {{ item.totalCancellationRightCount }}</td><td>{{ item.startDate | date:'dd.MM.yyyy'}}</td><td>{{ item.endDate | date:'dd.MM.yyyy'}}</td><td><span class="status-pill">{{ item.status }}</span></td><td><button class="table-action table-action-edit" aria-label="Üyelik detayı"><i class="pi pi-eye"></i></button></td></tr><tr *ngIf="!memberships.length"><td colspan="7">Henüz paket atanmadı.</td></tr></tbody></table></div></div>
+      </p-tabpanel>
+
+      <p-tabpanel value="measurements">
+        <div class="card empty-state"><i class="pi pi-chart-line"></i><h2>Ölçüm Takibi</h2><p>Vücut ölçümleri, kilo ve notlar burada tarihçeli olarak gösterilecek.</p><button class="secondary-button" disabled>Ölçüm Ekle · Yakında</button></div>
+      </p-tabpanel>
+
+      <p-tabpanel value="lessons">
+        <div class="card empty-state"><i class="pi pi-calendar"></i><h2>Katıldığı Dersler</h2><p>Üyenin yaklaşan ve geçmiş ders rezervasyonları burada gösterilecek.</p><a routerLink="/calendar" class="primary-button">Takvime Git</a></div>
+      </p-tabpanel>
+    </p-tabpanels>
+  </p-tabs>
+</div>
+
+<app-drawer [(visible)]="packageDrawerVisible" title="Üyelik Ekle"><div class="form"><div class="form-group"><label class="form-label">Üye</label><input pInputText [value]="member?.firstName + ' ' + member?.lastName" readonly /></div><div class="form-group"><label class="form-label">Paket</label><p-select [options]="packages" optionLabel="name" optionValue="id" [(ngModel)]="selectedPackageId" placeholder="Paket seçin" [filter]="true" appendTo="body"/></div><small class="form-help">Başlangıç tarihi önceki üyeliğin bitiş tarihine göre otomatik belirlenir.</small></div><div drawer-footer><div class="button-group"><button class="secondary-button" (click)="packageDrawerVisible = false">İptal</button><button class="primary-button" [disabled]="!selectedPackageId || assigning" (click)="assign()">{{ assigning ? 'Ekleniyor...' : 'Ekle' }}</button></div></div></app-drawer>
