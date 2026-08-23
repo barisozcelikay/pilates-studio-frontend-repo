@@ -43,14 +43,16 @@
       </p-select>
     </div>
 
-    <p class="reservation-note" *ngIf="!canSelectMember">Bu derse kendi adınıza rezervasyon oluşturacaksınız.</p>
+    <p class="reservation-note" *ngIf="!canSelectMember && !myReservation">Bu derse kendi adınıza rezervasyon oluşturacaksınız.</p>
+    <p class="reservation-note" *ngIf="myReservation">Bu ders için {{ myReservation.status === 'CONFIRMED' ? 'onaylı' : (myReservation.status === 'ATTENDED' ? 'katılımı işlenmiş' : 'iptal edilmiş') }} bir rezervasyonunuz var.</p>
     <p class="reservation-error" *ngIf="reservationError">{{ reservationError }}</p>
   </div>
 
   <div drawer-footer>
     <div class="button-group">
       <button type="button" class="secondary-button" [disabled]="reserving" (click)="reservationDrawerVisible = false">İptal</button>
-      <button type="button" class="primary-button" [disabled]="isReservationUnavailable()" (click)="reserve()">
+      <button type="button" class="table-action table-action-delete" *ngIf="myReservation?.status === 'CONFIRMED'" [disabled]="reserving" (click)="cancelMyReservation()">Rezervasyonu İptal Et</button>
+      <button type="button" class="primary-button" *ngIf="!myReservation" [disabled]="isReservationUnavailable()" (click)="reserve()">
         {{ reserving ? 'Kaydediliyor...' : 'Rezervasyon Yap' }}
       </button>
     </div>

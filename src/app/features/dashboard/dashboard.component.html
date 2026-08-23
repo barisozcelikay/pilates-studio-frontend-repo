@@ -3,20 +3,85 @@
     <div>
       <span class="page-eyebrow">STÜDYO ÖZETİ</span>
       <h1>Günaydın, Barış</h1>
-      <p>17 Ağustos Pazartesi · Stüdyonuzdaki güncel hareketler</p>
+      <p>{{ today | date: 'd MMMM EEEE' }} · Stüdyonuzdaki güncel hareketler</p>
     </div>
     <button class="primary-button"><i class="pi pi-plus"></i> Yeni Ders</button>
   </div>
 
   <section class="metric-grid">
-    <article class="metric-card"><span class="metric-icon members"><i class="pi pi-users"></i></span><div><small>Aktif Üyeler</small><strong>128</strong><em>+12 bu ay</em></div></article>
-    <article class="metric-card"><span class="metric-icon lessons"><i class="pi pi-calendar"></i></span><div><small>Bugünkü Dersler</small><strong>8</strong><em>3 ders tamamlandı</em></div></article>
-    <article class="metric-card"><span class="metric-icon bookings"><i class="pi pi-check-circle"></i></span><div><small>Bugünkü Rezervasyon</small><strong>46</strong><em>%82 doluluk</em></div></article>
-    <article class="metric-card"><span class="metric-icon revenue"><i class="pi pi-wallet"></i></span><div><small>Aylık Gelir</small><strong>₺84.500</strong><em>+%8,4 geçen aya göre</em></div></article>
+    <article class="metric-card">
+      <span class="metric-icon members"><i class="pi pi-users"></i></span>
+      <div>
+        <small>Aktif Üyeler</small><strong>{{ summary?.activeMemberCount ?? '-' }}</strong
+        ><em>Bugün geçerli üyelikler</em>
+      </div>
+    </article>
+    <article class="metric-card">
+      <span class="metric-icon bookings"><i class="pi pi-check-circle"></i></span>
+      <div>
+        <small>Bugünkü Rezervasyon</small
+        ><strong>{{ summary?.todayReservationCount ?? '-' }}</strong
+        ><em>Onaylanan ve katılan rezervasyonlar</em>
+      </div>
+    </article>
+    <article class="metric-card">
+      <span class="metric-icon revenue"><i class="pi pi-wallet"></i></span>
+      <div>
+        <small>Aylık Gelir</small
+        ><strong>{{ summary ? (summary.monthlyRevenue | number: '1.2-2') + ' ₺' : '-' }}</strong
+        ><em>Bu ay alınan ödemeler</em>
+      </div>
+    </article>
   </section>
+  <p class="dashboard-error" *ngIf="loadError">{{ loadError }}</p>
 
   <section class="dashboard-grid">
-    <article class="panel schedule-panel"><div class="panel-header"><div><h2>Bugünün Programı</h2><p>17 Ağustos Pazartesi</p></div><a>Takvimi Gör</a></div><div class="lesson-row"><time>09:00</time><span class="lesson-dot"></span><div><strong>Reformer Pilates</strong><small>Ayşe Yılmaz · 5 / 6 katılımcı</small></div><b>60 dk</b></div><div class="lesson-row"><time>11:00</time><span class="lesson-dot blue"></span><div><strong>Mat Pilates</strong><small>Elif Kaya · 8 / 10 katılımcı</small></div><b>50 dk</b></div><div class="lesson-row"><time>18:00</time><span class="lesson-dot orange"></span><div><strong>Başlangıç Reformer</strong><small>Ayşe Yılmaz · 6 / 6 katılımcı</small></div><b>60 dk</b></div></article>
-    <article class="panel activity-panel"><div class="panel-header"><div><h2>Son Hareketler</h2><p>Stüdyo akışı</p></div><a>Tümünü Gör</a></div><div class="activity"><i class="pi pi-user-plus"></i><p><strong>Zeynep Arslan</strong> yeni üye olarak eklendi.<small>12 dakika önce</small></p></div><div class="activity"><i class="pi pi-credit-card"></i><p><strong>10 Derslik Paket</strong> satışı tamamlandı.<small>35 dakika önce</small></p></div><div class="activity"><i class="pi pi-calendar-plus"></i><p><strong>Mat Pilates</strong> dersine yeni rezervasyon geldi.<small>1 saat önce</small></p></div></article>
+    <article class="panel schedule-panel">
+      <div class="panel-header">
+        <div>
+          <h2>Bugünün Programı</h2>
+          <p>{{ today | date: 'd MMMM EEEE' }}</p>
+        </div>
+        <a routerLink="/calendar">Takvimi Gör</a>
+      </div>
+      <div class="lesson-row" *ngFor="let lesson of summary?.todayLessons">
+        <time>{{ lesson.startAt | date: 'HH:mm' }}</time
+        ><span class="lesson-dot"></span>
+        <div>
+          <strong>{{ lesson.name }}</strong
+          ><small
+            >{{ lesson.instructorName }} · {{ lesson.reservationCount }} /
+            {{ lesson.capacity }} katılımcı</small
+          >
+        </div>
+        <b>{{ lesson.startAt | date: 'HH:mm' }} – {{ lesson.endAt | date: 'HH:mm' }}</b>
+      </div>
+      <p class="panel-empty" *ngIf="summary && !summary.todayLessons.length">
+        Bugün planlanmış ders bulunmuyor.
+      </p>
+    </article>
+    <article class="panel activity-panel">
+      <div class="panel-header">
+        <div>
+          <h2>Son Hareketler</h2>
+          <p>Stüdyo akışı</p>
+        </div>
+        <span class="panel-caption">Son 5 kayıt</span>
+      </div>
+      <div
+        class="activity"
+        *ngFor="let activity of summary?.recentActivities"
+        [class]="'activity activity--' + activity.type.toLowerCase()"
+      >
+        <i class="pi" [class]="'pi ' + activity.icon"></i>
+        <p>
+          <span class="activity-type">{{ activityTypeLabel(activity.type) }}</span
+          >{{ activity.description }}<small>{{ activity.occurredAt | date: 'd MMM, HH:mm' }}</small>
+        </p>
+      </div>
+      <p class="panel-empty" *ngIf="summary && !summary.recentActivities.length">
+        Henüz hareket bulunmuyor.
+      </p>
+    </article>
   </section>
 </div>

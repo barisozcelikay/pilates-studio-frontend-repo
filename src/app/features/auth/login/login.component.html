@@ -1,184 +1,108 @@
-<div
-  class="login-page"
-  [class.role-selection-mode]="showRoleSelection"
->
+<div class="login-page" [class.role-selection-mode]="showRoleSelection">
   @if (!showRoleSelection) {
-  <div class="login-card">
+    <a class="back-to-studio" routerLink="/studio"
+      ><i class="pi pi-arrow-left"></i> Stüdyo sayfasına dön</a
+    >
+    <div class="login-card">
+      <!-- BRAND -->
 
-    <!-- BRAND -->
+      <div class="login-brand">
+        <img src="/images/denge-pilates-logo.png" alt="Denge Pilates" class="logo" />
 
+        <p class="brand-subtitle">Pilates & Reformer</p>
 
-    <div class="login-brand">
-
-      <img
-        src="/images/denge-pilates-logo.png"
-        alt="Denge Pilates"
-        class="logo"
-      >
-
-      <p class="brand-subtitle">
-        Pilates & Reformer
-      </p>
-
-    </div>
-
-
-    <!-- CONTENT -->
-
-    <div class="login-content">
-
-
-
-
-      <div class="login-heading">
-
-        <span class="eyebrow">
-          HOŞ GELDİNİZ
-        </span>
-
-        <h1>
-          Hesabınıza giriş yapın
-        </h1>
-
-        <p>
-          Denge Pilates hesabınıza devam etmek için
-          bilgilerinizi girin.
-        </p>
-
+        <p class="brand-message">Dengede kalmak, kendine ayırdığın zamanla başlar.</p>
       </div>
 
+      <!-- CONTENT -->
 
-      <!-- FORM -->
+      <div class="login-content">
+        <div class="login-heading">
+          <span class="eyebrow"> HOŞ GELDİNİZ </span>
 
-      <form
-        [formGroup]="loginForm"
-        (ngSubmit)="login()"
-        class="login-form"
-      >
+          <h1>Hesabınıza giriş yapın</h1>
 
-        <!-- EMAIL -->
+          <p>Denge Pilates hesabınıza devam etmek için bilgilerinizi girin.</p>
+        </div>
 
-        <div class="form-group">
+        <!-- FORM -->
 
-          <label for="email">
-            E-posta
-          </label>
+        <form [formGroup]="loginForm" (ngSubmit)="login()" class="login-form">
+          <!-- EMAIL -->
 
-          <input
-            id="email"
-            type="email"
-            pInputText
-            formControlName="email"
-            autocomplete="email"
-            placeholder="ornek@email.com"
+          <div class="form-group">
+            <label for="email"> E-posta </label>
+
+            <input
+              id="email"
+              type="email"
+              pInputText
+              formControlName="email"
+              autocomplete="email"
+              placeholder="ornek@email.com"
+            />
+
+            @if (loginForm.controls.email.invalid && loginForm.controls.email.touched) {
+              <small class="error"> Geçerli bir e-posta adresi girin. </small>
+            }
+          </div>
+
+          <!-- PASSWORD -->
+
+          <div class="form-group">
+            <div class="password-label">
+              <label for="password"> Şifre </label>
+
+              <a href="/forgot-password"> Şifremi unuttum </a>
+            </div>
+
+            <p-password
+              formControlName="password"
+              [feedback]="false"
+              [toggleMask]="true"
+              inputId="password"
+              placeholder="Şifrenizi girin"
+            />
+          </div>
+
+          <!-- ERROR -->
+
+          @if (errorMessage) {
+            <div class="login-error">
+              {{ errorMessage }}
+            </div>
+          }
+
+          <!-- SUBMIT -->
+
+          <button
+            pButton
+            type="submit"
+            class="login-button"
+            [disabled]="loginForm.invalid || loading"
           >
+            @if (loading) {
+              <i class="pi pi-spin pi-spinner"></i>
+            } @else {
+              <span>Giriş Yap</span>
+            }
+          </button>
+        </form>
 
-          @if (
-            loginForm.controls.email.invalid &&
-            loginForm.controls.email.touched
-            ) {
+        <!-- FOOTER -->
 
-            <small class="error">
-              Geçerli bir e-posta adresi girin.
-            </small>
+        <div class="login-footer">
+          <span> Denge Pilates </span>
 
-          }
+          <span class="separator"> • </span>
 
+          <span> Sağlıklı yaşam, dengeli beden. </span>
         </div>
-
-
-        <!-- PASSWORD -->
-
-        <div class="form-group">
-
-          <div class="password-label">
-
-            <label for="password">
-              Şifre
-            </label>
-
-            <a href="/forgot-password">
-              Şifremi unuttum
-            </a>
-
-          </div>
-
-          <p-password
-            formControlName="password"
-            [feedback]="false"
-            [toggleMask]="true"
-            inputId="password"
-            placeholder="Şifrenizi girin"
-          />
-
-        </div>
-
-
-        <!-- ERROR -->
-
-        @if (errorMessage) {
-
-          <div class="login-error">
-            {{ errorMessage }}
-          </div>
-
-        }
-
-
-        <!-- SUBMIT -->
-
-        <button
-          pButton
-          type="submit"
-          class="login-button"
-          [disabled]="loginForm.invalid || loading"
-        >
-
-          @if (loading) {
-
-            <i class="pi pi-spin pi-spinner"></i>
-
-          } @else {
-
-            <span>Giriş Yap</span>
-
-          }
-
-        </button>
-
-      </form>
-
-
-      <!-- FOOTER -->
-
-      <div class="login-footer">
-
-        <span>
-          Denge Pilates
-        </span>
-
-        <span class="separator">
-          •
-        </span>
-
-        <span>
-          Sağlıklı yaşam, dengeli beden.
-        </span>
-
       </div>
-
-
     </div>
-
-
-
-  </div>
-  }@else {
-    <app-select-role
-      [roles]="roles"
-      [roleSelectionToken]="roleSelectionToken"></app-select-role>
+  } @else {
+    <app-select-role [roles]="roles" [roleSelectionToken]="roleSelectionToken"></app-select-role>
   }
-
 </div>
 
 <p-toast position="top-right"></p-toast>

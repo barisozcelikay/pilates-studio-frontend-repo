@@ -3,20 +3,20 @@
   overflow: hidden;
 
   /* Calendar palette */
-  --calendar-bg: #ffffff;
-  --calendar-header-bg: #f1f5f2;
-  --calendar-today-bg: #e8f0eb;
-  --calendar-border: #d8e1dc;
-  --calendar-border-light: #e7ece9;
+  --calendar-bg: #f4f0e8;
+  --calendar-header-bg: #e9e1d3;
+  --calendar-today-bg: #ddd2c1;
+  --calendar-border: #c9bba8;
+  --calendar-border-light: #ddd2c1;
 
-  --calendar-text: #294337;
-  --calendar-muted: #65756d;
+  --calendar-text: #35322d;
+  --calendar-muted: #827462;
 
-  --calendar-primary: #315c49;
-  --calendar-primary-dark: #244936;
+  --calendar-primary: #35322d;
+  --calendar-primary-dark: #28251f;
 
-  --calendar-gold: #c8a45d;
-  --calendar-event: #91ad9e;
+  --calendar-gold: #b88a42;
+  --calendar-event: #c8b79d;
 }
 
 .reservation-lesson-summary {
@@ -155,9 +155,7 @@
   background: var(--calendar-today-bg) !important;
 }
 
-:host ::ng-deep
-.fc .fc-col-header-cell.fc-day-today
-.fc-col-header-cell-cushion {
+:host ::ng-deep .fc .fc-col-header-cell.fc-day-today .fc-col-header-cell-cushion {
   color: var(--calendar-primary) !important;
 }
 
@@ -195,7 +193,7 @@
 }
 
 :host ::ng-deep .fc .fc-timegrid-slot:hover {
-  background: #f5f8f6 !important;
+  background: #e9e1d3 !important;
 }
 
 /* =========================================================
@@ -215,7 +213,7 @@
 }
 
 :host ::ng-deep .fc .fc-daygrid-day:hover {
-  background: #f5f8f6 !important;
+  background: #e9e1d3 !important;
 }
 
 :host ::ng-deep .fc .fc-daygrid-day-number {
@@ -240,7 +238,7 @@
 
   border-radius: 5px !important;
 
-  color: #173528 !important;
+  color: #35322d !important;
 
   padding: 3px 6px;
 
@@ -250,17 +248,85 @@
 }
 
 :host ::ng-deep .fc .fc-event:hover {
-  background: #829f90 !important;
+  background: #bead95 !important;
 }
 
 :host ::ng-deep .fc .fc-event-title {
-  color: #173528 !important;
+  color: #35322d !important;
   font-weight: 700;
 }
 
 :host ::ng-deep .fc .fc-event-time {
-  color: #294337 !important;
+  color: #5f5549 !important;
   font-weight: 500;
+}
+
+:host ::ng-deep .fc .fc-event-main {
+  overflow: hidden;
+  padding: 0 !important;
+}
+
+:host ::ng-deep .calendar-lesson-event {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+  padding: 3px 1px;
+}
+
+:host ::ng-deep .calendar-lesson-event__title {
+  overflow: hidden;
+  color: #35322d;
+  font-size: 11px;
+  font-weight: 700;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+:host ::ng-deep .calendar-lesson-event__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+}
+
+:host ::ng-deep .calendar-service-chip {
+  max-width: 100%;
+  overflow: hidden;
+  border-radius: 999px;
+  color: #fff;
+  font-size: 9px;
+  font-weight: 700;
+  line-height: 1.35;
+  padding: 1px 5px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+:host ::ng-deep .calendar-service-chip--0 {
+  background: #35322d;
+}
+:host ::ng-deep .calendar-service-chip--1 {
+  background: #a9967e;
+}
+:host ::ng-deep .calendar-service-chip--2 {
+  background: #b88a42;
+}
+:host ::ng-deep .calendar-service-chip--3 {
+  background: #766655;
+}
+
+:host ::ng-deep .calendar-lesson-event__instructor,
+:host ::ng-deep .calendar-lesson-event__capacity {
+  overflow: hidden;
+  color: #5f5549;
+  font-size: 9px;
+  line-height: 1.25;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+:host ::ng-deep .calendar-lesson-event__instructor::before {
+  content: 'Eğitmen: ';
+  font-weight: 700;
 }
 
 /* =========================================================
@@ -289,7 +355,6 @@
    ========================================================= */
 
 @media (max-width: 768px) {
-
   .calendar-card {
     padding: 0.5rem;
   }
@@ -402,10 +467,8 @@
   background: #294c39 !important;
 }
 
-:host-context(.dark) .fc .fc-col-header-cell.fc-day-today
-.fc-col-header-cell-cushion,
-:host-context(.dark-theme) .fc .fc-col-header-cell.fc-day-today
-.fc-col-header-cell-cushion {
+:host-context(.dark) .fc .fc-col-header-cell.fc-day-today .fc-col-header-cell-cushion,
+:host-context(.dark-theme) .fc .fc-col-header-cell.fc-day-today .fc-col-header-cell-cushion {
   color: #d5b46a !important;
 }
 

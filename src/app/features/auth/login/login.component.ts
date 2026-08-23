@@ -8,10 +8,8 @@ import { PasswordModule } from 'primeng/password';
 import { ToastModule } from 'primeng/toast';
 import { AuthService } from '../../../core/auth/service/auth-service';
 import { LoginRequest } from '../../../core/auth/model/login-request';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { SelectRoleComponent } from './select-role/select-role.component';
-
-
 
 @Component({
   selector: 'app-login',
@@ -23,6 +21,7 @@ import { SelectRoleComponent } from './select-role/select-role.component';
     PasswordModule,
     ToastModule,
     SelectRoleComponent,
+    RouterLink,
   ],
   providers: [MessageService],
   templateUrl: './login.component.html',

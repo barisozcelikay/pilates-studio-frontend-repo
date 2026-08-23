@@ -3,7 +3,7 @@ import { DatePipe, NgIf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { FullCalendarModule } from '@fullcalendar/angular';
 
-import { CalendarOptions, EventClickArg, EventInput } from '@fullcalendar/core';
+import { CalendarOptions, EventClickArg, EventContentArg, EventInput } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
@@ -13,7 +13,7 @@ import { Select } from 'primeng/select';
 import { LessonDto } from '../lessons/model/lesson-dto';
 import { MemberDto } from '../members/model/member-dto';
 import { MemberService } from '../members/service/member-service';
-import { ReservationService } from '../reservations/service/reservation-service';
+import { ReservationDto, ReservationService } from '../reservations/service/reservation-service';
 import { AuthService } from '../../core/auth/service/auth-service';
 
 @Component({
@@ -55,6 +55,7 @@ export class CalendarComponent implements OnInit {
     },
 
     events: [],
+    eventContent: (event) => this.renderLessonEvent(event),
     eventClick: (event) => {
       event.jsEvent.preventDefault();
       this.openReservationDrawer(event);
@@ -68,6 +69,7 @@ export class CalendarComponent implements OnInit {
   reservationDrawerVisible = false;
   reserving = false;
   reservationError = '';
+  myReservation: ReservationDto | null = null;
 
   constructor(
     private readonly calendarService: CalendarService,
@@ -78,7 +80,12 @@ export class CalendarComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.configureCalendarForRole();
     this.loadLessons();
+  }
+
+  get isMember(): boolean {
+    return this.authService.getActiveRole() === 'PROFILE_MEMBER';
   }
 
   get canSelectMember(): boolean {
@@ -88,13 +95,23 @@ export class CalendarComponent implements OnInit {
 
   openReservationDrawer(event: EventClickArg): void {
     const lesson = this.lessons.find((item) => item.id === Number(event.event.id));
-    if (!lesson) return;
+    if (!lesson?.id) return;
 
     this.selectedLesson = lesson;
     this.selectedMemberId = null;
     this.reservationError = '';
+    this.myReservation = null;
     this.reservationDrawerVisible = true;
     this.cdr.detectChanges();
+
+    if (!this.canSelectMember) {
+      this.reservationService.findMyReservation(lesson.id).subscribe({
+        next: (reservation) => {
+          this.myReservation = reservation;
+          this.cdr.detectChanges();
+        },
+      });
+    }
 
     if (this.canSelectMember && !this.members.length) {
       this.memberService.findAll().subscribe({
@@ -127,23 +144,54 @@ export class CalendarComponent implements OnInit {
 
   isReservationUnavailable(): boolean {
     const lesson = this.selectedLesson;
-    return !lesson
-      || this.reserving
-      || lesson.status !== 'ACTIVE'
-      || !lesson.capacity
-      || lesson.reservationCount >= lesson.capacity
-      || (this.canSelectMember && !this.selectedMemberId);
+    return (
+      !lesson ||
+      this.reserving ||
+      lesson.status !== 'ACTIVE' ||
+      !lesson.capacity ||
+      lesson.reservationCount >= lesson.capacity ||
+      !!this.myReservation ||
+      (this.canSelectMember && !this.selectedMemberId)
+    );
+  }
+
+  cancelMyReservation(): void {
+    if (!this.myReservation) return;
+    this.reserving = true;
+    this.reservationError = '';
+    this.reservationService.cancel(this.myReservation.id).subscribe({
+      next: () => {
+        this.reserving = false;
+        this.reservationDrawerVisible = false;
+        this.loadLessons();
+      },
+      error: (error) => {
+        this.reserving = false;
+        this.reservationError = error?.error?.message ?? 'Rezervasyon iptal edilemedi.';
+        this.cdr.markForCheck();
+      },
+    });
   }
 
   private loadLessons(): void {
-    this.calendarService.findLessons().subscribe({
+    const request = this.isMember
+      ? this.calendarService.findCurrentWeekLessons()
+      : this.calendarService.findLessons();
+
+    request.subscribe({
       next: (lessons) => {
         this.lessons = lessons;
         const events: EventInput[] = lessons.map((lesson) => ({
           id: String(lesson.id),
-          title: `${lesson.name} · ${lesson.reservationCount}/${lesson.capacity}`,
+          title: lesson.name,
           start: lesson.startAt ?? undefined,
           end: lesson.endAt ?? undefined,
+          extendedProps: {
+            serviceNames: lesson.serviceNames,
+            instructorNames: lesson.instructorNames,
+            reservationCount: lesson.reservationCount,
+            capacity: lesson.capacity,
+          },
           backgroundColor: lesson.status === 'CANCELLED' ? '#b45f5f' : undefined,
           borderColor: lesson.status === 'CANCELLED' ? '#b45f5f' : undefined,
         }));
@@ -152,5 +200,68 @@ export class CalendarComponent implements OnInit {
         this.cdr.markForCheck();
       },
     });
+  }
+
+  private configureCalendarForRole(): void {
+    if (!this.isMember) {
+      return;
+    }
+
+    const today = new Date();
+    const mondayOffset = (today.getDay() + 6) % 7;
+    const weekStart = new Date(today);
+    weekStart.setDate(today.getDate() - mondayOffset);
+    weekStart.setHours(0, 0, 0, 0);
+    const weekEnd = new Date(weekStart);
+    weekEnd.setDate(weekStart.getDate() + 7);
+
+    this.calendarOptions = {
+      ...this.calendarOptions,
+      initialView: 'timeGridWeek',
+      headerToolbar: {
+        left: 'today',
+        center: 'title',
+        right: 'timeGridWeek,timeGridDay',
+      },
+      validRange: { start: weekStart, end: weekEnd },
+    };
+  }
+
+  private renderLessonEvent(event: EventContentArg): { domNodes: HTMLElement[] } {
+    const root = document.createElement('div');
+    root.className = 'calendar-lesson-event';
+
+    const title = document.createElement('strong');
+    title.className = 'calendar-lesson-event__title';
+    title.textContent = event.event.title;
+    root.append(title);
+
+    const services = event.event.extendedProps['serviceNames'] as string[] | undefined;
+    if (services?.length) {
+      const chips = document.createElement('div');
+      chips.className = 'calendar-lesson-event__chips';
+      services.forEach((service, index) => {
+        const chip = document.createElement('span');
+        chip.className = `calendar-service-chip calendar-service-chip--${index % 4}`;
+        chip.textContent = service;
+        chips.append(chip);
+      });
+      root.append(chips);
+    }
+
+    const instructors = event.event.extendedProps['instructorNames'] as string[] | undefined;
+    if (instructors?.length) {
+      const instructor = document.createElement('span');
+      instructor.className = 'calendar-lesson-event__instructor';
+      instructor.textContent = instructors.join(', ');
+      root.append(instructor);
+    }
+
+    const capacity = document.createElement('span');
+    capacity.className = 'calendar-lesson-event__capacity';
+    capacity.textContent = `${event.event.extendedProps['reservationCount']} / ${event.event.extendedProps['capacity']} katılımcı`;
+    root.append(capacity);
+
+    return { domNodes: [root] };
   }
 }

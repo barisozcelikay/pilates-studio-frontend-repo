@@ -11,6 +11,18 @@ export const routes: Routes = [
   },
 
   {
+    path: '',
+    pathMatch: 'full',
+    redirectTo: 'studio',
+  },
+
+  {
+    path: 'studio',
+    loadComponent: () =>
+      import('./features/studio-home/studio-home.component').then((m) => m.StudioHomeComponent),
+  },
+
+  {
     path: 'forgot-password',
     loadComponent: () =>
       import('./features/auth/forgot-password/forgot-password.component').then(
@@ -42,7 +54,10 @@ export const routes: Routes = [
 
       {
         path: 'members/:id/memberships',
-        loadComponent: () => import('./features/member-memberships/member-memberships.component').then((m) => m.MemberMembershipsComponent),
+        loadComponent: () =>
+          import('./features/member-memberships/member-memberships.component').then(
+            (m) => m.MemberMembershipsComponent,
+          ),
       },
       {
         path: 'members',
@@ -59,7 +74,9 @@ export const routes: Routes = [
       {
         path: 'lessons/:id',
         loadComponent: () =>
-          import('./features/lesson-detail/lesson-detail.component').then((m) => m.LessonDetailComponent),
+          import('./features/lesson-detail/lesson-detail.component').then(
+            (m) => m.LessonDetailComponent,
+          ),
       },
       {
         path: 'lessons',
@@ -98,6 +115,11 @@ export const routes: Routes = [
           import('./features/calendar/calendar.component').then((m) => m.CalendarComponent),
       },
       {
+        path: 'payments',
+        loadComponent: () =>
+          import('./features/payments/payments.component').then((m) => m.PaymentsComponent),
+      },
+      {
         path: 'settings/menu',
         loadComponent: () =>
           import('./features/menu-settings/menu-settings.component').then(
@@ -115,11 +137,5 @@ export const routes: Routes = [
           import('./features/profiles/profiles.component').then((m) => m.ProfilesComponent),
       },
     ],
-  },
-
-  {
-    path: '',
-    redirectTo: 'login',
-    pathMatch: 'full',
   },
 ];

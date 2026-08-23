@@ -7,6 +7,7 @@
 .reservation-summary span { color: var(--color-text-muted); font-size: 12px; }
 .attendee-card { padding: 8px 24px; }
 .section-heading { display: flex; justify-content: space-between; align-items: center; margin: 18px 0 12px; }
+.section-actions { display: flex; align-items: center; gap: 14px; margin-left: auto; }
 .section-heading h2 { margin: 0 0 4px; color: var(--color-text); font-size: 18px; }
 .lesson-date { color: var(--color-text-secondary); font-size: 13px; }
 .attendee-table { width: 100%; border-collapse: collapse; color: var(--color-text-secondary); }
@@ -15,4 +16,5 @@
 .attendee-table td strong { color: var(--color-text); }
 .status-pill { color: var(--color-primary-light); font-size: 12px; font-weight: 600; }
 .empty-row { color: var(--color-text-muted); text-align: center !important; }
-@media (max-width: 700px) { .lesson-hero, .section-heading { align-items: flex-start; flex-direction: column; } .attendee-card { padding: 8px 14px; } }
+.action-error { margin: 0 0 12px; color: var(--color-error); font-size: 13px; }
+@media (max-width: 700px) { .lesson-hero, .section-heading, .section-actions { align-items: flex-start; flex-direction: column; } .section-actions { margin-left: 0; } .attendee-card { padding: 8px 14px; } }

@@ -7,6 +7,7 @@ import { ResetPasswordRequest } from '../model/reset-password-request';
 import { SetPasswordRequest } from '../model/set-password-request';
 import { SelectRoleRequest } from '../model/select-role-request';
 import { AccountDto } from '../model/account-dto';
+import { environment } from '../../../../environments/environment';
 
 
 @Injectable({
@@ -14,7 +15,7 @@ import { AccountDto } from '../model/account-dto';
 })
 export class AuthService {
   private readonly http = inject(HttpClient);
-  private readonly apiUrl = 'http://localhost:8080/api/auth';
+  private readonly apiUrl = `${environment.apiUrl}/auth`;
 
   login(request: LoginRequest): Observable<LoginResponse> {
     return this.http.post<LoginResponse>(`${this.apiUrl}/login`, request).pipe(
