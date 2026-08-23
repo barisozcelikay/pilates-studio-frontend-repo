@@ -19,3 +19,40 @@
   </div>
 
 </div>
+
+<app-drawer [(visible)]="reservationDrawerVisible" title="Derse Üye Rezervasyonu">
+  <div class="form" *ngIf="selectedLesson as lesson">
+    <div class="reservation-lesson-summary">
+      <strong>{{ lesson.name }}</strong>
+      <span>{{ lesson.startAt | date:'dd.MM.yyyy HH:mm' }}</span>
+      <small>{{ lesson.reservationCount }} / {{ lesson.capacity }} kontenjan dolu</small>
+    </div>
+
+    <div class="form-group" *ngIf="canSelectMember">
+      <label class="form-label">Üye</label>
+      <p-select
+        [options]="members"
+        optionLabel="firstName"
+        optionValue="id"
+        [(ngModel)]="selectedMemberId"
+        placeholder="Üye seçin"
+        [filter]="true"
+        appendTo="body">
+        <ng-template let-member #item>{{ member.firstName }} {{ member.lastName }}</ng-template>
+        <ng-template let-member #selectedItem>{{ member.firstName }} {{ member.lastName }}</ng-template>
+      </p-select>
+    </div>
+
+    <p class="reservation-note" *ngIf="!canSelectMember">Bu derse kendi adınıza rezervasyon oluşturacaksınız.</p>
+    <p class="reservation-error" *ngIf="reservationError">{{ reservationError }}</p>
+  </div>
+
+  <div drawer-footer>
+    <div class="button-group">
+      <button type="button" class="secondary-button" [disabled]="reserving" (click)="reservationDrawerVisible = false">İptal</button>
+      <button type="button" class="primary-button" [disabled]="isReservationUnavailable()" (click)="reserve()">
+        {{ reserving ? 'Kaydediliyor...' : 'Rezervasyon Yap' }}
+      </button>
+    </div>
+  </div>
+</app-drawer>

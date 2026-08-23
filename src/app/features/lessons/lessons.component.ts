@@ -13,6 +13,9 @@ import { ConfirmDialogComponent } from '../../shared/component/confirm-dialog/co
 import { DatePicker } from 'primeng/datepicker';
 import { InstructorDto } from '../instructors/model/instructor-dto';
 import { InstructorService } from '../instructors/service/instructor-service';
+import { RouterLink } from '@angular/router';
+import { StudioServiceDto } from '../studio-services/model/studio-service-dto';
+import { StudioServiceService } from '../studio-services/service/studio-service-service';
 
 @Component({
   selector: 'app-lessons',
@@ -27,6 +30,7 @@ import { InstructorService } from '../instructors/service/instructor-service';
     DrawerComponent,
     ConfirmDialogComponent,
     DatePicker,
+    RouterLink,
   ],
   templateUrl: './lessons.component.html',
 })
@@ -34,6 +38,8 @@ export class LessonsComponent extends BaseComponent<LessonDto> {
   instructors: InstructorDto[] = [];
   instructorOptions: { label: string; value: number }[] = [];
   selectedInstructorIds: number[] = [];
+  services: StudioServiceDto[] = [];
+  selectedServiceIds: number[] = [];
   readonly statusOptions = [
     { label: 'Aktif', value: 'ACTIVE' },
     { label: 'İptal Edildi', value: 'CANCELLED' },
@@ -44,6 +50,7 @@ export class LessonsComponent extends BaseComponent<LessonDto> {
     lessonService: LessonService,
     cdr: ChangeDetectorRef,
     private readonly instructorService: InstructorService,
+    private readonly studioServiceService: StudioServiceService,
   ) {
     super(lessonService, cdr, LessonDto);
   }
@@ -62,17 +69,25 @@ export class LessonsComponent extends BaseComponent<LessonDto> {
         this.cdr.markForCheck();
       },
     });
+    this.studioServiceService.findAll().subscribe({
+      next: (services) => {
+        this.services = services.filter((service) => service.active);
+        this.cdr.markForCheck();
+      },
+    });
   }
 
   protected override openEditForm(lesson: LessonDto): void {
     super.openEditForm(lesson);
     this.selectedInstructorIds = [...lesson.instructorIds];
+    this.selectedServiceIds = [...lesson.serviceIds];
     this.form.startAt = lesson.startAt ? new Date(lesson.startAt) : null;
     this.form.endAt = lesson.endAt ? new Date(lesson.endAt) : null;
   }
 
   protected override save(): void {
     this.form.instructorIds = [...this.selectedInstructorIds];
+    this.form.serviceIds = [...this.selectedServiceIds];
     this.form.startAt = this.toIsoDateTime(this.form.startAt);
     this.form.endAt = this.toIsoDateTime(this.form.endAt);
     super.save();
@@ -81,6 +96,7 @@ export class LessonsComponent extends BaseComponent<LessonDto> {
   override openCreateForm(): void {
     super.openCreateForm();
     this.selectedInstructorIds = [];
+    this.selectedServiceIds = [];
   }
 
   private toIsoDateTime(value: Date | string | null): string {

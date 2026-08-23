@@ -41,6 +41,10 @@ export const routes: Routes = [
       },
 
       {
+        path: 'members/:id/memberships',
+        loadComponent: () => import('./features/member-memberships/member-memberships.component').then((m) => m.MemberMembershipsComponent),
+      },
+      {
         path: 'members',
         loadComponent: () =>
           import('./features/members/members.component').then((m) => m.MembersComponent),
@@ -53,6 +57,11 @@ export const routes: Routes = [
           ),
       },
       {
+        path: 'lessons/:id',
+        loadComponent: () =>
+          import('./features/lesson-detail/lesson-detail.component').then((m) => m.LessonDetailComponent),
+      },
+      {
         path: 'lessons',
         loadComponent: () =>
           import('./features/lessons/lessons.component').then((m) => m.LessonsComponent),
@@ -60,7 +69,9 @@ export const routes: Routes = [
       {
         path: 'services',
         loadComponent: () =>
-          import('./features/services/services.component').then((m) => m.ServicesComponent),
+          import('./features/studio-services/studio-services.component').then(
+            (m) => m.StudioServicesComponent,
+          ),
       },
       {
         path: 'calendar',
@@ -68,9 +79,18 @@ export const routes: Routes = [
           import('./features/calendar/calendar.component').then((m) => m.CalendarComponent),
       },
       {
-        path: 'studio-service',
+        path: 'studio-services',
         loadComponent: () =>
-          import('./features/services/services.component').then((m) => m.ServicesComponent),
+          import('./features/studio-services/studio-services.component').then(
+            (m) => m.StudioServicesComponent,
+          ),
+      },
+      {
+        path: 'studio-packages',
+        loadComponent: () =>
+          import('./features/studio-packages/studio-packages.component').then(
+            (m) => m.StudioPackagesComponent,
+          ),
       },
       {
         path: 'calendar',

@@ -9,4 +9,7 @@ export class LessonDto extends BaseDto {
   status = 'ACTIVE';
   instructorIds: number[] = [];
   instructorNames: string[] = [];
+  serviceIds: number[] = [];
+  serviceNames: string[] = [];
+  reservationCount = 0;
 }

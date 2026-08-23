@@ -300,6 +300,52 @@
   border-color: var(--color-primary-light) !important;
 }
 
+/* ==============================
+   PRIME TABS
+   ============================== */
+
+.p-tabs,
+.p-tablist,
+.p-tablist-viewport,
+.p-tablist-content,
+.p-tablist-tab-list,
+.p-tabpanels,
+.p-tabpanel {
+  background: transparent !important;
+}
+
+.p-tablist {
+  border-bottom: 1px solid var(--color-border) !important;
+}
+
+.p-tab {
+  background: transparent !important;
+  border: 0 !important;
+  border-bottom: 2px solid transparent !important;
+  color: var(--color-text-muted) !important;
+  font-family: inherit !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+}
+
+.p-tab:hover {
+  background: var(--color-surface-soft) !important;
+  color: var(--color-primary) !important;
+}
+
+.p-tab.p-tab-active {
+  border-bottom-color: var(--color-primary) !important;
+  color: var(--color-primary) !important;
+}
+
+.p-tablist-active-bar {
+  background: var(--color-primary) !important;
+}
+
+.p-tabpanels {
+  padding: 20px 0 0 !important;
+}
+
 
 /* ==============================
    SELECT SEARCH

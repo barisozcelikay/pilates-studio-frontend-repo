@@ -100,6 +100,10 @@ export class AuthService {
     try {
       const payload = JSON.parse(atob(token.split('.')[1]));
 
+      if (typeof payload.profile === 'string') {
+        return payload.profile;
+      }
+
       const roles = payload.roles;
 
       if (!roles || !Array.isArray(roles) || roles.length === 0) {
