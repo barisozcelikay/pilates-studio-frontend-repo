@@ -6,6 +6,7 @@ import { LessonService } from './service/lesson-service';
 import { DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
+import { TextareaModule } from 'primeng/textarea';
 import { Select } from 'primeng/select';
 import { MultiSelect } from 'primeng/multiselect';
 import { DrawerComponent } from '../../shared/component/drawer/drawer.component';
@@ -25,6 +26,7 @@ import { StudioServiceService } from '../studio-services/service/studio-service-
     DatePipe,
     FormsModule,
     InputTextModule,
+    TextareaModule,
     Select,
     MultiSelect,
     DrawerComponent,

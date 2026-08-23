@@ -59,7 +59,9 @@
 .form {
   input.p-inputtext,
   input[type='text'].p-inputtext,
-  input[type='email'].p-inputtext {
+  input[type='email'].p-inputtext,
+  textarea.p-inputtextarea,
+  textarea.p-textarea {
     width: 100%;
     min-height: 40px;
 
@@ -77,7 +79,7 @@
     font-family: inherit;
     font-size: 12px;
 
-    color-scheme: dark;
+    color-scheme: light;
 
     transition:
       border-color 0.2s ease,
@@ -135,7 +137,7 @@
     font-family: inherit;
     font-size: 12px;
 
-    color-scheme: dark;
+    color-scheme: light;
 
     transition:
       border-color 0.2s ease,
@@ -185,7 +187,7 @@
   box-shadow:
     0 12px 32px rgba(0, 0, 0, 0.28);
 
-  color-scheme: dark;
+  color-scheme: light;
 }
 
 .p-select-list {
@@ -404,8 +406,8 @@
   }
 
   &.p-select-option-selected {
-    background: var(--color-primary) !important;
-    color: #ffffff !important;
+    background: var(--color-accent-light) !important;
+    color: var(--color-primary) !important;
   }
 }
 

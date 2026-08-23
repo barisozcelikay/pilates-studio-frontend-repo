@@ -138,7 +138,7 @@
 
     <div class="form-group">
       <label class="form-label" for="lesson-description">Açıklama</label>
-      <input id="lesson-description" type="text" pInputText [(ngModel)]="form.description" placeholder="Ders açıklaması" />
+      <textarea id="lesson-description" pTextarea [(ngModel)]="form.description" rows="3" placeholder="Ders açıklaması"></textarea>
     </div>
 
     <div class="form-row">
@@ -177,6 +177,7 @@
         [showClear]="true"
         [filter]="true"
         display="chip"
+        selectedItemsLabel="{0} adet seçildi"
         appendTo="body"
       />
     </div>
@@ -193,6 +194,7 @@
         [showClear]="true"
         [filter]="true"
         display="chip"
+        selectedItemsLabel="{0} adet seçildi"
         appendTo="body"
       />
     </div>

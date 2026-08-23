@@ -5,6 +5,7 @@ import { InstructorService } from './service/instructor-service';
 import { InstructorDto } from './model/instructor-dto';
 import { FormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
+import { TextareaModule } from 'primeng/textarea';
 import { DrawerComponent } from '../../shared/component/drawer/drawer.component';
 
 @Component({
@@ -14,6 +15,7 @@ import { DrawerComponent } from '../../shared/component/drawer/drawer.component'
     TableModule,
     FormsModule,
     InputTextModule,
+    TextareaModule,
     DrawerComponent,
   ],
   templateUrl: './instructors.component.html',

@@ -114,6 +114,21 @@ body {
   color: var(--color-text-light) !important;
 }
 
+.p-multiselect .p-chip,
+.p-multiselect-chip {
+  background: var(--color-surface-soft) !important;
+  border: 1px solid var(--color-border) !important;
+  color: var(--color-primary) !important;
+}
+
+.p-multiselect .p-chip .p-chip-label,
+.p-multiselect .p-chip .p-chip-remove-icon,
+.p-multiselect-chip .p-chip-label,
+.p-multiselect-chip .p-chip-remove-icon,
+.p-multiselect-chip-icon {
+  color: var(--color-primary) !important;
+}
+
 
 /* Dropdown */
 
@@ -199,11 +214,13 @@ body {
    PrimeNG 21 - MultiSelect Checkbox
    ========================================= */
 
-.p-multiselect-option .p-checkbox {
+.p-multiselect .p-checkbox,
+.p-multiselect-overlay .p-checkbox {
   background: transparent !important;
 }
 
-.p-multiselect-option .p-checkbox-box {
+.p-multiselect .p-checkbox-box,
+.p-multiselect-overlay .p-checkbox-box {
   width: 20px !important;
   height: 20px !important;
 
@@ -215,24 +232,21 @@ body {
   color: var(--color-primary) !important;
 }
 
-.p-multiselect-option
-.p-checkbox.p-checkbox-checked
-.p-checkbox-box {
-
-  background: var(--color-primary) !important;
-  border-color: var(--color-primary) !important;
-
-  color: #ffffff !important;
+.p-multiselect .p-checkbox.p-checkbox-checked .p-checkbox-box,
+.p-multiselect .p-checkbox.p-checkbox-indeterminate .p-checkbox-box,
+.p-multiselect-overlay .p-checkbox.p-checkbox-checked .p-checkbox-box,
+.p-multiselect-overlay .p-checkbox.p-checkbox-indeterminate .p-checkbox-box {
+  background: var(--color-accent-light) !important;
+  border-color: var(--color-accent-light) !important;
+  color: var(--color-primary) !important;
 }
 
 
 /* Checkbox icon */
 
-.p-multiselect-option
-.p-checkbox
-.p-checkbox-icon {
-
-  color: #ffffff !important;
+.p-multiselect .p-checkbox .p-checkbox-icon,
+.p-multiselect-overlay .p-checkbox .p-checkbox-icon {
+  color: var(--color-primary) !important;
 }
 
 

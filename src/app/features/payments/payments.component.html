@@ -1,0 +1,139 @@
+<div class="page">
+  <div class="page-header">
+    <div class="page-header-content">
+      <span class="page-eyebrow">FİNANS YÖNETİMİ</span>
+      <h1 class="page-title">Ödemeler</h1>
+      <p class="page-description">Kaydedilen ödeme hareketlerini takip edin.</p>
+    </div>
+    <button class="primary-button" (click)="openCreateForm()">
+      <i class="pi pi-plus"></i>
+      Ödeme Ekle
+    </button>
+  </div>
+
+  <div class="card">
+    <div class="table-container">
+      <table class="payment-table">
+        <thead>
+          <tr>
+            <th>Üye</th>
+            <th>Paket</th>
+            <th>Tutar</th>
+            <th>Ödeme Tipi</th>
+            <th>Durum</th>
+            <th>Ödeme Tarihi</th>
+            <th>İşlemler</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let payment of items">
+            <td>
+              <strong>{{ payment.memberName }}</strong>
+            </td>
+            <td>{{ payment.packageName }}</td>
+            <td>
+              <strong>{{ payment.amount | number: '1.2-2' }} ₺</strong>
+            </td>
+            <td>{{ paymentMethodLabel(payment.paymentMethod) }}</td>
+            <td>
+              <span class="status-pill">{{ paymentStatusLabel(payment.status) }}</span>
+            </td>
+            <td>{{ payment.paidAt ? (payment.paidAt | date: 'dd.MM.yyyy HH:mm') : '-' }}</td>
+            <td>
+              <div class="table-actions">
+                <button class="icon-button" title="Düzenle" (click)="openEditForm(payment)">
+                  <i class="pi pi-pencil"></i>
+                </button>
+                <button class="icon-button danger" title="Sil" (click)="confirmDelete(payment)">
+                  <i class="pi pi-trash"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+          <tr *ngIf="!items.length && !loading">
+            <td colspan="7">Henüz ödeme kaydı bulunmuyor.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<app-drawer
+  [(visible)]="drawerVisible"
+  [title]="editing ? 'Ödeme Kaydını Düzenle' : 'Ödeme Kaydı Ekle'"
+>
+  <div class="form">
+    <div class="form-group">
+      <label class="form-label" for="sale">Üye adı / Paket</label>
+      <p-select
+        inputId="sale"
+        [options]="options"
+        optionLabel="displayLabel"
+        optionValue="membershipId"
+        [(ngModel)]="form.membershipId"
+        (onChange)="selectMembership()"
+        placeholder="Üye ve paket seçin"
+      ></p-select>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label" for="amount">Fiyat</label>
+      <input
+        id="amount"
+        type="number"
+        [(ngModel)]="form.amount"
+        min="0.01"
+        step="0.01"
+        placeholder="Tutar girin"
+      />
+      <small *ngIf="form.membershipId"
+        >Paket fiyatı seçildi; tutarı gerekirse düzenleyebilirsiniz.</small
+      >
+    </div>
+
+    <div class="form-group">
+      <label class="form-label" for="method">Ödeme tipi</label>
+      <p-select
+        inputId="method"
+        [options]="methods"
+        optionLabel="label"
+        optionValue="value"
+        [(ngModel)]="form.paymentMethod"
+      />
+    </div>
+
+    <div class="form-group">
+      <label class="form-label" for="payment-status">Ödeme durumu</label>
+      <p-select
+        inputId="payment-status"
+        [options]="statuses"
+        optionLabel="label"
+        optionValue="value"
+        [(ngModel)]="form.status"
+      />
+    </div>
+
+    <div class="form-group">
+      <label class="form-label" for="note">Not</label>
+      <input id="note" [(ngModel)]="form.note" />
+    </div>
+  </div>
+
+  <div drawer-footer>
+    <div class="button-group">
+      <button class="secondary-button" (click)="drawerVisible = false">İptal</button>
+      <button class="primary-button" [disabled]="saving" (click)="save()">
+        {{ saving ? 'Kaydediliyor...' : 'Kaydet' }}
+      </button>
+    </div>
+  </div>
+</app-drawer>
+
+<app-confirm-dialog
+  [(visible)]="confirmVisible"
+  title="Ödeme Kaydını Sil"
+  [message]="itemToDelete ? '“' + itemToDelete.memberName + '” için ödeme kaydı silinsin mi?' : ''"
+  confirmText="Sil"
+  (confirm)="delete()"
+/>

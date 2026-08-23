@@ -1,0 +1,172 @@
+.page-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.page-eyebrow {
+  color: var(--color-primary);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+}
+
+.page-title {
+  margin: 6px 0 8px;
+  color: var(--color-text);
+}
+
+.page-description {
+  margin: 0;
+  color: var(--color-text-muted);
+}
+
+.card {
+  overflow: hidden;
+  border: 1px solid var(--color-border-light);
+  border-radius: 18px;
+  background: var(--color-surface);
+}
+
+.table-container {
+  overflow-x: auto;
+}
+
+.payment-table {
+  width: 100%;
+  min-width: 760px;
+  border-collapse: collapse;
+  color: var(--color-text-secondary);
+}
+
+.payment-table th,
+.payment-table td {
+  padding: 16px 18px;
+  border-bottom: 1px solid var(--color-border-light);
+  text-align: left;
+}
+
+.payment-table th {
+  color: var(--color-text-muted);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.payment-table tr:last-child td {
+  border-bottom: 0;
+}
+
+.payment-table strong {
+  color: var(--color-text);
+}
+
+.status-pill {
+  display: inline-flex;
+  border-radius: 999px;
+  background: var(--color-surface-soft);
+  color: var(--color-primary);
+  font-size: 12px;
+  font-weight: 700;
+  padding: 6px 10px;
+}
+
+.table-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.icon-button {
+  display: grid;
+  width: 34px;
+  height: 34px;
+  place-items: center;
+  border: 1px solid var(--color-border);
+  border-radius: 9px;
+  background: var(--color-surface-soft);
+  color: var(--color-primary);
+  cursor: pointer;
+}
+
+.icon-button.danger {
+  color: var(--color-error);
+}
+
+.form {
+  display: grid;
+  gap: 18px;
+}
+
+.form-group {
+  display: grid;
+  gap: 8px;
+}
+
+.form-label {
+  color: var(--color-text);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.form-group input {
+  width: 100%;
+  min-height: 46px;
+  box-sizing: border-box;
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  background: var(--color-surface-soft);
+  color: var(--color-text);
+  outline: none;
+  padding: 0 13px;
+}
+
+.form-group input:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primary) 14%, transparent);
+}
+
+.form-group small {
+  color: var(--color-text-muted);
+  font-size: 12px;
+}
+
+.form-group ::ng-deep .p-select {
+  width: 100%;
+  min-height: 46px;
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  background: var(--color-surface-soft);
+}
+
+.form-group ::ng-deep .p-select-label {
+  color: var(--color-text);
+  padding: 13px;
+}
+
+.form-error {
+  color: var(--color-error);
+  font-size: 12px;
+}
+
+.load-error {
+  margin: 0;
+  padding: 14px 18px;
+  color: var(--color-error);
+  font-size: 13px;
+}
+
+.button-group {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+@media (max-width: 640px) {
+  .page-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
