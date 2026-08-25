@@ -1,7 +1,8 @@
-import { DatePipe, DecimalPipe, NgFor, NgIf } from '@angular/common';
+import { DatePipe, DecimalPipe, NgIf } from '@angular/common';
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Select } from 'primeng/select';
+import { TableModule } from 'primeng/table';
 
 import { BaseComponent } from '../../shared/component/base/base-component';
 import { ConfirmDialogComponent } from '../../shared/component/confirm-dialog/confirm-dialog.component';
@@ -20,12 +21,12 @@ import {
   imports: [
     DatePipe,
     DecimalPipe,
-    NgFor,
     NgIf,
     FormsModule,
     DrawerComponent,
     ConfirmDialogComponent,
     Select,
+    TableModule,
   ],
   templateUrl: './payments.component.html',
   styleUrl: './payments.component.scss',

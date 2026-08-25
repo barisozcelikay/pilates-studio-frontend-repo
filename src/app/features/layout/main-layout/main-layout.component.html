@@ -1,6 +1,7 @@
 <div
   class="dashboard"
   [class.sidebar-open]="sidebarOpen"
+  [class.dark-mode]="isDarkTheme"
 >
 
   <div
@@ -14,12 +15,11 @@
     [class.open]="sidebarOpen"
   >
 
-    <div class="sidebar-brand">
-      <img
-        class="brand-logo"
-        src="/images/denge-pilates-logo.png"
-        alt="Denge Pilates"
-      />
+    <div class="sidebar-brand" aria-label="Olive Pilates Studio">
+      <div class="theme-logo" aria-hidden="true">
+        <img class="theme-logo-image theme-logo-light" src="/images/olive-logo-light-transparent-v3.png" alt="" />
+        <img class="theme-logo-image theme-logo-dark" src="/images/olive-logo-dark-crisp-transparent-v4.png" alt="" />
+      </div>
     </div>
 
 

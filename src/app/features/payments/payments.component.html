@@ -13,8 +13,15 @@
 
   <div class="card">
     <div class="table-container">
-      <table class="payment-table">
-        <thead>
+      <p-table
+        class="data-table"
+        [value]="items"
+        [loading]="loading"
+        [paginator]="true"
+        [rows]="10"
+        [rowsPerPageOptions]="[10, 20, 50]"
+      >
+        <ng-template #header>
           <tr>
             <th>Üye</th>
             <th>Paket</th>
@@ -24,9 +31,9 @@
             <th>Ödeme Tarihi</th>
             <th>İşlemler</th>
           </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let payment of items">
+        </ng-template>
+        <ng-template #body let-payment>
+          <tr>
             <td>
               <strong>{{ payment.memberName }}</strong>
             </td>
@@ -36,25 +43,31 @@
             </td>
             <td>{{ paymentMethodLabel(payment.paymentMethod) }}</td>
             <td>
-              <span class="status-pill">{{ paymentStatusLabel(payment.status) }}</span>
+              <span
+                class="status-pill"
+                [class.paid]="payment.status === 'PAID'"
+                [class.unpaid]="payment.status !== 'PAID'"
+              >{{ paymentStatusLabel(payment.status) }}</span>
             </td>
             <td>{{ payment.paidAt ? (payment.paidAt | date: 'dd.MM.yyyy HH:mm') : '-' }}</td>
             <td>
               <div class="table-actions">
-                <button class="icon-button" title="Düzenle" (click)="openEditForm(payment)">
+                <button class="table-action table-action-edit" title="Düzenle" (click)="openEditForm(payment)">
                   <i class="pi pi-pencil"></i>
                 </button>
-                <button class="icon-button danger" title="Sil" (click)="confirmDelete(payment)">
+                <button class="table-action table-action-delete" title="Sil" (click)="confirmDelete(payment)">
                   <i class="pi pi-trash"></i>
                 </button>
               </div>
             </td>
           </tr>
-          <tr *ngIf="!items.length && !loading">
-            <td colspan="7">Henüz ödeme kaydı bulunmuyor.</td>
+        </ng-template>
+        <ng-template #emptymessage>
+          <tr>
+            <td colspan="7" class="table-empty">Henüz ödeme kaydı bulunmuyor.</td>
           </tr>
-        </tbody>
-      </table>
+        </ng-template>
+      </p-table>
     </div>
   </div>
 </div>

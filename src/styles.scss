@@ -42,6 +42,20 @@
   --shadow-sm: #{v.$shadow-sm};
   --shadow-md: #{v.$shadow-md};
   --shadow-lg: #{v.$shadow-lg};
+  --neon-gold: #f0d84a;
+  --neon-olive: #f0d84a;
+  --charcoal: #171815;
+  --glow-gold: 0 0 10px rgba(242, 199, 92, 0.34), 0 0 28px rgba(227, 179, 75, 0.16);
+  --sidebar-background:
+    radial-gradient(circle at 50% 2%, rgba(41, 41, 37, 0.06), transparent 32%),
+    linear-gradient(180deg, #f3ead9 0%, #e8ddca 100%);
+  --sidebar-text: #3e3e39;
+  --sidebar-icon: #77746b;
+  --sidebar-hover-text: #171816;
+  --sidebar-active-text: #171816;
+  --sidebar-active-bg: linear-gradient(100deg, rgba(41, 41, 37, 0.14), rgba(169, 134, 67, 0.08));
+  --logo-glow: none;
+  --app-background: linear-gradient(135deg, #eee4d1 0%, #f5eddf 48%, #e6dac5 100%);
 }
 
 
@@ -69,6 +83,19 @@
   --color-warning: #{v.$dark-color-warning};
   --color-error: #{v.$dark-color-error};
   --color-info: #{v.$dark-color-info};
+  --sidebar-background:
+    radial-gradient(circle at 50% 2%, rgba(240, 216, 74, 0.13), transparent 30%),
+    linear-gradient(rgba(29, 30, 28, 0.48), rgba(18, 19, 17, 0.62)),
+    url('/images/charcoal-leather-texture-v1.png') center / 520px auto repeat;
+  --sidebar-text: #ded6c2;
+  --sidebar-icon: #aaa28f;
+  --sidebar-hover-text: #fff174;
+  --sidebar-active-text: #fff174;
+  --sidebar-active-bg: linear-gradient(100deg, rgba(240, 216, 74, 0.22), rgba(240, 200, 91, 0.06));
+  --logo-glow: 0 0 12px rgba(240, 216, 74, 0.34), 0 0 28px rgba(240, 200, 91, 0.12);
+  --app-background:
+    linear-gradient(rgba(24, 25, 23, 0.70), rgba(17, 18, 16, 0.78)),
+    url('/images/charcoal-leather-texture-v1.png') center / 720px auto repeat;
 
   --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.20);
 
@@ -82,12 +109,27 @@
 
 html,
 body {
-  background: var(--color-background);
+  background: var(--app-background);
+  background-attachment: fixed;
   color: var(--color-text);
 
   transition:
     background-color 0.2s ease,
     color 0.2s ease;
+}
+
+::selection {
+  background: rgba(215, 200, 74, 0.42);
+  color: #171815;
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--neon-gold);
+  outline-offset: 2px;
 }
 
 

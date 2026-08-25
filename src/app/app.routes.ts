@@ -13,13 +13,19 @@ export const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: 'studio',
+    redirectTo: 'home',
+  },
+
+  {
+    path: 'home',
+    loadComponent: () =>
+      import('./features/studio-home/studio-home.component').then((m) => m.StudioHomeComponent),
   },
 
   {
     path: 'studio',
-    loadComponent: () =>
-      import('./features/studio-home/studio-home.component').then((m) => m.StudioHomeComponent),
+    pathMatch: 'full',
+    redirectTo: 'home',
   },
 
   {

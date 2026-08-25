@@ -34,65 +34,39 @@
   overflow-x: auto;
 }
 
-.payment-table {
-  width: 100%;
+:host ::ng-deep .data-table .p-datatable-table {
   min-width: 760px;
-  border-collapse: collapse;
-  color: var(--color-text-secondary);
 }
 
-.payment-table th,
-.payment-table td {
-  padding: 16px 18px;
-  border-bottom: 1px solid var(--color-border-light);
-  text-align: left;
-}
-
-.payment-table th {
-  color: var(--color-text-muted);
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
-
-.payment-table tr:last-child td {
-  border-bottom: 0;
-}
-
-.payment-table strong {
+:host ::ng-deep .data-table strong {
   color: var(--color-text);
 }
 
 .status-pill {
   display: inline-flex;
   border-radius: 999px;
-  background: var(--color-surface-soft);
-  color: var(--color-primary);
+  border: 1px solid transparent;
   font-size: 12px;
   font-weight: 700;
   padding: 6px 10px;
 }
 
-.table-actions {
-  display: flex;
-  gap: 8px;
+.status-pill.paid {
+  border-color: color-mix(in srgb, var(--color-success) 28%, transparent);
+  background: color-mix(in srgb, var(--color-success) 14%, transparent);
+  color: var(--color-success);
 }
 
-.icon-button {
-  display: grid;
-  width: 34px;
-  height: 34px;
-  place-items: center;
-  border: 1px solid var(--color-border);
-  border-radius: 9px;
-  background: var(--color-surface-soft);
-  color: var(--color-primary);
-  cursor: pointer;
+.status-pill.unpaid {
+  border-color: color-mix(in srgb, var(--color-warning) 32%, transparent);
+  background: color-mix(in srgb, var(--color-warning) 14%, transparent);
+  color: var(--color-warning);
 }
 
-.icon-button.danger {
-  color: var(--color-error);
+.table-empty {
+  padding: 42px 18px !important;
+  color: var(--color-text-muted) !important;
+  text-align: center;
 }
 
 .form {

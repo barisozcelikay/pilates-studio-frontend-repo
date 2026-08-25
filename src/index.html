@@ -1,11 +1,34 @@
 <!doctype html>
-<html lang="en">
+<html lang="tr">
 <head>
   <meta charset="utf-8">
-  <title>PilatesStudioWeb</title>
+  <title>Olive Pilates Studio</title>
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=3">
+  <link rel="alternate icon" type="image/png" sizes="32x32" href="/favicon-32.png?v=3">
+  <link rel="apple-touch-icon" sizes="128x128" href="/images/olive-favicon-v1.png?v=3">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              anthracite: '#181916',
+              sand: '#D5C8A5',
+              stone: '#AEBB34',
+              cream: '#E8E1CB',
+              ivory: '#F7F3E9',
+              gold: '#E2B84E'
+            },
+            fontFamily: {
+              display: ['Georgia', 'serif'],
+              body: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif']
+            }
+          }
+        }
+    };
+  </script>
 </head>
 <body>
   <app-root></app-root>
