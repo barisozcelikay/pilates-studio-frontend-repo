@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnDestroy } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 @Component({
@@ -12,6 +12,28 @@ export class StudioHomeComponent implements AfterViewInit, OnDestroy {
   mobileMenuOpen = false;
   openFaqIndex: number | null = null;
   private revealObserver?: IntersectionObserver;
+  private scrollFrame?: number;
+  private readonly updateIntroProgress = (): void => {
+    if (this.scrollFrame !== undefined) {
+      return;
+    }
+
+    this.scrollFrame = requestAnimationFrame(() => {
+      const viewportHeight = Math.max(window.innerHeight, 1);
+      const progress = Math.min(Math.max(window.scrollY / (viewportHeight * 0.62), 0), 1);
+      const style = this.elementRef.nativeElement.style;
+      style.setProperty('--intro-progress', progress.toFixed(4));
+      style.setProperty('--intro-y', `${(-progress * 38).toFixed(2)}vh`);
+      style.setProperty('--intro-scale', (1 - progress * 0.58).toFixed(4));
+      style.setProperty('--intro-opacity', Math.max(1 - progress * 0.92, 0).toFixed(4));
+      style.setProperty('--intro-ambient-opacity', Math.max(1 - progress, 0).toFixed(4));
+      style.setProperty('--intro-grid-opacity', Math.max(0.22 * (1 - progress), 0).toFixed(4));
+      style.setProperty('--intro-cue-opacity', Math.max(1 - progress * 3, 0).toFixed(4));
+      this.scrollFrame = undefined;
+    });
+  };
+
+  constructor(private readonly elementRef: ElementRef<HTMLElement>) {}
 
   readonly instagramPosts = [
     {
@@ -66,6 +88,9 @@ export class StudioHomeComponent implements AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit(): void {
+    window.addEventListener('scroll', this.updateIntroProgress, { passive: true });
+    this.updateIntroProgress();
+
     const revealElements = Array.from(
       document.querySelectorAll<HTMLElement>(
         '.studio-home-page section:not(.hero-shell), .instagram-card, #paketler article, #yaklasim article',
@@ -101,6 +126,11 @@ export class StudioHomeComponent implements AfterViewInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.revealObserver?.disconnect();
+    window.removeEventListener('scroll', this.updateIntroProgress);
+
+    if (this.scrollFrame !== undefined) {
+      cancelAnimationFrame(this.scrollFrame);
+    }
   }
 
   closeMobileMenu(): void {

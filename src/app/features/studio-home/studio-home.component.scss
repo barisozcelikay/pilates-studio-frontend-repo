@@ -1,6 +1,13 @@
 :host {
   display: block;
   background: #f7f3e9;
+  --intro-progress: 0;
+  --intro-y: 0vh;
+  --intro-scale: 1;
+  --intro-opacity: 1;
+  --intro-ambient-opacity: 1;
+  --intro-grid-opacity: 0.22;
+  --intro-cue-opacity: 1;
 }
 
 html {
@@ -9,6 +16,132 @@ html {
 
 section[id] {
   scroll-margin-top: 86px;
+}
+
+.intro-logo-stage {
+  position: relative;
+  height: 162vh;
+  min-height: 900px;
+  background:
+    radial-gradient(circle at 50% 40%, rgba(240, 216, 74, 0.13), transparent 28%),
+    radial-gradient(circle at 18% 20%, rgba(226, 184, 78, 0.06), transparent 25%),
+    linear-gradient(rgba(24, 25, 23, 0.72), rgba(13, 14, 12, 0.90)),
+    url('/images/charcoal-leather-texture-v1.png') center / 760px auto repeat;
+}
+
+.intro-logo-sticky {
+  position: sticky;
+  top: 0;
+  display: grid;
+  width: 100%;
+  height: 100vh;
+  min-height: 620px;
+  place-items: center;
+  overflow: hidden;
+}
+
+.intro-logo-sticky::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: var(--intro-grid-opacity);
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.022) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.022) 1px, transparent 1px);
+  background-size: 58px 58px;
+  mask-image: radial-gradient(circle at center, black, transparent 72%);
+}
+
+.intro-logo-wrap {
+  position: relative;
+  z-index: 2;
+  width: min(78vw, 880px);
+  transform:
+    translate3d(0, var(--intro-y), 0)
+    scale(var(--intro-scale));
+  opacity: var(--intro-opacity);
+  will-change: transform, opacity;
+}
+
+.intro-logo-wrap::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: -35% -18%;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, rgba(240, 216, 74, 0.18), rgba(226, 184, 78, 0.055) 38%, transparent 70%);
+  filter: blur(18px);
+  opacity: var(--intro-ambient-opacity);
+}
+
+.intro-logo {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  filter:
+    brightness(1.08)
+    drop-shadow(0 0 3px rgba(255, 248, 186, 0.94))
+    drop-shadow(0 0 13px rgba(240, 216, 74, 0.68))
+    drop-shadow(0 0 34px rgba(226, 184, 78, 0.25));
+}
+
+.intro-scroll-cue {
+  position: absolute;
+  bottom: 34px;
+  left: 50%;
+  z-index: 3;
+  display: grid;
+  justify-items: center;
+  gap: 10px;
+  color: rgba(247, 243, 233, 0.58);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  opacity: var(--intro-cue-opacity);
+  transform: translateX(-50%);
+}
+
+.intro-scroll-cue i {
+  position: relative;
+  display: block;
+  width: 1px;
+  height: 34px;
+  overflow: hidden;
+  background: rgba(226, 184, 78, 0.22);
+}
+
+.intro-scroll-cue i::after {
+  content: '';
+  position: absolute;
+  top: -45%;
+  left: 0;
+  width: 100%;
+  height: 45%;
+  background: #fff174;
+  box-shadow: 0 0 8px rgba(240, 216, 74, 0.72);
+  animation: intro-scroll-line 1.8s ease-in-out infinite;
+}
+
+.intro-ambient {
+  position: absolute;
+  width: 32vw;
+  height: 32vw;
+  max-width: 520px;
+  max-height: 520px;
+  border: 1px solid rgba(240, 216, 74, 0.12);
+  border-radius: 50%;
+  opacity: var(--intro-ambient-opacity);
+}
+
+.intro-ambient-left { left: -18vw; top: 18%; }
+.intro-ambient-right { right: -22vw; bottom: 8%; }
+
+@keyframes intro-scroll-line {
+  0% { transform: translateY(0); opacity: 0; }
+  25% { opacity: 1; }
+  100% { transform: translateY(320%); opacity: 0; }
 }
 
 .section-arrived {
@@ -367,6 +500,22 @@ section[id] {
 }
 
 @media (max-width: 560px) {
+  .intro-logo-stage {
+    height: 145vh;
+    min-height: 760px;
+  }
+
+  .intro-logo-sticky {
+    min-height: 540px;
+  }
+
+  .intro-logo-wrap {
+    width: 92vw;
+    transform:
+      translate3d(0, var(--intro-y), 0)
+      scale(var(--intro-scale));
+  }
+
   .instagram-grid {
     grid-template-columns: 1fr;
   }
@@ -380,4 +529,6 @@ section[id] {
   html { scroll-behavior: auto; }
   .section-arrived { animation: none; }
   .reveal-item { opacity: 1; transform: none; transition: none; }
+  .intro-logo-wrap { transform: none; opacity: 1; }
+  .intro-scroll-cue i::after { animation: none; }
 }

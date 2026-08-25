@@ -1,12 +1,30 @@
 <main id="anasayfa" class="studio-home-page min-h-screen font-body text-anthracite">
+  <section class="intro-logo-stage" aria-label="Olive Pilates Studio giriş">
+    <div class="intro-logo-sticky">
+      <div class="intro-ambient intro-ambient-left"></div>
+      <div class="intro-ambient intro-ambient-right"></div>
+      <div class="intro-logo-wrap">
+        <img
+          src="/images/olive-logo-dark-crisp-transparent-v4.png"
+          alt="Olive Pilates Studio"
+          class="intro-logo"
+        />
+      </div>
+      <div class="intro-scroll-cue" aria-hidden="true">
+        <span>Keşfet</span>
+        <i></i>
+      </div>
+    </div>
+  </section>
+
   <header class="studio-header sticky top-0 z-50 border-b border-white/10 bg-anthracite/95 text-ivory backdrop-blur-xl">
     <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-3">
       <a href="#anasayfa" (click)="scrollToSection($event, 'anasayfa')" class="brand-lockup flex items-center" aria-label="Olive Pilates Studio ana sayfa"><img src="/images/olive-logo-dark-crisp-transparent-v4.png" alt="Olive Pilates Studio" class="brand-logo w-52 rounded-lg" /></a>
-      <nav class="header-nav hidden items-center gap-6 text-[11px] font-bold uppercase tracking-[0.13em] text-ivory/70 lg:flex"><a href="#anasayfa" (click)="scrollToSection($event, 'anasayfa')">Ana Sayfa</a><a href="#studio" (click)="scrollToSection($event, 'studio')">Stüdyo</a><a href="#dersler" (click)="scrollToSection($event, 'dersler')">Dersler</a><a href="#paketler" (click)="scrollToSection($event, 'paketler')">Paketler</a><a href="#instagram" (click)="scrollToSection($event, 'instagram')">Instagram</a><a href="#iletisim" (click)="scrollToSection($event, 'iletisim')">İletişim</a></nav>
+      <nav class="header-nav hidden items-center gap-6 text-[11px] font-bold uppercase tracking-[0.13em] text-ivory/70 lg:flex"><a href="#studio" (click)="scrollToSection($event, 'studio')">Stüdyo</a><a href="#dersler" (click)="scrollToSection($event, 'dersler')">Dersler</a><a href="#paketler" (click)="scrollToSection($event, 'paketler')">Paketler</a><a href="#instagram" (click)="scrollToSection($event, 'instagram')">Instagram</a><a href="#iletisim" (click)="scrollToSection($event, 'iletisim')">İletişim</a></nav>
       <a routerLink="/login" class="neon-button hidden rounded-full border border-gold/60 px-5 py-2.5 text-xs font-bold uppercase tracking-[0.12em] text-gold transition hover:-translate-y-0.5 lg:inline-flex">Üye Girişi</a>
       <button class="rounded-lg border border-gold/50 px-3 py-2 text-gold lg:hidden" (click)="mobileMenuOpen = !mobileMenuOpen" aria-label="Menüyü aç">☰</button>
     </div>
-    @if (mobileMenuOpen) { <nav class="mobile-nav border-t border-sand/20 px-6 py-5 lg:hidden"><div class="grid grid-cols-2 gap-3 text-sm font-semibold"><a href="#anasayfa" (click)="scrollToSection($event, 'anasayfa')">Ana Sayfa</a><a href="#studio" (click)="scrollToSection($event, 'studio')">Stüdyo</a><a href="#dersler" (click)="scrollToSection($event, 'dersler')">Dersler</a><a href="#paketler" (click)="scrollToSection($event, 'paketler')">Paketler</a><a href="#instagram" (click)="scrollToSection($event, 'instagram')">Instagram</a><a href="#iletisim" (click)="scrollToSection($event, 'iletisim')" class="text-gold">İletişim</a></div></nav> }
+    @if (mobileMenuOpen) { <nav class="mobile-nav border-t border-sand/20 px-6 py-5 lg:hidden"><div class="grid grid-cols-2 gap-3 text-sm font-semibold"><a href="#studio" (click)="scrollToSection($event, 'studio')">Stüdyo</a><a href="#dersler" (click)="scrollToSection($event, 'dersler')">Dersler</a><a href="#paketler" (click)="scrollToSection($event, 'paketler')">Paketler</a><a href="#instagram" (click)="scrollToSection($event, 'instagram')">Instagram</a><a href="#iletisim" (click)="scrollToSection($event, 'iletisim')" class="text-gold">İletişim</a></div></nav> }
   </header>
 
   <section class="hero-shell relative overflow-hidden bg-anthracite text-ivory"><div class="hero-orbit absolute -left-36 top-12 h-96 w-96 rounded-full border border-stone/30"></div><div class="hero-glow absolute right-0 top-24 h-96 w-96 rounded-full bg-stone/20 blur-3xl"></div><div class="relative mx-auto grid min-h-[760px] max-w-7xl items-center gap-16 px-6 py-20 lg:grid-cols-2">
@@ -35,4 +53,4 @@
   <section id="iletisim" class="scroll-mt-24 bg-cream px-6 py-24"><div class="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-center"><div><p class="text-xs font-bold tracking-[0.2em] text-gold">BİRLİKTE BAŞLAYALIM</p><h2 class="mt-5 font-display text-5xl leading-none">Kendinize iyi gelecek bir alan açın.</h2><p class="mt-6 max-w-xl text-sm leading-7 text-anthracite/65">Stüdyomuz ve size uygun başlangıç hakkında bilgi almak için bizimle iletişime geçin.</p></div><div class="rounded-2xl bg-anthracite p-9 text-ivory shadow-xl"><p class="text-xs font-bold tracking-[0.2em] text-sand">DENİZLİ · TÜRKİYE</p><h3 class="mt-5 font-display text-4xl">Olive Pilates Stüdyosu</h3><p class="mt-4 text-sm leading-7 text-cream">İlk adım, kendinize ayırdığınız küçük bir zaman olabilir.</p><a routerLink="/login" class="mt-8 inline-flex rounded-full bg-gold px-6 py-3 text-sm font-bold text-white transition hover:bg-sand hover:text-anthracite">Üye Girişi →</a></div></div></section>
 </main>
 
-<footer class="leather-section px-6 py-10 text-cream"><div class="mx-auto flex max-w-7xl flex-col gap-6 text-sm md:flex-row md:items-center md:justify-between"><div><p class="font-display text-2xl text-ivory">OLIVE</p><p class="mt-1 text-xs text-sand">Hareket · Nefes · Denge</p></div><div class="flex gap-5 text-xs font-bold"><a href="#anasayfa" class="hover:text-gold">Ana Sayfa</a><a href="#dersler" class="hover:text-gold">Dersler</a><a href="#iletisim" class="hover:text-gold">İletişim</a></div><p class="text-xs text-sand">© 2026 Olive Pilates Stüdyosu</p></div></footer>
+<footer class="leather-section px-6 py-10 text-cream"><div class="mx-auto flex max-w-7xl flex-col gap-6 text-sm md:flex-row md:items-center md:justify-between"><div><p class="font-display text-2xl text-ivory">OLIVE</p><p class="mt-1 text-xs text-sand">Hareket · Nefes · Denge</p></div><div class="flex gap-5 text-xs font-bold"><a href="#dersler" class="hover:text-gold">Dersler</a><a href="#iletisim" class="hover:text-gold">İletişim</a></div><p class="text-xs text-sand">© 2026 Olive Pilates Stüdyosu</p></div></footer>
