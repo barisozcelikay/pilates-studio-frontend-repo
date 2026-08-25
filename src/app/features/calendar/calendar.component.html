@@ -13,14 +13,6 @@
   </div>
 
   <div class="card calendar-card">
-    <div class="calendar-guide" aria-label="Takvim açıklaması">
-      <div class="calendar-legend">
-        <span><i class="legend-dot legend-dot-active"></i> Aktif ders</span>
-        <span><i class="legend-dot legend-dot-cancelled"></i> İptal edilen</span>
-      </div>
-      <p><i class="pi pi-sparkles"></i> Rezervasyon ayrıntıları için derse dokunun.</p>
-    </div>
-
     <full-calendar
       [options]="calendarOptions">
     </full-calendar>
@@ -31,12 +23,9 @@
 <app-drawer [(visible)]="reservationDrawerVisible" title="Derse Üye Rezervasyonu">
   <div class="form" *ngIf="selectedLesson as lesson">
     <div class="reservation-lesson-summary">
-      <div class="reservation-lesson-summary__icon"><i class="pi pi-calendar"></i></div>
-      <div>
-        <strong>{{ lesson.name }}</strong>
-        <span>{{ lesson.startAt | date:'dd.MM.yyyy HH:mm' }}</span>
-        <small>{{ lesson.reservationCount }} / {{ lesson.capacity }} kontenjan dolu</small>
-      </div>
+      <strong>{{ lesson.name }}</strong>
+      <span>{{ lesson.startAt | date:'dd.MM.yyyy HH:mm' }}</span>
+      <small>{{ lesson.reservationCount }} / {{ lesson.capacity }} kontenjan dolu</small>
     </div>
 
     <div class="form-group" *ngIf="canSelectMember">

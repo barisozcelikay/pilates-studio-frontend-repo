@@ -192,7 +192,6 @@ export class CalendarComponent implements OnInit {
             reservationCount: lesson.reservationCount,
             capacity: lesson.capacity,
           },
-          classNames: [lesson.status === 'CANCELLED' ? 'calendar-event--cancelled' : 'calendar-event--active'],
           backgroundColor: lesson.status === 'CANCELLED' ? '#b45f5f' : undefined,
           borderColor: lesson.status === 'CANCELLED' ? '#b45f5f' : undefined,
         }));
