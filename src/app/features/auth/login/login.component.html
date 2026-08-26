@@ -3,100 +3,113 @@
     <a class="back-to-studio" routerLink="/home"
       ><i class="pi pi-arrow-left"></i> Stüdyo sayfasına dön</a
     >
-    <div class="login-card">
-      <!-- BRAND -->
+    <div class="login-card-shell">
+      <span class="orbit-light" aria-hidden="true"></span>
+      <div class="login-card">
+        <!-- BRAND -->
 
-      <div class="login-brand">
-        <img src="/images/olive-logo-dark-crisp-transparent-v4.png" alt="Olive Pilates Studio" class="logo" />
+        <div class="login-brand">
+          <img
+            src="/images/olive-logo-dark-crisp-transparent-v4.png"
+            alt="Olive Pilates Studio"
+            class="logo"
+          />
 
-        <p class="brand-subtitle">Pilates & Reformer</p>
+          <p class="brand-subtitle">Pilates & Reformer</p>
 
-        <p class="brand-message">Dengede kalmak, kendine ayırdığın zamanla başlar.</p>
-      </div>
-
-      <!-- CONTENT -->
-
-      <div class="login-content">
-        <div class="login-heading">
-          <span class="eyebrow"> HOŞ GELDİNİZ </span>
-
-          <h1>Hesabınıza giriş yapın</h1>
-
-          <p>Olive Pilates hesabınıza devam etmek için bilgilerinizi girin.</p>
+          <p class="brand-message">Dengede kalmak, kendine ayırdığın zamanla başlar.</p>
         </div>
 
-        <!-- FORM -->
+        <!-- CONTENT -->
 
-        <form [formGroup]="loginForm" (ngSubmit)="login()" class="login-form">
-          <!-- EMAIL -->
+        <div class="login-content">
+          <div class="login-heading">
+            <span class="eyebrow"> HOŞ GELDİNİZ </span>
 
-          <div class="form-group">
-            <label for="email"> E-posta </label>
+            <h1>Hesabınıza giriş yapın</h1>
 
-            <input
-              id="email"
-              type="email"
-              pInputText
-              formControlName="email"
-              autocomplete="email"
-              placeholder="ornek@email.com"
-            />
-
-            @if (loginForm.controls.email.invalid && loginForm.controls.email.touched) {
-              <small class="error"> Geçerli bir e-posta adresi girin. </small>
-            }
+            <p>Olive Pilates hesabınıza devam etmek için bilgilerinizi girin.</p>
           </div>
 
-          <!-- PASSWORD -->
+          <!-- FORM -->
 
-          <div class="form-group">
-            <div class="password-label">
-              <label for="password"> Şifre </label>
+        <form
+          [formGroup]="loginForm"
+          (ngSubmit)="login()"
+          class="login-form"
+          autocomplete="on"
+        >
+            <!-- EMAIL -->
 
-              <a href="/forgot-password"> Şifremi unuttum </a>
+            <div class="form-group">
+              <label for="email"> E-posta </label>
+
+              <input
+                id="email"
+                type="email"
+                pInputText
+                formControlName="email"
+                autocomplete="email"
+                placeholder="ornek@email.com"
+              />
+
+              @if (loginForm.controls.email.invalid && loginForm.controls.email.touched) {
+                <small class="error"> Geçerli bir e-posta adresi girin. </small>
+              }
             </div>
+
+            <!-- PASSWORD -->
+
+            <div class="form-group">
+              <div class="password-label">
+                <label for="password"> Şifre </label>
+
+                <a href="/forgot-password"> Şifremi unuttum </a>
+              </div>
 
             <p-password
               formControlName="password"
               [feedback]="false"
               [toggleMask]="true"
               inputId="password"
+              autocomplete="current-password"
               placeholder="Şifrenizi girin"
             />
-          </div>
-
-          <!-- ERROR -->
-
-          @if (errorMessage) {
-            <div class="login-error">
-              {{ errorMessage }}
             </div>
-          }
 
-          <!-- SUBMIT -->
+            <!-- ERROR -->
 
-          <button
-            pButton
-            type="submit"
-            class="login-button"
-            [disabled]="loginForm.invalid || loading"
-          >
-            @if (loading) {
-              <i class="pi pi-spin pi-spinner"></i>
-            } @else {
-              <span>Giriş Yap</span>
+            @if (errorMessage) {
+              <div class="login-error">
+                {{ errorMessage }}
+              </div>
             }
-          </button>
-        </form>
 
-        <!-- FOOTER -->
+            <!-- SUBMIT -->
 
-        <div class="login-footer">
-          <span> Olive Pilates </span>
+            <button
+              pButton
+              type="submit"
+              class="login-button"
+              [disabled]="loginForm.invalid || loading"
+            >
+              @if (loading) {
+                <i class="pi pi-spin pi-spinner"></i>
+              } @else {
+                <span>Giriş Yap</span>
+              }
+            </button>
+          </form>
 
-          <span class="separator"> • </span>
+          <!-- FOOTER -->
 
-          <span> Sağlıklı yaşam, dengeli beden. </span>
+          <div class="login-footer">
+            <span> Olive Pilates </span>
+
+            <span class="separator"> • </span>
+
+            <span> Sağlıklı yaşam, dengeli beden. </span>
+          </div>
         </div>
       </div>
     </div>

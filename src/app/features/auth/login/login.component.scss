@@ -75,12 +75,41 @@
    CARD
    ============================================================ */
 
-.login-card {
+.login-card-shell {
   position: relative;
   z-index: 1;
-
   width: 100%;
   max-width: 520px;
+}
+
+.orbit-light {
+  position: absolute;
+  z-index: 3;
+  top: 0;
+  left: 0;
+  width: 12px;
+  height: 3px;
+  pointer-events: none;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(255, 238, 137, 0), #fffbd1 70%);
+  box-shadow:
+    0 0 4px 1px rgba(255, 247, 163, 0.9),
+    0 0 10px 3px rgba(242, 199, 92, 0.5);
+  offset-path: inset(0 round 26px);
+  offset-anchor: center;
+  offset-rotate: auto;
+  animation: orbit-card 12s linear infinite;
+}
+
+@keyframes orbit-card {
+  to {
+    offset-distance: 100%;
+  }
+}
+
+.login-card {
+  position: relative;
+  width: 100%;
 
   overflow: hidden;
 
@@ -95,6 +124,13 @@
     0 0 34px rgba(242, 199, 92, 0.18);
 
   backdrop-filter: blur(12px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .orbit-light {
+    animation: none;
+    offset-distance: 12%;
+  }
 }
 
 /* ============================================================
@@ -429,9 +465,12 @@
     padding: 40px;
   }
 
+  .login-card-shell {
+    max-width: 880px;
+  }
+
   .login-card {
     display: grid;
-    max-width: 880px;
     grid-template-columns: 0.9fr 1.1fr;
   }
 
