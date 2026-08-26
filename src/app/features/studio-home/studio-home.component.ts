@@ -13,6 +13,17 @@ export class StudioHomeComponent implements AfterViewInit, OnDestroy {
   openFaqIndex: number | null = null;
   private revealObserver?: IntersectionObserver;
   private scrollFrame?: number;
+  private pointerFrame?: number;
+  private parallaxLayers: Array<{ element: HTMLElement; speed: number }> = [];
+  private readonly updatePointerGlow = (event: PointerEvent): void => {
+    if (this.pointerFrame !== undefined || event.pointerType === 'touch') return;
+    this.pointerFrame = requestAnimationFrame(() => {
+      const style = this.elementRef.nativeElement.style;
+      style.setProperty('--pointer-x', `${event.clientX}px`);
+      style.setProperty('--pointer-y', `${event.clientY}px`);
+      this.pointerFrame = undefined;
+    });
+  };
   private readonly updateIntroProgress = (): void => {
     if (this.scrollFrame !== undefined) {
       return;
@@ -20,15 +31,52 @@ export class StudioHomeComponent implements AfterViewInit, OnDestroy {
 
     this.scrollFrame = requestAnimationFrame(() => {
       const viewportHeight = Math.max(window.innerHeight, 1);
-      const progress = Math.min(Math.max(window.scrollY / (viewportHeight * 0.62), 0), 1);
-      const style = this.elementRef.nativeElement.style;
+      const host = this.elementRef.nativeElement;
+      const introStage = host.querySelector<HTMLElement>('.intro-logo-stage');
+      const introLogo = host.querySelector<HTMLElement>('.intro-logo-wrap');
+      const brandLogo = host.querySelector<HTMLElement>('.brand-logo');
+      const header = host.querySelector<HTMLElement>('.studio-header');
+      const transitionDistance = Math.max((introStage?.offsetHeight ?? viewportHeight * 1.45) - viewportHeight, 1);
+      const progress = Math.min(Math.max(window.scrollY / transitionDistance, 0), 1);
+      const easedProgress = progress * progress * (3 - 2 * progress);
+      const brandRect = brandLogo?.getBoundingClientRect();
+      const headerRect = header?.getBoundingClientRect();
+      const introWidth = introLogo?.offsetWidth ?? Math.min(window.innerWidth * 0.78, 880);
+      const targetCenterX = brandRect ? brandRect.left + brandRect.width / 2 : 128;
+      const targetCenterY = brandRect ? brandRect.top - (headerRect?.top ?? 0) + brandRect.height / 2 : 48;
+      const targetScale = brandRect ? Math.min(Math.max(brandRect.width / Math.max(introWidth, 1), 0.18), 0.42) : 0.3;
+      const headerProgress = Math.min(Math.max((progress - 0.76) / 0.2, 0), 1);
+      const heroProgress = Math.min(Math.max((progress - 0.36) / 0.64, 0), 1);
+      const style = host.style;
       style.setProperty('--intro-progress', progress.toFixed(4));
-      style.setProperty('--intro-y', `${(-progress * 38).toFixed(2)}vh`);
-      style.setProperty('--intro-scale', (1 - progress * 0.58).toFixed(4));
-      style.setProperty('--intro-opacity', Math.max(1 - progress * 0.92, 0).toFixed(4));
+      style.setProperty('--intro-x', `${((targetCenterX - window.innerWidth / 2) * easedProgress).toFixed(2)}px`);
+      style.setProperty('--intro-y', `${((targetCenterY - viewportHeight / 2) * easedProgress).toFixed(2)}px`);
+      style.setProperty('--intro-scale', (1 - (1 - targetScale) * easedProgress).toFixed(4));
+      style.setProperty('--intro-opacity', Math.max(1 - Math.max((progress - 0.82) / 0.18, 0), 0).toFixed(4));
       style.setProperty('--intro-ambient-opacity', Math.max(1 - progress, 0).toFixed(4));
       style.setProperty('--intro-grid-opacity', Math.max(0.22 * (1 - progress), 0).toFixed(4));
       style.setProperty('--intro-cue-opacity', Math.max(1 - progress * 3, 0).toFixed(4));
+      style.setProperty('--header-progress', headerProgress.toFixed(4));
+      style.setProperty('--header-nav-progress', Math.min(Math.max((progress - 0.82) / 0.16, 0), 1).toFixed(4));
+      style.setProperty('--hero-progress', heroProgress.toFixed(4));
+      const documentProgress = window.scrollY / Math.max(document.documentElement.scrollHeight - viewportHeight, 1);
+      style.setProperty('--page-progress', Math.min(Math.max(documentProgress, 0), 1).toFixed(5));
+      if (header) header.style.pointerEvents = headerProgress > 0.9 ? 'auto' : 'none';
+
+      const parallaxEnabled = window.innerWidth > 768
+        && !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      this.parallaxLayers.forEach(({ element, speed }) => {
+        if (!parallaxEnabled) {
+          element.style.setProperty('--parallax-y', '0px');
+          return;
+        }
+
+        const rect = element.getBoundingClientRect();
+        const distanceFromCenter = rect.top + rect.height / 2 - viewportHeight / 2;
+        const shift = Math.min(Math.max(distanceFromCenter * speed, -56), 56);
+        element.style.setProperty('--parallax-y', `${shift.toFixed(2)}px`);
+      });
       this.scrollFrame = undefined;
     });
   };
@@ -87,13 +135,79 @@ export class StudioHomeComponent implements AfterViewInit, OnDestroy {
     this.openFaqIndex = this.openFaqIndex === index ? null : index;
   }
 
+  private applyOliveWordmark(): void {
+    const host = this.elementRef.nativeElement;
+    const walker = document.createTreeWalker(host, NodeFilter.SHOW_TEXT);
+    const matches: Text[] = [];
+    let currentNode = walker.nextNode();
+
+    while (currentNode) {
+      const textNode = currentNode as Text;
+      const parent = textNode.parentElement;
+      if (
+        parent
+        && /\bolive\b/i.test(textNode.data)
+        && !textNode.data.includes('@')
+        && !parent.closest('.olive-signature, script, style')
+      ) {
+        matches.push(textNode);
+      }
+      currentNode = walker.nextNode();
+    }
+
+    matches.forEach((textNode) => {
+      const fragment = document.createDocumentFragment();
+      textNode.data.split(/(\bolive\b)/gi).forEach((part) => {
+        if (/^olive$/i.test(part)) {
+          const signature = document.createElement('span');
+          signature.className = 'olive-signature';
+          signature.textContent = 'Olive';
+          fragment.appendChild(signature);
+        } else {
+          fragment.appendChild(document.createTextNode(part));
+        }
+      });
+      textNode.replaceWith(fragment);
+    });
+  }
+
+  private initializeParallax(): void {
+    const host = this.elementRef.nativeElement;
+    const layerGroups: Array<{ selector: string; speed: number }> = [
+      { selector: '.hero-orbit', speed: -0.12 },
+      { selector: '.hero-glow', speed: 0.08 },
+      { selector: '.hero-copy', speed: -0.045 },
+      { selector: '.hero-visual', speed: 0.065 },
+      { selector: '#studio > div > div', speed: 0.035 },
+      { selector: '#yaklasim h2', speed: -0.035 },
+      { selector: '#yaklasim article', speed: 0.045 },
+      { selector: '#dersler article', speed: 0.025 },
+      { selector: '.studio-story-section img', speed: 0.075 },
+      { selector: '.studio-story-section .story-copy', speed: -0.04 },
+      { selector: '#paketler article', speed: 0.045 },
+      { selector: '.instagram-card', speed: 0.035 },
+      { selector: '#iletisim > div > div', speed: 0.04 },
+    ];
+
+    this.parallaxLayers = layerGroups.flatMap(({ selector, speed }) =>
+      Array.from(host.querySelectorAll<HTMLElement>(selector)).map((element, index) => {
+        element.classList.add('parallax-layer');
+        return { element, speed: speed * (1 + (index % 3) * 0.16) };
+      }),
+    );
+  }
+
   ngAfterViewInit(): void {
+    this.applyOliveWordmark();
+    this.initializeParallax();
     window.addEventListener('scroll', this.updateIntroProgress, { passive: true });
+    window.addEventListener('resize', this.updateIntroProgress, { passive: true });
+    window.addEventListener('pointermove', this.updatePointerGlow, { passive: true });
     this.updateIntroProgress();
 
     const revealElements = Array.from(
       document.querySelectorAll<HTMLElement>(
-        '.studio-home-page section:not(.hero-shell), .instagram-card, #paketler article, #yaklasim article',
+        '.studio-home-page section:not(.hero-shell):not(.intro-logo-stage), .instagram-card, #paketler article, #yaklasim article',
       ),
     );
 
@@ -127,10 +241,13 @@ export class StudioHomeComponent implements AfterViewInit, OnDestroy {
   ngOnDestroy(): void {
     this.revealObserver?.disconnect();
     window.removeEventListener('scroll', this.updateIntroProgress);
+    window.removeEventListener('resize', this.updateIntroProgress);
+    window.removeEventListener('pointermove', this.updatePointerGlow);
 
     if (this.scrollFrame !== undefined) {
       cancelAnimationFrame(this.scrollFrame);
     }
+    if (this.pointerFrame !== undefined) cancelAnimationFrame(this.pointerFrame);
   }
 
   closeMobileMenu(): void {

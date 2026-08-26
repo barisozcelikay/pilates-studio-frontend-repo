@@ -355,6 +355,15 @@
    ========================================================= */
 
 @media (max-width: 768px) {
+  .page {
+    gap: 12px;
+  }
+
+  .page-description,
+  .calendar-legend {
+    display: none;
+  }
+
   .calendar-card {
     padding: 0.5rem;
   }
@@ -557,4 +566,388 @@
 :host-context(.dark) .fc .fc-daygrid-day-number,
 :host-context(.dark-theme) .fc .fc-daygrid-day-number {
   color: #e8e5da !important;
+}
+
+/* =========================================================
+   OLIVE CALENDAR THEME
+   ========================================================= */
+
+:host {
+  display: block;
+}
+
+.page {
+  gap: 16px;
+  padding: 0;
+}
+
+.page-header {
+  flex: 0 0 auto;
+}
+
+.calendar-card {
+  display: block;
+}
+
+full-calendar {
+  display: block;
+}
+
+/* FullCalendar calculates this layer numerically. Keep a real fallback height
+   so the time grid can never collapse while the route/layout is settling. */
+:host ::ng-deep .fc .fc-view-harness {
+  min-height: 520px;
+}
+
+.calendar-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 16px;
+  color: var(--color-text-muted);
+  font-size: 11px;
+  font-weight: 650;
+}
+
+.calendar-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.calendar-create-button {
+  min-width: 148px;
+  box-shadow: 0 0 18px rgba(174, 185, 52, 0.16);
+}
+
+.calendar-card--creator::after {
+  content: 'Boş bir saat alanına tıklayarak hızlıca ders oluşturabilirsiniz.';
+  display: none;
+  color: var(--calendar-muted);
+  font-size: 10px;
+  text-align: right;
+}
+
+:host ::ng-deep .calendar-card--creator .fc-timegrid-slot-lane,
+:host ::ng-deep .calendar-card--creator .fc-daygrid-day-frame {
+  cursor: cell;
+}
+
+.calendar-form-intro {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 14px;
+  border: 1px solid rgba(169, 134, 67, 0.28);
+  border-radius: 13px;
+  background: linear-gradient(135deg, var(--color-surface-soft), var(--color-surface));
+  box-shadow: inset 3px 0 var(--color-accent);
+}
+
+.calendar-form-intro > i {
+  display: grid;
+  flex: 0 0 38px;
+  width: 38px;
+  height: 38px;
+  place-items: center;
+  border-radius: 11px;
+  background: var(--color-primary);
+  color: var(--color-accent-light);
+}
+
+.calendar-form-intro div { display: grid; gap: 3px; }
+.calendar-form-intro strong { color: var(--color-text); font-size: 12px; }
+.calendar-form-intro span { color: var(--color-text-muted); font-size: 9px; line-height: 1.45; }
+
+.calendar-hours-help {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: -4px;
+  padding: 9px 11px;
+  border-radius: 9px;
+  background: rgba(169, 134, 67, 0.08);
+  color: var(--color-text-muted);
+  font-size: 9px;
+}
+
+.calendar-hours-help i { color: var(--color-accent); }
+
+:host-context(.dark-theme) .calendar-form-intro {
+  border-color: rgba(232, 216, 77, 0.18);
+  background: rgba(232, 216, 77, 0.055);
+  box-shadow: inset 3px 0 #e8d84d;
+}
+
+:host-context(.dark-theme) .calendar-form-intro > i {
+  background: #292a26;
+  color: #fff174;
+  box-shadow: 0 0 14px rgba(232, 216, 77, 0.13);
+}
+
+.legend-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.legend-dot--lesson {
+  background: #aeb934;
+  box-shadow: 0 0 9px rgba(174, 185, 52, 0.55);
+}
+
+.legend-dot--today {
+  border: 1px solid #a98643;
+  background: rgba(169, 134, 67, 0.22);
+}
+
+.legend-dot--cancelled {
+  background: #c65c57;
+  box-shadow: 0 0 7px rgba(198, 92, 87, 0.35);
+}
+
+.calendar-card {
+  position: relative;
+  padding: 20px;
+  border: 1px solid rgba(169, 134, 67, 0.24) !important;
+  border-radius: 20px !important;
+  background:
+    radial-gradient(circle at 82% 0%, rgba(214, 190, 136, 0.15), transparent 30%),
+    linear-gradient(145deg, rgba(248, 240, 225, 0.98), rgba(238, 228, 209, 0.96)) !important;
+  box-shadow: 0 24px 60px rgba(53, 50, 45, 0.1), inset 0 1px rgba(255, 255, 255, 0.65) !important;
+  --calendar-bg: rgba(248, 240, 225, 0.72);
+  --calendar-header-bg: rgba(228, 215, 193, 0.78);
+  --calendar-today-bg: rgba(214, 190, 136, 0.2);
+  --calendar-border: rgba(169, 134, 67, 0.34);
+  --calendar-border-light: rgba(200, 185, 149, 0.48);
+  --calendar-text: #292925;
+  --calendar-muted: #747168;
+  --calendar-primary: #292925;
+  --calendar-primary-dark: #171816;
+  --calendar-gold: #a98643;
+  --calendar-event: #31322d;
+}
+
+:host ::ng-deep .fc {
+  border-radius: 15px;
+  background: transparent;
+}
+
+:host ::ng-deep .fc .fc-toolbar {
+  min-height: 48px;
+  margin-bottom: 18px !important;
+}
+
+:host ::ng-deep .fc .fc-toolbar-title {
+  font-size: clamp(1.05rem, 2vw, 1.35rem);
+  font-weight: 750;
+  letter-spacing: -0.025em;
+}
+
+:host ::ng-deep .fc .fc-button {
+  min-height: 36px;
+  border-color: rgba(169, 134, 67, 0.34) !important;
+  border-radius: 10px !important;
+  background: rgba(248, 240, 225, 0.72) !important;
+  color: #515049 !important;
+  transition: transform 180ms ease, color 180ms ease, background 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+}
+
+:host ::ng-deep .fc .fc-button:hover {
+  transform: translateY(-1px);
+  border-color: #a98643 !important;
+  background: #f8f0e1 !important;
+  color: #292925 !important;
+  box-shadow: 0 7px 18px rgba(169, 134, 67, 0.14);
+}
+
+:host ::ng-deep .fc .fc-button-active {
+  border-color: #292925 !important;
+  background: #292925 !important;
+  color: #fff174 !important;
+  box-shadow: 0 0 0 1px rgba(255, 241, 116, 0.12), 0 0 18px rgba(169, 134, 67, 0.16) !important;
+}
+
+:host ::ng-deep .fc-theme-standard .fc-scrollgrid {
+  border-color: rgba(169, 134, 67, 0.3) !important;
+  border-radius: 14px;
+  box-shadow: inset 0 1px rgba(255, 255, 255, 0.45);
+}
+
+:host ::ng-deep .fc .fc-col-header-cell {
+  background: linear-gradient(180deg, rgba(228, 215, 193, 0.9), rgba(238, 228, 209, 0.78)) !important;
+}
+
+:host ::ng-deep .fc .fc-col-header-cell-cushion {
+  padding-block: 11px;
+  font-size: 11px;
+  letter-spacing: 0.055em;
+  text-transform: uppercase;
+}
+
+:host ::ng-deep .fc .fc-col-header-cell.fc-day-today {
+  background: linear-gradient(180deg, rgba(214, 190, 136, 0.52), rgba(214, 190, 136, 0.24)) !important;
+  box-shadow: inset 0 -2px #a98643;
+}
+
+:host ::ng-deep .fc .fc-timegrid-slot,
+:host ::ng-deep .fc .fc-daygrid-day {
+  transition: background 180ms ease;
+}
+
+:host ::ng-deep .fc .fc-timegrid-slot:hover,
+:host ::ng-deep .fc .fc-daygrid-day:hover {
+  background: rgba(214, 190, 136, 0.15) !important;
+}
+
+:host ::ng-deep .fc .fc-day-today {
+  background: linear-gradient(180deg, rgba(214, 190, 136, 0.18), rgba(214, 190, 136, 0.07)) !important;
+}
+
+:host ::ng-deep .fc .fc-event {
+  overflow: hidden;
+  border: 1px solid rgba(174, 185, 52, 0.35) !important;
+  border-left: 3px solid #aeb934 !important;
+  border-radius: 9px !important;
+  background: linear-gradient(135deg, #34352f, #292a26) !important;
+  color: #fff8e8 !important;
+  box-shadow: 0 5px 14px rgba(41, 41, 37, 0.2), inset 0 1px rgba(255, 255, 255, 0.06);
+  transition: transform 190ms ease, border-color 190ms ease, box-shadow 190ms ease, filter 190ms ease;
+}
+
+:host ::ng-deep .fc .fc-event:hover {
+  z-index: 8;
+  transform: translateY(-2px) scale(1.015);
+  border-color: #d6be88 !important;
+  background: linear-gradient(135deg, #3b3d34, #2d2e29) !important;
+  box-shadow: 0 10px 24px rgba(41, 41, 37, 0.26), 0 0 16px rgba(174, 185, 52, 0.18);
+}
+
+:host ::ng-deep .fc .calendar-event--cancelled {
+  border-color: rgba(198, 92, 87, 0.62) !important;
+  border-left-color: #e58a83 !important;
+  background: linear-gradient(135deg, #6f3936, #512d2b) !important;
+  filter: saturate(0.82);
+}
+
+:host ::ng-deep .calendar-lesson-event__title {
+  color: #fff8e8;
+  font-size: 11px;
+}
+
+:host ::ng-deep .calendar-lesson-event__instructor,
+:host ::ng-deep .calendar-lesson-event__capacity {
+  color: #d4ccb8;
+}
+
+:host ::ng-deep .calendar-service-chip--0 { background: #aeb934; color: #171816; }
+:host ::ng-deep .calendar-service-chip--1 { background: #a98643; }
+:host ::ng-deep .calendar-service-chip--2 { background: #6e622f; }
+:host ::ng-deep .calendar-service-chip--3 { background: #51514a; }
+
+:host ::ng-deep .fc .fc-timegrid-now-indicator-line {
+  border-color: #e8d84d !important;
+  box-shadow: 0 0 8px rgba(232, 216, 77, 0.65);
+}
+
+.reservation-lesson-summary {
+  border-color: rgba(169, 134, 67, 0.3);
+  background: linear-gradient(145deg, var(--color-surface-soft), var(--color-surface));
+  box-shadow: inset 3px 0 var(--color-accent);
+}
+
+:host-context(.dark) .calendar-card,
+:host-context(.dark-theme) .calendar-card {
+  --calendar-bg: rgba(24, 25, 23, 0.88);
+  --calendar-header-bg: rgba(44, 45, 42, 0.94);
+  --calendar-today-bg: rgba(232, 216, 77, 0.08);
+  --calendar-border: rgba(110, 98, 47, 0.72);
+  --calendar-border-light: rgba(61, 58, 39, 0.9);
+  --calendar-text: #fff8e8;
+  --calendar-muted: #bcb39b;
+  --calendar-primary: #e8d84d;
+  --calendar-primary-dark: #fff174;
+  --calendar-gold: #f0c85b;
+  --calendar-event: #292a26;
+  border-color: rgba(232, 216, 77, 0.18) !important;
+  background:
+    radial-gradient(circle at 84% 0%, rgba(232, 216, 77, 0.08), transparent 30%),
+    linear-gradient(rgba(33, 34, 32, 0.94), rgba(24, 25, 23, 0.97)),
+    url('/images/charcoal-leather-texture-v1.png') center / 620px auto repeat !important;
+  box-shadow: 0 30px 75px rgba(0, 0, 0, 0.32), inset 0 1px rgba(255, 241, 116, 0.04) !important;
+}
+
+:host-context(.dark) .calendar-legend,
+:host-context(.dark-theme) .calendar-legend {
+  color: #bcb39b;
+}
+
+:host-context(.dark) ::ng-deep .fc,
+:host-context(.dark-theme) ::ng-deep .fc {
+  background: transparent !important;
+}
+
+:host-context(.dark) ::ng-deep .fc .fc-button,
+:host-context(.dark-theme) ::ng-deep .fc .fc-button {
+  border-color: rgba(110, 98, 47, 0.72) !important;
+  background: rgba(33, 34, 32, 0.86) !important;
+  color: #e8dfc7 !important;
+}
+
+:host-context(.dark) ::ng-deep .fc .fc-button:hover,
+:host-context(.dark-theme) ::ng-deep .fc .fc-button:hover,
+:host-context(.dark) ::ng-deep .fc .fc-button-active,
+:host-context(.dark-theme) ::ng-deep .fc .fc-button-active {
+  border-color: #e8d84d !important;
+  background: rgba(232, 216, 77, 0.12) !important;
+  color: #fff174 !important;
+  box-shadow: 0 0 16px rgba(232, 216, 77, 0.16) !important;
+}
+
+:host-context(.dark) ::ng-deep .fc .fc-col-header-cell,
+:host-context(.dark-theme) ::ng-deep .fc .fc-col-header-cell,
+:host-context(.dark) ::ng-deep .fc .fc-timegrid-axis,
+:host-context(.dark-theme) ::ng-deep .fc .fc-timegrid-axis {
+  background: linear-gradient(180deg, #2c2d2a, #252622) !important;
+}
+
+:host-context(.dark) ::ng-deep .fc .fc-timegrid-slot,
+:host-context(.dark-theme) ::ng-deep .fc .fc-timegrid-slot,
+:host-context(.dark) ::ng-deep .fc .fc-daygrid-day,
+:host-context(.dark-theme) ::ng-deep .fc .fc-daygrid-day {
+  background: rgba(24, 25, 23, 0.88) !important;
+  border-color: #3d3a27 !important;
+}
+
+:host-context(.dark) ::ng-deep .fc .fc-timegrid-slot:hover,
+:host-context(.dark-theme) ::ng-deep .fc .fc-timegrid-slot:hover,
+:host-context(.dark) ::ng-deep .fc .fc-daygrid-day:hover,
+:host-context(.dark-theme) ::ng-deep .fc .fc-daygrid-day:hover {
+  background: rgba(232, 216, 77, 0.055) !important;
+}
+
+:host-context(.dark) ::ng-deep .fc .fc-day-today,
+:host-context(.dark-theme) ::ng-deep .fc .fc-day-today {
+  background: linear-gradient(180deg, rgba(232, 216, 77, 0.095), rgba(232, 216, 77, 0.025)) !important;
+}
+
+@media (max-width: 768px) {
+  .calendar-card {
+    padding: 10px;
+    border-radius: 15px !important;
+  }
+
+  :host ::ng-deep .fc .fc-toolbar {
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  :host ::ng-deep .fc .fc-toolbar-chunk {
+    display: flex;
+    justify-content: center;
+  }
+
+  :host ::ng-deep .fc .fc-toolbar-title {
+    text-align: center;
+  }
 }

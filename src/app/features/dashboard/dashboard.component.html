@@ -1,3 +1,61 @@
+@if (isMember) {
+<div class="member-home">
+  <section class="member-welcome">
+    <div class="member-welcome__copy">
+      <span class="page-eyebrow">OLIVE MEMBER</span>
+      <h1>Hoş geldin, {{ currentAccount?.firstName || 'Olive üyesi' }}.</h1>
+      <p>Bu hafta kendine ayırdığın zamanı, yaklaşan dersleri ve stüdyo akışını burada görebilirsin.</p>
+      <div class="member-welcome__actions">
+        <a routerLink="/calendar" class="member-primary-action"><i class="pi pi-calendar-plus"></i>Ders seç</a>
+        <a routerLink="/calendar" class="member-secondary-action">Haftayı görüntüle <i class="pi pi-arrow-right"></i></a>
+      </div>
+    </div>
+    <div class="member-next" [class.member-next--empty]="!nextMemberLesson">
+      <span class="member-next__eyebrow">SIRADAKİ AKIŞ</span>
+      @if (nextMemberLesson; as lesson) {
+        <time>{{ lesson.startAt | date:'EEEE' }}<strong>{{ lesson.startAt | date:'HH:mm' }}</strong></time>
+        <div><h2>{{ lesson.name }}</h2><p>{{ lesson.instructorNames.join(', ') || 'Eğitmen bilgisi yakında' }}</p></div>
+        <span class="member-next__capacity">{{ lesson.reservationCount }} / {{ lesson.capacity }} kişi</span>
+      } @else {
+        <i class="pi pi-sparkles"></i><h2>Yeni bir akış seç</h2><p>Bu hafta için yaklaşan aktif ders bulunmuyor.</p>
+      }
+    </div>
+  </section>
+
+  <section class="member-stat-grid">
+    <article><i class="pi pi-calendar"></i><div><small>Bu haftaki dersler</small><strong>{{ memberLessons.length }}</strong><span>Programdaki aktif ders</span></div></article>
+    <article><i class="pi pi-check-circle"></i><div><small>Yer olan dersler</small><strong>{{ openLessonCount }}</strong><span>Rezervasyona uygun</span></div></article>
+    <article class="member-ritual"><i class="pi pi-heart"></i><div><small>Bugünün ritüeli</small><strong>Nefes · Denge</strong><span>Kendine ayırdığın zaman değerli</span></div></article>
+  </section>
+
+  <p class="dashboard-error" *ngIf="loadError">{{ loadError }}</p>
+
+  <section class="member-content-grid">
+    <article class="member-schedule-panel">
+      <header><div><span class="page-eyebrow">HAFTALIK PROGRAM</span><h2>Yaklaşan dersler</h2></div><a routerLink="/calendar">Takvime git <i class="pi pi-arrow-up-right"></i></a></header>
+      <div class="member-lesson-list">
+        @for (lesson of upcomingMemberLessons; track lesson.id) {
+          <a routerLink="/calendar" class="member-lesson-card">
+            <time><strong>{{ lesson.startAt | date:'dd' }}</strong><span>{{ lesson.startAt | date:'MMM' }}</span></time>
+            <div class="member-lesson-card__body"><h3>{{ lesson.name }}</h3><p>{{ lesson.startAt | date:'EEEE, HH:mm' }} · {{ lesson.instructorNames.join(', ') || 'Olive Studio' }}</p><div class="member-capacity"><i [style.width.%]="lessonOccupancy(lesson)"></i></div></div>
+            <span class="member-lesson-card__count">{{ (lesson.capacity ?? 0) - lesson.reservationCount }} yer</span>
+            <i class="pi pi-chevron-right"></i>
+          </a>
+        } @empty {
+          <div class="member-empty"><i class="pi pi-calendar-times"></i><h3>Yaklaşan ders bulunmuyor</h3><p>Yeni program yayınlandığında burada görebileceksin.</p></div>
+        }
+      </div>
+    </article>
+
+    <aside class="member-note-panel">
+      <span class="page-eyebrow">OLIVE NOTU</span>
+      <blockquote>“İyi hissetmek, kendi ritmini bulmakla başlar.”</blockquote>
+      <p>Derse birkaç dakika erken gel, nefesine dön ve günün hızını kapıda bırak.</p>
+      <div class="member-note-orbit"><span>O</span></div>
+    </aside>
+  </section>
+</div>
+} @else {
 <div class="dashboard-home">
   <div class="dashboard-heading">
     <div>
@@ -84,3 +142,4 @@
     </article>
   </section>
 </div>
+}
