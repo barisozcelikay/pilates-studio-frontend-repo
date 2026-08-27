@@ -149,6 +149,13 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./features/profiles/profiles.component').then((m) => m.ProfilesComponent),
       },
+      {
+        path: 'settings/reservation-policies',
+        loadComponent: () =>
+          import('./features/reservation-policies/reservation-policies.component').then(
+            (m) => m.ReservationPoliciesComponent,
+          ),
+      },
     ],
   },
 ];

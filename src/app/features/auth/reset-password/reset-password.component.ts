@@ -26,6 +26,10 @@ export class ResetPasswordComponent {
 
   resetPasswordForm;
 
+  get isInitialPassword(): boolean {
+    return this.type === 'initial';
+  }
+
   constructor(
     private readonly formBuilder: FormBuilder,
     private readonly authService: AuthService,

@@ -17,6 +17,10 @@ import { InstructorService } from '../instructors/service/instructor-service';
 import { RouterLink } from '@angular/router';
 import { StudioServiceDto } from '../studio-services/model/studio-service-dto';
 import { StudioServiceService } from '../studio-services/service/studio-service-service';
+import {
+  ReservationPolicyDto,
+  ReservationPolicyService,
+} from '../reservation-policies/reservation-policy-service';
 
 @Component({
   selector: 'app-lessons',
@@ -42,6 +46,7 @@ export class LessonsComponent extends BaseComponent<LessonDto> {
   selectedInstructorIds: number[] = [];
   services: StudioServiceDto[] = [];
   selectedServiceIds: number[] = [];
+  reservationPolicies: ReservationPolicyDto[] = [];
   readonly statusOptions = [
     { label: 'Aktif', value: 'ACTIVE' },
     { label: 'İptal Edildi', value: 'CANCELLED' },
@@ -53,6 +58,7 @@ export class LessonsComponent extends BaseComponent<LessonDto> {
     cdr: ChangeDetectorRef,
     private readonly instructorService: InstructorService,
     private readonly studioServiceService: StudioServiceService,
+    private readonly reservationPolicyService: ReservationPolicyService,
   ) {
     super(lessonService, cdr, LessonDto);
   }
@@ -80,6 +86,12 @@ export class LessonsComponent extends BaseComponent<LessonDto> {
         this.cdr.markForCheck();
       },
     });
+    this.reservationPolicyService.findAll().subscribe({
+      next: (policies) => {
+        this.reservationPolicies = policies.filter((policy) => policy.active);
+        this.cdr.markForCheck();
+      },
+    });
   }
 
   protected override openEditForm(lesson: LessonDto): void {
@@ -102,6 +114,7 @@ export class LessonsComponent extends BaseComponent<LessonDto> {
     super.openCreateForm();
     this.selectedInstructorIds = [];
     this.selectedServiceIds = [];
+    this.form.reservationPolicyId = null;
   }
 
   private toIsoDateTime(value: Date | string | null): string {

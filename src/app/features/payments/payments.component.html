@@ -133,6 +133,20 @@
         optionLabel="label"
         optionValue="value"
         [(ngModel)]="form.status"
+        (onChange)="onPaymentStatusChange()"
+      />
+    </div>
+
+    <div class="form-group" *ngIf="form.status === 'PAID'">
+      <label class="form-label" for="paid-at">Ödenme tarihi</label>
+      <p-datepicker
+        inputId="paid-at"
+        [(ngModel)]="form.paidAt"
+        [showTime]="true"
+        [showIcon]="true"
+        hourFormat="24"
+        dateFormat="dd.mm.yy"
+        appendTo="body"
       />
     </div>
 

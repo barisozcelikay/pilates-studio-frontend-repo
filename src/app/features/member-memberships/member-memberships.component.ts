@@ -61,6 +61,8 @@ export class MemberMembershipsComponent implements OnInit {
   readonly chartMetrics = [
     { key: 'weightKg', label: 'Kilo', unit: 'kg', color: '#B88A42' },
     { key: 'bodyFatPercentage', label: 'Yağ Oranı', unit: '%', color: '#9B7EAF' },
+    { key: 'muscleMassKg', label: 'Kas Kütlesi', unit: 'kg', color: '#547A68' },
+    { key: 'bodyWaterPercentage', label: 'Su Oranı', unit: '%', color: '#4E8CA6' },
     { key: 'chestCm', label: 'Göğüs', unit: 'cm', color: '#C06C5A' },
     { key: 'waistCm', label: 'Bel', unit: 'cm', color: '#6D8A75' },
     { key: 'hipCm', label: 'Kalça', unit: 'cm', color: '#7489A7' },

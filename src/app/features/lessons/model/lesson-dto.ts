@@ -2,6 +2,7 @@ import { BaseDto } from '../../../shared/model/base-dto';
 
 export class LessonDto extends BaseDto {
   name = '';
+  reservationPolicyId: number | null = null;
   description = '';
   startAt: Date | string | null = null;
   endAt: Date | string | null = null;

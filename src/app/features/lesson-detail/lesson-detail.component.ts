@@ -151,12 +151,7 @@ export class LessonDetailComponent implements OnInit {
   }
 
   statusLabel(status: ReservationDto['status']): string {
-    return {
-      CONFIRMED: 'Rezerve edildi',
-      ATTENDED: 'Katıldı',
-      CANCELLED_WITH_RIGHT: 'İptal hakkından düşürüldü',
-      REMOVED: 'Dersten çıkarıldı',
-    }[status];
+    return ""
   }
 
   private refresh(): void {

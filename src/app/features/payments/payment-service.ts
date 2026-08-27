@@ -16,7 +16,7 @@ export class PaymentDto extends BaseDto {
   amount: number | null = null;
   paymentMethod: PaymentMethod | null = null;
   status: PaymentStatus = 'UNPAID';
-  paidAt: string | null = null;
+  paidAt: Date | string | null = null;
   note = '';
 }
 
@@ -58,6 +58,7 @@ export class PaymentService extends BaseService<PaymentDto> {
       amount: payment.amount,
       paymentMethod: payment.paymentMethod,
       status: payment.status,
+      paidAt: payment.paidAt ? new Date(payment.paidAt).toISOString() : null,
       note: payment.note,
     };
   }

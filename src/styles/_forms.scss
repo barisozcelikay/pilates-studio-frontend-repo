@@ -115,6 +115,42 @@
   }
 }
 
+/* Chrome/Safari autofill paints its own light-blue background. Keep filled
+   controls inside drawers aligned with the active application theme. */
+.form input.p-inputtext:-webkit-autofill,
+.form input.p-inputtext:-webkit-autofill:hover,
+.form input.p-inputtext:-webkit-autofill:focus,
+.form input.p-inputtext:-webkit-autofill:active,
+.form .p-inputnumber-input:-webkit-autofill,
+.form .p-inputnumber-input:-webkit-autofill:hover,
+.form .p-inputnumber-input:-webkit-autofill:focus,
+.form .p-inputnumber-input:-webkit-autofill:active,
+.form textarea:-webkit-autofill,
+.form textarea:-webkit-autofill:hover,
+.form textarea:-webkit-autofill:focus,
+.form textarea:-webkit-autofill:active {
+  background-color: var(--color-surface-soft) !important;
+  box-shadow: 0 0 0 1000px var(--color-surface-soft) inset !important;
+  -webkit-box-shadow: 0 0 0 1000px var(--color-surface-soft) inset !important;
+  caret-color: var(--color-text) !important;
+  color: var(--color-text) !important;
+  -webkit-text-fill-color: var(--color-text) !important;
+  filter: none !important;
+  text-shadow: none !important;
+  -webkit-background-clip: padding-box !important;
+  transition:
+    background-color 9999s ease-out 0s,
+    color 0s !important;
+}
+
+.form input.p-inputtext:autofill,
+.form .p-inputnumber-input:autofill,
+.form textarea:autofill {
+  background: var(--color-surface-soft) !important;
+  color: var(--color-text) !important;
+  text-shadow: none !important;
+}
+
 /* ==============================
    PRIME SELECT
    ============================== */
@@ -398,8 +434,9 @@
   }
 
   &.p-select-option-selected {
-    background: var(--color-accent-light) !important;
-    color: var(--color-primary) !important;
+    background: var(--color-surface-soft) !important;
+    color: var(--color-text) !important;
+    box-shadow: inset 3px 0 var(--color-accent);
   }
 }
 

@@ -13,7 +13,7 @@ export interface ReservationDto {
   lessonId?: number;
   lessonName?: string;
   lessonStartAt?: string;
-  status: 'CONFIRMED' | 'ATTENDED' | 'CANCELLED_WITH_RIGHT' | 'REMOVED';
+  status: 'CONFIRMED' | 'ATTENDED' | 'CANCELLED' | 'CANCELLED_WITH_RIGHT' | 'REMOVED';
   createdAt: string;
 }
 

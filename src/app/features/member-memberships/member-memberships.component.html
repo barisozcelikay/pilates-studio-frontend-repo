@@ -116,6 +116,8 @@
                   <th>Tarih</th>
                   <th>Kilo</th>
                   <th>Yağ Oranı</th>
+                  <th>Kas</th>
+                  <th>Su</th>
                   <th>Göğüs</th>
                   <th>Bel</th>
                   <th>Kalça</th>
@@ -128,6 +130,8 @@
                   <td>{{ item.measuredAt | date: 'dd.MM.yyyy' }}</td>
                   <td>{{ item.weightKg ? item.weightKg + ' kg' : '—' }}</td>
                   <td>{{ item.bodyFatPercentage ? '%' + item.bodyFatPercentage : '—' }}</td>
+                  <td>{{ item.muscleMassKg ? item.muscleMassKg + ' kg' : '—' }}</td>
+                  <td>{{ item.bodyWaterPercentage ? '%' + item.bodyWaterPercentage : '—' }}</td>
                   <td>{{ item.chestCm ? item.chestCm + ' cm' : '—' }}</td>
                   <td>{{ item.waistCm ? item.waistCm + ' cm' : '—' }}</td>
                   <td>{{ item.hipCm ? item.hipCm + ' cm' : '—' }}</td>
@@ -149,7 +153,7 @@
                   </td>
                 </tr>
                 <tr *ngIf="!measurements.length">
-                  <td colspan="8">Henüz ölçüm kaydı bulunmuyor.</td>
+                  <td colspan="10">Henüz ölçüm kaydı bulunmuyor.</td>
                 </tr>
               </tbody>
             </table>
@@ -253,15 +257,25 @@
                   <td>{{ item.lessonStartAt | date: 'dd.MM.yyyy HH:mm' }}</td>
                   <td>{{ item.createdAt | date: 'dd.MM.yyyy HH:mm' }}</td>
                   <td>
-                    <span class="status-pill">{{
-                      item.status === 'CONFIRMED'
-                        ? 'Rezerve edildi'
-                        : item.status === 'ATTENDED'
-                          ? 'Katıldı'
-                          : item.status === 'CANCELLED_WITH_RIGHT'
-                            ? 'İptal hakkından düşürüldü'
-                            : 'Dersten çıkarıldı'
-                    }}</span>
+                    <span
+                      class="status-pill reservation-status"
+                      [class.reservation-status--attended]="item.status === 'ATTENDED'"
+                      [class.reservation-status--cancelled]="
+                        item.status === 'CANCELLED' || item.status === 'CANCELLED_WITH_RIGHT'
+                      "
+                      [class.reservation-status--confirmed]="item.status === 'CONFIRMED'"
+                      >{{
+                        item.status === 'CONFIRMED'
+                          ? 'Rezerve edildi'
+                          : item.status === 'ATTENDED'
+                            ? 'Katıldı'
+                            : item.status === 'CANCELLED'
+                              ? 'İptal edildi'
+                              : item.status === 'CANCELLED_WITH_RIGHT'
+                                ? 'İptal edildi · Hak düşüldü'
+                                : 'Dersten çıkarıldı'
+                      }}</span
+                    >
                   </td>
                 </tr>
                 <tr *ngIf="!lessonReservations.length">
@@ -375,6 +389,37 @@
         <label class="form-label">Kilo (kg)</label
         ><input type="number" min="0" step="0.1" pInputText [(ngModel)]="measurement.weightKg" />
       </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Kas Kütlesi (kg)</label>
+        <input type="number" min="0" step="0.1" pInputText [(ngModel)]="measurement.muscleMassKg" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Vücut Su Oranı (%)</label>
+        <input
+          type="number"
+          min="0"
+          max="100"
+          step="0.1"
+          pInputText
+          [(ngModel)]="measurement.bodyWaterPercentage"
+        />
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Boyun (cm)</label>
+        <input type="number" min="0" step="0.1" pInputText [(ngModel)]="measurement.neckCm" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Kol (cm)</label>
+        <input type="number" min="0" step="0.1" pInputText [(ngModel)]="measurement.armCm" />
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Uyluk (cm)</label>
+      <input type="number" min="0" step="0.1" pInputText [(ngModel)]="measurement.thighCm" />
     </div>
     <div class="form-row">
       <div class="form-group">

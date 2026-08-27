@@ -1,0 +1,179 @@
+<div class="page member-detail-page">
+  @if (loading) {
+    <div class="card empty-state">
+      <i class="pi pi-spin pi-spinner"></i>
+      <p>Bilgileriniz yükleniyor…</p>
+    </div>
+  } @else if (overview; as data) {
+    <div class="member-hero">
+      <div class="member-avatar">{{ data.member.firstName[0] }}{{ data.member.lastName[0] }}</div>
+      <div>
+        <span class="page-eyebrow">ÜYELİĞİM</span>
+        <h1>{{ data.member.firstName }} {{ data.member.lastName }}</h1>
+        <p>
+          {{ data.member.email || 'E-posta bilgisi yok' }} ·
+          {{ data.member.phone || 'Telefon bilgisi yok' }}
+        </p>
+      </div>
+      <span
+        class="member-status"
+        [class.pending]="data.member.status === 'EMAIL_CONFIRMATION_PENDING'"
+        >{{ accountStatusLabel() }}</span
+      >
+    </div>
+
+    <p-tabs value="memberships" class="member-tabs">
+      <p-tablist>
+        <p-tab value="memberships"><i class="pi pi-id-card"></i> Üyeliklerim</p-tab>
+        <p-tab value="measurements"><i class="pi pi-chart-line"></i> Ölçümlerim</p-tab>
+        <p-tab value="lessons"><i class="pi pi-calendar"></i> Derslerim</p-tab>
+      </p-tablist>
+      <p-tabpanels>
+        <p-tabpanel value="memberships">
+          <div class="section-heading">
+            <div>
+              <h2>Üyeliklerim</h2>
+              <p>Paket ve kalan kullanım haklarınız.</p>
+            </div>
+          </div>
+          <div class="card history-card">
+            <div class="table-container">
+              <table class="membership-table">
+                <thead>
+                  <tr>
+                    <th>Paket</th>
+                    <th>Ders Hakkı</th>
+                    <th>İptal Hakkı</th>
+                    <th>Başlangıç</th>
+                    <th>Bitiş</th>
+                    <th>Durum</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for (item of data.memberships; track item.id) {
+                    <tr>
+                      <td>
+                        <strong>{{ item.packageName }}</strong>
+                      </td>
+                      <td>
+                        <strong>{{ item.remainingSessionCount }}</strong> /
+                        {{ item.totalSessionCount }}
+                      </td>
+                      <td>
+                        <strong>{{ item.remainingCancellationRightCount }}</strong> /
+                        {{ item.totalCancellationRightCount }}
+                      </td>
+                      <td>{{ item.startDate | date: 'dd.MM.yyyy' }}</td>
+                      <td>{{ item.endDate | date: 'dd.MM.yyyy' }}</td>
+                      <td>
+                        <span class="status-pill">{{
+                          item.status === 'ACTIVE' ? 'Aktif' : item.status
+                        }}</span>
+                      </td>
+                    </tr>
+                  } @empty {
+                    <tr>
+                      <td colspan="6">Henüz üyelik paketiniz bulunmuyor.</td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </p-tabpanel>
+        <p-tabpanel value="measurements">
+          <div class="section-heading">
+            <div>
+              <h2>Ölçümlerim</h2>
+              <p>Kaydedilmiş vücut ölçümleriniz.</p>
+            </div>
+          </div>
+          <div class="card history-card">
+            <div class="table-container">
+              <table class="membership-table">
+                <thead>
+                  <tr>
+                    <th>Tarih</th>
+                    <th>Kilo</th>
+                    <th>Yağ Oranı</th>
+                    <th>Kas</th>
+                    <th>Su</th>
+                    <th>Göğüs</th>
+                    <th>Bel</th>
+                    <th>Kalça</th>
+                    <th>Not</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for (item of data.measurements; track item.id) {
+                    <tr>
+                      <td>{{ item.measuredAt | date: 'dd.MM.yyyy' }}</td>
+                      <td>{{ item.weightKg != null ? item.weightKg + ' kg' : '—' }}</td>
+                      <td>
+                        {{ item.bodyFatPercentage != null ? '%' + item.bodyFatPercentage : '—' }}
+                      </td>
+                      <td>{{ item.muscleMassKg != null ? item.muscleMassKg + ' kg' : '—' }}</td>
+                      <td>
+                        {{
+                          item.bodyWaterPercentage != null ? '%' + item.bodyWaterPercentage : '—'
+                        }}
+                      </td>
+                      <td>{{ item.chestCm != null ? item.chestCm + ' cm' : '—' }}</td>
+                      <td>{{ item.waistCm != null ? item.waistCm + ' cm' : '—' }}</td>
+                      <td>{{ item.hipCm != null ? item.hipCm + ' cm' : '—' }}</td>
+                      <td>{{ item.note || '—' }}</td>
+                    </tr>
+                  } @empty {
+                    <tr>
+                      <td colspan="9">Henüz ölçüm kaydınız bulunmuyor.</td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </p-tabpanel>
+        <p-tabpanel value="lessons">
+          <div class="section-heading">
+            <div>
+              <h2>Derslerim</h2>
+              <p>Yaklaşan ve geçmiş ders rezervasyonlarınız.</p>
+            </div>
+          </div>
+          <div class="card history-card">
+            <div class="table-container">
+              <table class="membership-table">
+                <thead>
+                  <tr>
+                    <th>Ders</th>
+                    <th>Tarih / Saat</th>
+                    <th>Rezervasyon Tarihi</th>
+                    <th>Durum</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for (item of data.reservations; track item.id) {
+                    <tr>
+                      <td>
+                        <strong>{{ item.lessonName }}</strong>
+                      </td>
+                      <td>{{ item.lessonStartAt | date: 'dd.MM.yyyy HH:mm' }}</td>
+                      <td>{{ item.createdAt | date: 'dd.MM.yyyy HH:mm' }}</td>
+                      <td>
+                        <span class="status-pill">{{ reservationStatusLabel(item.status) }}</span>
+                      </td>
+                    </tr>
+                  } @empty {
+                    <tr>
+                      <td colspan="4">Henüz ders rezervasyonunuz bulunmuyor.</td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </p-tabpanel>
+      </p-tabpanels>
+    </p-tabs>
+  }
+</div>

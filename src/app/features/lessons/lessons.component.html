@@ -205,6 +205,19 @@
     </div>
 
     <div class="form-group">
+      <label class="form-label" for="lesson-reservation-policy">Rezervasyon Kuralı</label>
+      <p-select
+        inputId="lesson-reservation-policy"
+        [options]="reservationPolicies"
+        optionLabel="name"
+        optionValue="id"
+        [(ngModel)]="form.reservationPolicyId"
+        placeholder="Varsayılan kural"
+        appendTo="body"
+      />
+    </div>
+
+    <div class="form-group">
       <label class="form-label" for="lesson-services">Hizmetler</label>
       <p-multiselect
         inputId="lesson-services"

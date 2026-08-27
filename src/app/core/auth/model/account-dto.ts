@@ -5,6 +5,8 @@ export class AccountDto extends BaseDto {
   phone = '';
   firstName = '';
   lastName = '';
+  nationalId = '';
+  birthDate: string | null = null;
   active = true;
   lastLoginAt: string | null = null;
   profileId: number | null = null;

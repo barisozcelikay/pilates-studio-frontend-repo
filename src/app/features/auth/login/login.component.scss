@@ -331,6 +331,27 @@
   box-shadow: 0 0 0 3px rgba(184, 138, 66, 0.18);
 }
 
+.form-group input:-webkit-autofill,
+.form-group input:-webkit-autofill:hover,
+.form-group input:-webkit-autofill:focus,
+.form-group input:-webkit-autofill:active,
+.form-group ::ng-deep input:-webkit-autofill,
+.form-group ::ng-deep input:-webkit-autofill:hover,
+.form-group ::ng-deep input:-webkit-autofill:focus,
+.form-group ::ng-deep input:-webkit-autofill:active {
+  box-shadow: 0 0 0 1000px #f4f0e8 inset !important;
+  -webkit-box-shadow: 0 0 0 1000px #f4f0e8 inset !important;
+  caret-color: #35322d !important;
+  color: #35322d !important;
+  -webkit-text-fill-color: #35322d !important;
+  filter: none !important;
+  text-shadow: none !important;
+  -webkit-background-clip: padding-box !important;
+  transition:
+    background-color 9999s ease-out 0s,
+    color 0s !important;
+}
+
 /* Password row */
 
 .password-label {

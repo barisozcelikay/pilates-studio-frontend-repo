@@ -1,0 +1,75 @@
+.default-policy-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-left: 9px;
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: rgba(169, 134, 67, 0.14);
+  color: var(--color-accent);
+  font-size: 10px;
+  font-weight: 700;
+}
+.status-pill {
+  display: inline-flex;
+  padding: 5px 9px;
+  border-radius: 999px;
+  background: rgba(198, 92, 87, 0.12);
+  color: var(--color-error);
+  font-size: 11px;
+  font-weight: 700;
+}
+.status-pill.active {
+  background: rgba(65, 145, 93, 0.14);
+  color: #4f9f6b;
+}
+.policy-form {
+  gap: 14px;
+}
+.policy-option {
+  display: grid;
+  gap: 14px;
+  padding: 15px;
+  border: 1px solid var(--color-border);
+  border-radius: 13px;
+  background: var(--color-surface-soft);
+}
+.policy-option__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+}
+.policy-option__header > div {
+  display: grid;
+  gap: 4px;
+}
+.policy-option__header strong {
+  color: var(--color-text);
+  font-size: 12px;
+}
+.policy-option__header span {
+  color: var(--color-text-muted);
+  font-size: 10px;
+  line-height: 1.45;
+}
+.policy-option__input {
+  margin: 0;
+  padding-top: 12px;
+  border-top: 1px solid var(--color-border-light);
+}
+.policy-option--compact {
+  padding-block: 13px;
+}
+:host ::ng-deep .policy-option .p-checkbox-box {
+  width: 22px;
+  height: 22px;
+  border-color: var(--color-border);
+  border-radius: 7px;
+  background: var(--color-surface);
+}
+:host ::ng-deep .policy-option .p-checkbox-checked .p-checkbox-box {
+  border-color: var(--color-accent);
+  background: var(--color-primary);
+  color: var(--color-accent-light);
+}

@@ -1,0 +1,201 @@
+<div class="page reservation-policy-page">
+  <div class="page-header">
+    <div class="page-header-content">
+      <span class="page-eyebrow">YÖNETİM</span>
+      <h1 class="page-title">Rezervasyon Kuralları</h1>
+      <p class="page-description">Derslerin rezervasyon ve ücretsiz iptal sürelerini yönetin.</p>
+    </div>
+    <button class="primary-button" (click)="openCreateForm()">
+      <i class="pi pi-plus"></i> Kural Ekle
+    </button>
+  </div>
+
+  <div class="card">
+    <div class="table-container">
+      <p-table
+        class="data-table"
+        [value]="items"
+        [loading]="loading"
+        [paginator]="true"
+        [rows]="10"
+      >
+        <ng-template #header>
+          <tr>
+            <th>Kural Adı</th>
+            <th>Ücretsiz İptal</th>
+            <th>Son Rezervasyon</th>
+            <th>Durum</th>
+            <th>İşlemler</th>
+          </tr>
+        </ng-template>
+        <ng-template #body let-policy>
+          <tr>
+            <td>
+              <strong>{{ policy.name }}</strong>
+              @if (policy.defaultPolicy) {
+                <span class="default-policy-badge"><i class="pi pi-star-fill"></i> Varsayılan</span>
+              }
+            </td>
+            <td>
+              {{
+                policy.freeCancellationEnabled
+                  ? policy.cancellationDeadlineMinutes + ' dk. öncesine kadar'
+                  : 'Kapalı'
+              }}
+            </td>
+            <td>
+              {{
+                policy.latestReservationEnabled
+                  ? 'En geç ' + policy.latestReservationMinutes + ' dk. önce'
+                  : 'Sınır yok'
+              }}
+            </td>
+            <td>
+              <span class="status-pill" [class.active]="policy.active">{{
+                policy.active ? 'Aktif' : 'Pasif'
+              }}</span>
+            </td>
+            <td>
+              <div class="table-actions">
+                <button
+                  class="table-action table-action-edit"
+                  title="Düzenle"
+                  (click)="openEditForm(policy)"
+                >
+                  <i class="pi pi-pencil"></i>
+                </button>
+                <button
+                  class="table-action table-action-delete"
+                  title="Sil"
+                  (click)="confirmDelete(policy)"
+                >
+                  <i class="pi pi-trash"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template #emptymessage
+          ><tr>
+            <td colspan="5" class="table-empty">Henüz rezervasyon kuralı bulunmuyor.</td>
+          </tr></ng-template
+        >
+      </p-table>
+    </div>
+  </div>
+</div>
+
+<app-drawer [(visible)]="drawerVisible" [title]="editing ? 'Kuralı Düzenle' : 'Kural Ekle'">
+  <div class="form policy-form">
+    <div class="form-group">
+      <label class="form-label" for="policy-name">Kural Adı</label>
+      <input
+        id="policy-name"
+        pInputText
+        [(ngModel)]="form.name"
+        placeholder="Örn. Standart rezervasyon kuralı"
+      />
+    </div>
+
+    <div class="policy-option">
+      <div class="policy-option__header">
+        <div>
+          <strong>Ücretsiz iptal kontrolü</strong
+          ><span>Bu süreden önce iptal edilirse hak düşmez.</span>
+        </div>
+        <p-checkbox
+          inputId="free-cancellation"
+          [(ngModel)]="form.freeCancellationEnabled"
+          [binary]="true"
+        />
+      </div>
+      @if (form.freeCancellationEnabled) {
+        <div class="form-group policy-option__input">
+          <label class="form-label" for="cancellation-minutes">Ders başlamadan önce (dk.)</label>
+          <input
+            id="cancellation-minutes"
+            type="number"
+            min="0"
+            pInputText
+            [(ngModel)]="form.cancellationDeadlineMinutes"
+          />
+        </div>
+      }
+    </div>
+
+    <div class="policy-option">
+      <div class="policy-option__header">
+        <div>
+          <strong>Son rezervasyon kontrolü</strong
+          ><span>Derse az süre kaldığında rezervasyonu engeller.</span>
+        </div>
+        <p-checkbox
+          inputId="latest-reservation"
+          [(ngModel)]="form.latestReservationEnabled"
+          [binary]="true"
+        />
+      </div>
+      @if (form.latestReservationEnabled) {
+        <div class="form-group policy-option__input">
+          <label class="form-label" for="latest-reservation-minutes"
+            >Ders başlamadan en geç (dk.)</label
+          >
+          <input
+            id="latest-reservation-minutes"
+            type="number"
+            min="0"
+            pInputText
+            [(ngModel)]="form.latestReservationMinutes"
+          />
+        </div>
+      }
+    </div>
+
+    <div class="policy-option policy-option--compact">
+      <div class="policy-option__header">
+        <div>
+          <strong>Varsayılan kural</strong
+          ><span>Özel kural seçilmeyen derslere otomatik uygulanır.</span>
+        </div>
+        <p-checkbox
+          inputId="default-policy"
+          [(ngModel)]="form.defaultPolicy"
+          [binary]="true"
+          [disabled]="editing && form.defaultPolicy"
+          (onChange)="onDefaultPolicyChange()"
+        />
+      </div>
+    </div>
+
+    <div class="policy-option policy-option--compact">
+      <div class="policy-option__header">
+        <div><strong>Aktif</strong><span>Pasif kurallar yeni derslerde kullanılamaz.</span></div>
+        <p-checkbox
+          inputId="policy-active"
+          [(ngModel)]="form.active"
+          [binary]="true"
+          [disabled]="form.defaultPolicy"
+        />
+      </div>
+    </div>
+  </div>
+
+  <div drawer-footer>
+    <div class="button-group">
+      <button class="secondary-button" [disabled]="saving" (click)="drawerVisible = false">
+        İptal
+      </button>
+      <button class="primary-button" [disabled]="saving || !form.name.trim()" (click)="save()">
+        {{ saving ? 'Kaydediliyor...' : 'Kaydet' }}
+      </button>
+    </div>
+  </div>
+</app-drawer>
+
+<app-confirm-dialog
+  [(visible)]="confirmVisible"
+  title="Rezervasyon Kuralını Sil"
+  [message]="itemToDelete ? '“' + itemToDelete.name + '” kuralı silinsin mi?' : ''"
+  confirmText="Sil"
+  (confirm)="delete()"
+/>

@@ -36,6 +36,17 @@
   color: var(--color-text-muted);
 }
 
+.reservation-lesson-summary__instructor {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.reservation-lesson-summary__instructor .pi {
+  color: var(--color-accent);
+  font-size: 12px;
+}
+
 .reservation-note,
 .reservation-error {
   margin: 0;
@@ -44,6 +55,37 @@
 
 .reservation-error {
   color: var(--color-error);
+}
+
+.reservation-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  width: 100%;
+}
+
+.reservation-cancel-button {
+  min-height: 40px;
+  padding: 0 16px;
+  border: 1px solid rgba(198, 92, 87, 0.5);
+  border-radius: 10px;
+  background: rgba(198, 92, 87, 0.1);
+  color: var(--color-error);
+  font: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.reservation-cancel-button:hover:not(:disabled) {
+  border-color: var(--color-error);
+  background: rgba(198, 92, 87, 0.18);
+}
+
+.reservation-cancel-button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
 }
 
 /* =========================================================
@@ -268,9 +310,10 @@
 
 :host ::ng-deep .calendar-lesson-event {
   display: grid;
-  gap: 4px;
+  gap: 3px;
   min-width: 0;
-  padding: 3px 1px;
+  height: 100%;
+  padding: 2px 1px;
 }
 
 :host ::ng-deep .calendar-lesson-event__title {
@@ -284,7 +327,8 @@
 
 :host ::ng-deep .calendar-lesson-event__chips {
   display: flex;
-  flex-wrap: wrap;
+  min-width: 0;
+  overflow: hidden;
   gap: 3px;
 }
 
@@ -316,6 +360,7 @@
 
 :host ::ng-deep .calendar-lesson-event__instructor,
 :host ::ng-deep .calendar-lesson-event__capacity {
+  min-width: 0;
   overflow: hidden;
   color: #5f5549;
   font-size: 9px;
@@ -324,9 +369,36 @@
   white-space: nowrap;
 }
 
-:host ::ng-deep .calendar-lesson-event__instructor::before {
-  content: 'Eğitmen: ';
-  font-weight: 700;
+:host ::ng-deep .calendar-lesson-event__meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-width: 0;
+  gap: 6px;
+}
+
+:host ::ng-deep .calendar-lesson-event__instructor {
+  display: flex;
+  flex: 1 1 auto;
+  align-items: center;
+  min-width: 0;
+  gap: 4px;
+}
+
+:host ::ng-deep .calendar-lesson-event__instructor span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+:host ::ng-deep .calendar-lesson-event__capacity {
+  flex: 0 0 auto;
+}
+
+:host ::ng-deep .calendar-lesson-event__instructor .pi {
+  flex: 0 0 auto;
+  color: #8b6a35;
+  font-size: 8px;
 }
 
 /* =========================================================
@@ -587,6 +659,34 @@
 
 .calendar-card {
   display: block;
+}
+
+.calendar-filters {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: fit-content;
+  margin-bottom: 14px;
+}
+
+.calendar-filters label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--calendar-text);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.calendar-filters label .pi {
+  color: var(--calendar-gold);
+  font-size: 11px;
+}
+
+:host ::ng-deep .calendar-filters .p-select {
+  min-width: 190px;
+  border-color: rgba(169, 134, 67, 0.38);
+  background: var(--calendar-bg);
 }
 
 full-calendar {
@@ -871,6 +971,38 @@ full-calendar {
   filter: saturate(0.82);
 }
 
+:host ::ng-deep .fc .calendar-event--full {
+  border-left-color: #c65c57 !important;
+  cursor: not-allowed;
+  filter: grayscale(0.45);
+}
+
+:host ::ng-deep .fc .calendar-event--past {
+  border-left-color: #8d887d !important;
+  cursor: not-allowed;
+  filter: grayscale(0.75);
+  opacity: 0.72;
+}
+
+:host ::ng-deep .fc .calendar-event--full:hover,
+:host ::ng-deep .fc .calendar-event--past:hover,
+:host ::ng-deep .fc .calendar-event--cancelled:hover {
+  transform: none;
+}
+
+:host ::ng-deep .calendar-event--full .calendar-lesson-event__capacity,
+:host ::ng-deep .calendar-event--past .calendar-lesson-event__capacity,
+:host ::ng-deep .calendar-event--cancelled .calendar-lesson-event__capacity {
+  color: #ffaaa4;
+  font-weight: 700;
+}
+
+@media (max-width: 480px) {
+  .reservation-actions > button {
+    flex: 1 1 100%;
+  }
+}
+
 :host ::ng-deep .calendar-lesson-event__title {
   color: #fff8e8;
   font-size: 11px;
@@ -879,6 +1011,10 @@ full-calendar {
 :host ::ng-deep .calendar-lesson-event__instructor,
 :host ::ng-deep .calendar-lesson-event__capacity {
   color: #d4ccb8;
+}
+
+:host ::ng-deep .calendar-lesson-event__instructor .pi {
+  color: #e8d84d;
 }
 
 :host ::ng-deep .calendar-service-chip--0 {
@@ -993,6 +1129,15 @@ full-calendar {
     min-height: 660px;
     padding: 10px;
     border-radius: 15px !important;
+  }
+
+  .calendar-filters {
+    width: 100%;
+  }
+
+  :host ::ng-deep .calendar-filters .p-select {
+    flex: 1;
+    min-width: 0;
   }
 
   :host ::ng-deep .fc .fc-toolbar {

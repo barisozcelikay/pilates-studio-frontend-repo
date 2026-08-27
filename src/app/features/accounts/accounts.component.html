@@ -153,6 +153,25 @@
       />
     </div>
 
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label" for="account-national-id">T.C. Kimlik Numarası</label>
+        <input
+          id="account-national-id"
+          type="text"
+          inputmode="numeric"
+          maxlength="11"
+          pInputText
+          [(ngModel)]="form.nationalId"
+          placeholder="11 haneli kimlik numarası"
+        />
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="account-birth-date">Doğum Tarihi</label>
+        <input id="account-birth-date" type="date" pInputText [(ngModel)]="form.birthDate" />
+      </div>
+    </div>
+
     <div class="form-group">
       <label class="form-label" for="account-profile"> Profil </label>
 

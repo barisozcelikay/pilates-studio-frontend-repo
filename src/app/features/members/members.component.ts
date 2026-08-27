@@ -66,6 +66,7 @@ export class MembersComponent extends BaseComponent<MemberDto> {
   }
 
   protected override save(): void {
+    this.form.birthDate = this.toDateValue(this.form.birthDate);
     this.form.membershipStartDate = this.toDateValue(this.form.membershipStartDate);
     this.form.membershipEndDate = this.toDateValue(this.form.membershipEndDate);
     super.save();

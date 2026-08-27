@@ -101,6 +101,23 @@
   font-size: 12px;
   font-weight: 600;
 }
+.reservation-status {
+  display: inline-flex;
+  padding: 5px 9px;
+  border-radius: 999px;
+}
+.reservation-status--attended {
+  background: rgba(65, 145, 93, 0.15);
+  color: #4fa66e;
+}
+.reservation-status--cancelled {
+  background: rgba(198, 92, 87, 0.15);
+  color: #d36b66;
+}
+.reservation-status--confirmed {
+  background: rgba(232, 216, 77, 0.15);
+  color: #b8a51e;
+}
 .empty-state {
   padding: 64px 24px;
   text-align: center;

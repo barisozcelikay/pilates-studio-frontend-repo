@@ -2,6 +2,7 @@ import { DatePipe, DecimalPipe, NgIf } from '@angular/common';
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Select } from 'primeng/select';
+import { DatePicker } from 'primeng/datepicker';
 import { TableModule } from 'primeng/table';
 
 import { BaseComponent } from '../../shared/component/base/base-component';
@@ -26,6 +27,7 @@ import {
     DrawerComponent,
     ConfirmDialogComponent,
     Select,
+    DatePicker,
     TableModule,
   ],
   templateUrl: './payments.component.html',
@@ -58,6 +60,15 @@ export class PaymentsComponent extends BaseComponent<PaymentDto> {
   override openCreateForm(): void {
     super.openCreateForm();
     this.form.paymentMethod = 'CASH';
+  }
+
+  override openEditForm(item: PaymentDto): void {
+    super.openEditForm(item);
+    this.form.paidAt = item.paidAt ? new Date(item.paidAt) : null;
+  }
+
+  onPaymentStatusChange(): void {
+    this.form.paidAt = this.form.status === 'PAID' ? this.form.paidAt || new Date() : null;
   }
 
   selectMembership(): void {

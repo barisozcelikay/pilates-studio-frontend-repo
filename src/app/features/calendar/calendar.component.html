@@ -30,6 +30,22 @@
     [class.calendar-card--creator]="canCreateLesson"
     aria-label="Ders takvimi"
   >
+    <div class="calendar-filters">
+      <label for="calendar-service-filter">
+        <i class="pi pi-filter" aria-hidden="true"></i>
+        Hizmet
+      </label>
+      <p-select
+        inputId="calendar-service-filter"
+        [options]="serviceFilterOptions"
+        optionLabel="label"
+        optionValue="value"
+        [(ngModel)]="selectedServiceFilter"
+        (onChange)="applyServiceFilter()"
+        appendTo="body"
+        ariaLabel="Takvimi hizmete göre filtrele"
+      />
+    </div>
     <full-calendar [options]="calendarOptions"> </full-calendar>
   </div>
 </div>
@@ -39,6 +55,10 @@
     <div class="reservation-lesson-summary">
       <strong>{{ lesson.name }}</strong>
       <span>{{ lesson.startAt | date: 'dd.MM.yyyy HH:mm' }}</span>
+      <span class="reservation-lesson-summary__instructor">
+        <i class="pi pi-user" aria-hidden="true"></i>
+        {{ lesson.instructorNames.length ? lesson.instructorNames.join(', ') : 'Eğitmen atanmadı' }}
+      </span>
       <small>{{ lesson.reservationCount }} / {{ lesson.capacity }} kontenjan dolu</small>
     </div>
 
@@ -78,7 +98,7 @@
   </div>
 
   <div drawer-footer>
-    <div class="button-group">
+    <div class="button-group reservation-actions">
       <button
         type="button"
         class="secondary-button"
@@ -89,7 +109,7 @@
       </button>
       <button
         type="button"
-        class="table-action table-action-delete"
+        class="reservation-cancel-button"
         *ngIf="myReservation?.status === 'CONFIRMED'"
         [disabled]="reserving"
         (click)="cancelMyReservation()"
@@ -201,6 +221,20 @@
         display="chip"
         appendTo="body"
       />
+    </div>
+
+    <div class="form-group">
+      <label class="form-label" for="calendar-reservation-policy">Rezervasyon Kuralı</label>
+      <p-select
+        inputId="calendar-reservation-policy"
+        [options]="reservationPolicies"
+        optionLabel="name"
+        optionValue="id"
+        [(ngModel)]="lessonForm.reservationPolicyId"
+        placeholder="Varsayılan kural"
+        appendTo="body"
+      />
+      <small class="form-help">Seçilmezse varsayılan aktif kural uygulanır.</small>
     </div>
 
     <div class="form-group">

@@ -25,6 +25,10 @@ import { InstructorDto } from '../instructors/model/instructor-dto';
 import { InstructorService } from '../instructors/service/instructor-service';
 import { StudioServiceDto } from '../studio-services/model/studio-service-dto';
 import { StudioServiceService } from '../studio-services/service/studio-service-service';
+import {
+  ReservationPolicyDto,
+  ReservationPolicyService,
+} from '../reservation-policies/reservation-policy-service';
 
 @Component({
   selector: 'app-calendar',
@@ -88,6 +92,7 @@ export class CalendarComponent implements OnInit {
     eventContent: (event) => this.renderLessonEvent(event),
     eventClick: (event) => {
       event.jsEvent.preventDefault();
+      if (event.event.extendedProps['isUnavailable']) return;
       this.openReservationDrawer(event);
     },
     dateClick: (event) => this.openLessonDrawerFromDate(event),
@@ -108,8 +113,13 @@ export class CalendarComponent implements OnInit {
   instructors: InstructorDto[] = [];
   instructorOptions: { label: string; value: number }[] = [];
   services: StudioServiceDto[] = [];
+  reservationPolicies: ReservationPolicyDto[] = [];
   selectedInstructorIds: number[] = [];
   selectedServiceIds: number[] = [];
+  serviceFilterOptions: { label: string; value: string | null }[] = [
+    { label: 'Tüm hizmetler', value: null },
+  ];
+  selectedServiceFilter: string | null = null;
 
   constructor(
     private readonly calendarService: CalendarService,
@@ -119,6 +129,7 @@ export class CalendarComponent implements OnInit {
     private readonly lessonService: LessonService,
     private readonly instructorService: InstructorService,
     private readonly studioServiceService: StudioServiceService,
+    private readonly reservationPolicyService: ReservationPolicyService,
     private readonly cdr: ChangeDetectorRef,
   ) {}
 
@@ -312,6 +323,17 @@ export class CalendarComponent implements OnInit {
     });
   }
 
+  applyServiceFilter(): void {
+    const filteredLessons = this.selectedServiceFilter
+      ? this.lessons.filter((lesson) => lesson.serviceNames.includes(this.selectedServiceFilter!))
+      : this.lessons;
+
+    this.calendarOptions = {
+      ...this.calendarOptions,
+      events: this.createCalendarEvents(filteredLessons),
+    };
+  }
+
   private loadLessons(): void {
     const request = this.isMember
       ? this.calendarService.findCurrentWeekLessons()
@@ -320,27 +342,64 @@ export class CalendarComponent implements OnInit {
     request.subscribe({
       next: (lessons) => {
         this.lessons = lessons;
-        const events: EventInput[] = lessons.map((lesson) => ({
-          id: String(lesson.id),
-          title: lesson.name,
-          start: lesson.startAt ?? undefined,
-          end: lesson.endAt ?? undefined,
-          extendedProps: {
-            serviceNames: lesson.serviceNames,
-            instructorNames: lesson.instructorNames,
-            reservationCount: lesson.reservationCount,
-            capacity: lesson.capacity,
-          },
-          classNames: [
-            lesson.status === 'CANCELLED' ? 'calendar-event--cancelled' : 'calendar-event--active',
-          ],
-          backgroundColor: lesson.status === 'CANCELLED' ? '#b45f5f' : undefined,
-          borderColor: lesson.status === 'CANCELLED' ? '#b45f5f' : undefined,
-        }));
+        const serviceNames = [...new Set(lessons.flatMap((lesson) => lesson.serviceNames))].sort(
+          (first, second) => first.localeCompare(second, 'tr'),
+        );
+        this.serviceFilterOptions = [
+          { label: 'Tüm hizmetler', value: null },
+          ...serviceNames.map((name) => ({ label: name, value: name })),
+        ];
 
-        this.calendarOptions = { ...this.calendarOptions, events };
+        if (this.selectedServiceFilter && !serviceNames.includes(this.selectedServiceFilter)) {
+          this.selectedServiceFilter = null;
+        }
+
+        this.applyServiceFilter();
         this.cdr.markForCheck();
       },
+    });
+  }
+
+  private createCalendarEvents(lessons: LessonDto[]): EventInput[] {
+    const now = Date.now();
+
+    return lessons.map((lesson) => {
+      const isPast = lesson.startAt ? new Date(lesson.startAt).getTime() <= now : false;
+      const isFull = lesson.capacity !== null && lesson.reservationCount >= lesson.capacity;
+      const isCancelled = lesson.status === 'CANCELLED';
+      const unavailableReason = isCancelled
+        ? 'Ders iptal edildi'
+        : isPast
+          ? 'Ders saati geçti'
+          : isFull
+            ? 'Kontenjan dolu'
+            : null;
+
+      return {
+        id: String(lesson.id),
+        title: lesson.name,
+        start: lesson.startAt ?? undefined,
+        end: lesson.endAt ?? undefined,
+        extendedProps: {
+          serviceNames: lesson.serviceNames,
+          instructorNames: lesson.instructorNames,
+          reservationCount: lesson.reservationCount,
+          capacity: lesson.capacity,
+          isUnavailable: unavailableReason !== null,
+          unavailableReason,
+        },
+        classNames: [
+          isCancelled
+            ? 'calendar-event--cancelled'
+            : isPast
+              ? 'calendar-event--past'
+              : isFull
+                ? 'calendar-event--full'
+                : 'calendar-event--active',
+        ],
+        backgroundColor: isCancelled ? '#b45f5f' : undefined,
+        borderColor: isCancelled ? '#b45f5f' : undefined,
+      };
     });
   }
 
@@ -380,6 +439,7 @@ export class CalendarComponent implements OnInit {
       endAt: end,
       capacity: 3,
       status: 'ACTIVE',
+      reservationPolicyId: null,
     });
     this.selectedInstructorIds = [];
     this.selectedServiceIds = [];
@@ -407,6 +467,12 @@ export class CalendarComponent implements OnInit {
     this.studioServiceService.findAll().subscribe({
       next: (services) => {
         this.services = services.filter((service) => service.active);
+        this.cdr.markForCheck();
+      },
+    });
+    this.reservationPolicyService.findAll().subscribe({
+      next: (policies) => {
+        this.reservationPolicies = policies.filter((policy) => policy.active);
         this.cdr.markForCheck();
       },
     });
@@ -445,17 +511,28 @@ export class CalendarComponent implements OnInit {
     }
 
     const instructors = event.event.extendedProps['instructorNames'] as string[] | undefined;
-    if (instructors?.length) {
-      const instructor = document.createElement('span');
-      instructor.className = 'calendar-lesson-event__instructor';
-      instructor.textContent = instructors.join(', ');
-      root.append(instructor);
-    }
+    const meta = document.createElement('div');
+    meta.className = 'calendar-lesson-event__meta';
+
+    const instructor = document.createElement('span');
+    instructor.className = 'calendar-lesson-event__instructor';
+
+    const instructorIcon = document.createElement('i');
+    instructorIcon.className = 'pi pi-user';
+    instructorIcon.setAttribute('aria-hidden', 'true');
+
+    const instructorName = document.createElement('span');
+    instructorName.textContent = instructors?.length ? instructors.join(', ') : 'Eğitmen atanmadı';
+
+    instructor.append(instructorIcon, instructorName);
 
     const capacity = document.createElement('span');
     capacity.className = 'calendar-lesson-event__capacity';
-    capacity.textContent = `${event.event.extendedProps['reservationCount']} / ${event.event.extendedProps['capacity']} katılımcı`;
-    root.append(capacity);
+    capacity.textContent =
+      event.event.extendedProps['unavailableReason'] ??
+      `${event.event.extendedProps['reservationCount']} / ${event.event.extendedProps['capacity']} katılımcı`;
+    meta.append(instructor, capacity);
+    root.append(meta);
 
     return { domNodes: [root] };
   }
