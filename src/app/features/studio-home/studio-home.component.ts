@@ -1,16 +1,26 @@
 import { AfterViewInit, Component, ElementRef, OnDestroy } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+
+import { ToastService } from '../../shared/service/toast-service';
+import {
+  ContactRequestPayload,
+  ContactRequestService,
+} from '../contact-requests/contact-request.service';
 
 @Component({
   selector: 'app-studio-home',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink, FormsModule],
   templateUrl: './studio-home.component.html',
   styleUrl: './studio-home.component.scss',
 })
 export class StudioHomeComponent implements AfterViewInit, OnDestroy {
   mobileMenuOpen = false;
   openFaqIndex: number | null = null;
+  contactSubmitting = false;
+  contactSubmitted = false;
+  contactForm: ContactRequestPayload = this.emptyContactForm();
   private revealObserver?: IntersectionObserver;
   private scrollFrame?: number;
   private pointerFrame?: number;
@@ -41,7 +51,9 @@ export class StudioHomeComponent implements AfterViewInit, OnDestroy {
         1,
       );
       const progress = Math.min(Math.max(window.scrollY / transitionDistance, 0), 1);
-      const easedProgress = progress * progress * (3 - 2 * progress);
+      const videoProgress = Math.min(progress / 0.72, 1);
+      const transitionProgress = Math.min(Math.max((progress - 0.72) / 0.28, 0), 1);
+      const easedProgress = transitionProgress * transitionProgress * (3 - 2 * transitionProgress);
       const brandRect = brandLogo?.getBoundingClientRect();
       const headerRect = header?.getBoundingClientRect();
       const introWidth = introLogo?.offsetWidth ?? Math.min(window.innerWidth * 0.78, 880);
@@ -53,9 +65,10 @@ export class StudioHomeComponent implements AfterViewInit, OnDestroy {
         ? Math.min(Math.max(brandRect.width / Math.max(introWidth, 1), 0.18), 0.42)
         : 0.3;
       const headerProgress = Math.min(Math.max((progress - 0.76) / 0.2, 0), 1);
-      const heroProgress = Math.min(Math.max((progress - 0.36) / 0.64, 0), 1);
+      const heroProgress = Math.min(Math.max((progress - 0.78) / 0.22, 0), 1);
       const style = host.style;
       style.setProperty('--intro-progress', progress.toFixed(4));
+      style.setProperty('--intro-video-progress', videoProgress.toFixed(4));
       style.setProperty(
         '--intro-x',
         `${((targetCenterX - window.innerWidth / 2) * easedProgress).toFixed(2)}px`,
@@ -67,7 +80,7 @@ export class StudioHomeComponent implements AfterViewInit, OnDestroy {
       style.setProperty('--intro-scale', (1 - (1 - targetScale) * easedProgress).toFixed(4));
       style.setProperty(
         '--intro-opacity',
-        Math.max(1 - Math.max((progress - 0.82) / 0.18, 0), 0).toFixed(4),
+        Math.max(1 - Math.max((progress - 0.94) / 0.06, 0), 0).toFixed(4),
       );
       style.setProperty('--intro-ambient-opacity', Math.max(1 - progress, 0).toFixed(4));
       style.setProperty('--intro-grid-opacity', Math.max(0.22 * (1 - progress), 0).toFixed(4));
@@ -101,7 +114,42 @@ export class StudioHomeComponent implements AfterViewInit, OnDestroy {
     });
   };
 
-  constructor(private readonly elementRef: ElementRef<HTMLElement>) {}
+  constructor(
+    private readonly elementRef: ElementRef<HTMLElement>,
+    private readonly contactRequestService: ContactRequestService,
+    private readonly toastService: ToastService,
+  ) {}
+
+  submitContactRequest(): void {
+    if (
+      this.contactSubmitting ||
+      !this.contactForm.fullName.trim() ||
+      !this.contactForm.email.trim() ||
+      !this.contactForm.phone.trim() ||
+      !this.contactForm.note.trim()
+    ) {
+      this.toastService.warning('Lütfen tüm alanları doldurun.');
+      return;
+    }
+
+    this.contactSubmitting = true;
+    this.contactRequestService.create(this.contactForm).subscribe({
+      next: () => {
+        this.contactSubmitting = false;
+        this.contactSubmitted = true;
+        this.contactForm = this.emptyContactForm();
+        this.toastService.success('Talebiniz alındı. En kısa sürede sizinle iletişime geçeceğiz.');
+      },
+      error: () => {
+        this.contactSubmitting = false;
+        this.toastService.error('Talebiniz gönderilemedi. Lütfen tekrar deneyin.');
+      },
+    });
+  }
+
+  private emptyContactForm(): ContactRequestPayload {
+    return { fullName: '', email: '', phone: '', note: '' };
+  }
 
   readonly instagramPosts = [
     {

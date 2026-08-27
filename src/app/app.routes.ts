@@ -156,6 +156,13 @@ export const routes: Routes = [
             (m) => m.ReservationPoliciesComponent,
           ),
       },
+      {
+        path: 'settings/contact-requests',
+        loadComponent: () =>
+          import('./features/contact-requests/contact-requests.component').then(
+            (m) => m.ContactRequestsComponent,
+          ),
+      },
     ],
   },
 ];

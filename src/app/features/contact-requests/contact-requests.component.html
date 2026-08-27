@@ -1,0 +1,108 @@
+<div class="page contact-requests-page">
+  <div class="page-header">
+    <div class="page-header-content">
+      <span class="page-eyebrow">YÖNETİM</span>
+      <h1 class="page-title">İletişim Talepleri</h1>
+      <p class="page-description">Landing page üzerinden görüşme isteyen kişileri takip edin.</p>
+    </div>
+    <div class="request-summary">
+      <span>Yeni Talepler</span>
+      <strong>{{ newRequestCount }}</strong>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="table-container">
+      <p-table
+        class="data-table"
+        [value]="items"
+        [loading]="loading"
+        [paginator]="true"
+        [rows]="10"
+        [rowsPerPageOptions]="[10, 20, 50]"
+      >
+        <ng-template #header>
+          <tr>
+            <th>Kişi</th>
+            <th>İletişim</th>
+            <th>Not</th>
+            <th>Tarih</th>
+            <th>Durum</th>
+            <th>İşlemler</th>
+          </tr>
+        </ng-template>
+        <ng-template #body let-request>
+          <tr>
+            <td>
+              <strong>{{ request.fullName }}</strong
+              ><span class="request-id">#{{ request.id }}</span>
+            </td>
+            <td>
+              <a [href]="'mailto:' + request.email">{{ request.email }}</a
+              ><a [href]="'tel:' + request.phone">{{ request.phone }}</a>
+            </td>
+            <td>
+              <p class="request-note" [title]="request.note">{{ request.note }}</p>
+            </td>
+            <td>{{ request.createdAt | date: 'dd.MM.yyyy HH:mm' }}</td>
+            <td>
+              <div
+                class="status-segmented"
+                role="group"
+                [attr.aria-label]="request.fullName + ' talep durumu'"
+              >
+                @for (status of statuses; track status.value) {
+                  <button
+                    type="button"
+                    class="status-segmented__option"
+                    [class.status-segmented__option--new]="
+                      request.status === status.value && status.value === 'NEW'
+                    "
+                    [class.status-segmented__option--contacted]="
+                      request.status === status.value && status.value === 'CONTACTED'
+                    "
+                    [class.status-segmented__option--closed]="
+                      request.status === status.value && status.value === 'CLOSED'
+                    "
+                    [attr.aria-pressed]="request.status === status.value"
+                    (click)="request.status !== status.value && updateStatus(request, status.value)"
+                  >
+                    <i
+                      class="status-segmented__indicator"
+                      [class.status-segmented__indicator--active]="request.status === status.value"
+                    ></i>
+                    {{ status.label }}
+                  </button>
+                }
+              </div>
+            </td>
+            <td>
+              <div class="table-actions">
+                <button
+                  class="table-action table-action-delete"
+                  title="Sil"
+                  (click)="confirmDelete(request)"
+                >
+                  <i class="pi pi-trash"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template #emptymessage
+          ><tr>
+            <td colspan="6" class="table-empty">Henüz iletişim talebi bulunmuyor.</td>
+          </tr></ng-template
+        >
+      </p-table>
+    </div>
+  </div>
+</div>
+
+<app-confirm-dialog
+  [(visible)]="confirmVisible"
+  title="İletişim Talebini Sil"
+  [message]="itemToDelete ? itemToDelete.fullName + ' kişisinin talebi silinsin mi?' : ''"
+  confirmText="Sil"
+  (confirm)="delete()"
+/>

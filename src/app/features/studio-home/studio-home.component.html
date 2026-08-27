@@ -5,9 +5,15 @@
       <div class="intro-ambient intro-ambient-right"></div>
       <div class="intro-logo-wrap">
         <img
-          src="/images/olive-logo-dark-crisp-transparent-v4.png"
+          src="/images/olive-logo-transparent-v2.png"
+          alt=""
+          class="intro-logo intro-logo-base"
+          aria-hidden="true"
+        />
+        <img
+          src="/images/olive-logo-transparent-v2.png"
           alt="Olive Pilates Studio"
-          class="intro-logo"
+          class="intro-logo intro-logo-reveal"
         />
       </div>
       <div class="intro-scroll-cue" aria-hidden="true">
@@ -27,7 +33,7 @@
         class="brand-lockup flex items-center"
         aria-label="Olive Pilates Studio ana sayfa"
         ><img
-          src="/images/olive-logo-dark-crisp-transparent-v4.png"
+          src="/images/olive-logo-transparent-v2.png"
           alt="Olive Pilates Studio"
           class="brand-logo w-52 rounded-lg"
       /></a>
@@ -191,87 +197,92 @@
     <div class="movement-shell">
       <div class="movement-heading">
         <div>
-          <p class="movement-eyebrow">PILATES HAREKET ATLASI</p>
-          <h2>Her hareket,<br /><em>bedene yazılan</em> bir cümle.</h2>
+          <p class="movement-eyebrow">OLIVE DENEYİMLERİ</p>
+          <h2>Dört disiplin,<br /><em>tek bir denge.</em></h2>
         </div>
         <div class="movement-intro">
-          <span class="movement-count">04 / AKIŞ</span>
-          <p>Bir kartın üzerinde gezin; hareketin odağını ve bedeninizde açtığı alanı keşfedin.</p>
+          <span class="movement-count">04 / HİZMET</span>
+          <p>Kartların üzerine gelin; bedeninize en iyi gelecek Olive deneyimini keşfedin.</p>
         </div>
       </div>
 
-      <div class="movement-deck" aria-label="Pilates hareketleri">
-        <article class="movement-card movement-card--olive" tabindex="0">
-          <span class="movement-number">01</span>
-          <svg class="movement-figure" viewBox="0 0 220 320" aria-hidden="true">
-            <circle cx="113" cy="48" r="18" />
-            <path
-              d="M111 68c-8 38-17 70-9 112m1-77c-33 20-51 50-61 91m65-87c35 20 51 50 63 88m-69-15c-30 28-44 58-47 96m49-94c30 30 43 61 49 96"
-            />
-            <path class="movement-accent" d="M36 279h146M26 291h166" />
-          </svg>
-          <div class="movement-copy">
-            <span>MERKEZ · KONTROL</span>
-            <h3>Hundred</h3>
-            <p>
-              Nefesle merkezi uyandıran, bedenin tamamını tek ritimde buluşturan güçlü başlangıç.
-            </p>
-            <a href="#iletisim">Bu akışı deneyimle ↗</a>
-          </div>
-        </article>
+      <div class="service-deck-stage">
+        <div class="service-deck" aria-label="Olive Pilates hizmetleri">
+          <article class="service-card service-card--mat" tabindex="0">
+            <a
+              href="#iletisim"
+              class="service-card-arrow"
+              aria-label="Mat Pilates hakkında bilgi al"
+              ><span>Bilgi al</span><b>↗</b></a
+            >
+            <div class="service-card-visual">
+              <img
+                src="/images/service-mat-pilates-v1.webp"
+                alt="Mat Pilates teaser hareketi"
+              /><span>01</span>
+            </div>
+            <div class="service-card-copy">
+              <span>MERKEZ · NEFES · AKIŞ</span>
+              <h3>Mat Pilates</h3>
+              <p>
+                Merkez gücünü, mobiliteyi ve beden farkındalığını kendi ağırlığınızla geliştirin.
+              </p>
+            </div>
+          </article>
 
-        <article class="movement-card movement-card--sand" tabindex="0">
-          <span class="movement-number">02</span>
-          <svg class="movement-figure" viewBox="0 0 220 320" aria-hidden="true">
-            <circle cx="70" cy="104" r="17" />
-            <path
-              d="M87 110c38 5 67 23 82 54m-76-48c-16 35-19 70-8 106m6-100c-27 14-49 33-65 59m65-55c35 20 63 52 83 91m-90 6c-26 19-42 41-51 69m55-69c29 17 50 39 64 67"
-            />
-            <path class="movement-accent" d="M24 292h172" />
-          </svg>
-          <div class="movement-copy">
-            <span>DENGE · UZAMA</span>
-            <h3>Side Bend</h3>
-            <p>Yan bedeni uzatırken omuz kuşağını ve merkez kontrolünü zarifçe güçlendirir.</p>
-            <a href="#iletisim">Bu akışı deneyimle ↗</a>
-          </div>
-        </article>
+          <article class="service-card service-card--aerial" tabindex="0">
+            <a href="#iletisim" class="service-card-arrow" aria-label="Hamak Yoga hakkında bilgi al"
+              ><span>Bilgi al</span><b>↗</b></a
+            >
+            <div class="service-card-visual">
+              <img
+                src="/images/service-aerial-yoga-v1.webp"
+                alt="Hamak Yoga ters duruş hareketi"
+              /><span>02</span>
+            </div>
+            <div class="service-card-copy">
+              <span>ÖZGÜRLÜK · ESNEKLİK · DENGE</span>
+              <h3>Hamak Yoga</h3>
+              <p>Yer çekimini desteğe dönüştürün; omurgaya alan açarken hafifliği deneyimleyin.</p>
+            </div>
+          </article>
 
-        <article class="movement-card movement-card--gold" tabindex="0">
-          <span class="movement-number">03</span>
-          <svg class="movement-figure" viewBox="0 0 220 320" aria-hidden="true">
-            <circle cx="112" cy="62" r="17" />
-            <path
-              d="M111 80c-4 39-4 70 5 105m-4-78c-30 27-52 57-65 91m67-88c32 24 55 53 70 86m-68-12c-29 27-50 59-61 96m63-95c28 28 47 59 57 94"
-            />
-            <path class="movement-accent" d="M47 280c44-18 84-18 128 0" />
-          </svg>
-          <div class="movement-copy">
-            <span>POSTÜR · HİZALAMA</span>
-            <h3>Reformer Flow</h3>
-            <p>
-              Yay direnciyle hareket kalitesini görünür kılan, kontrollü ve kişisel bir güç akışı.
-            </p>
-            <a href="#iletisim">Bu akışı deneyimle ↗</a>
-          </div>
-        </article>
+          <article class="service-card service-card--reformer" tabindex="0">
+            <a href="#iletisim" class="service-card-arrow" aria-label="Reformer hakkında bilgi al"
+              ><span>Bilgi al</span><b>↗</b></a
+            >
+            <div class="service-card-visual">
+              <img src="/images/service-reformer-v1.webp" alt="Reformer Pilates hareketi" /><span
+                >03</span
+              >
+            </div>
+            <div class="service-card-copy">
+              <span>GÜÇ · HİZALAMA · KONTROL</span>
+              <h3>Reformer</h3>
+              <p>Yay direnci ve akıcı geçişlerle bedeninizi kontrollü biçimde güçlendirin.</p>
+            </div>
+          </article>
 
-        <article class="movement-card movement-card--ink" tabindex="0">
-          <span class="movement-number">04</span>
-          <svg class="movement-figure" viewBox="0 0 220 320" aria-hidden="true">
-            <circle cx="82" cy="84" r="17" />
-            <path
-              d="M95 96c30 21 47 50 48 88m-45-82c-31 23-50 51-59 85m102-4c20 22 33 49 38 82m-39-80c-28 22-47 53-56 91m-44-88c17 5 32 16 43 31"
-            />
-            <path class="movement-accent" d="M24 278h172M46 291h128" />
-          </svg>
-          <div class="movement-copy">
-            <span>MOBİLİTE · NEFES</span>
-            <h3>Swan</h3>
-            <p>Omurgayı akış içinde açar; göğüs kafesine alan, duruşa hafiflik kazandırır.</p>
-            <a href="#iletisim">Bu akışı deneyimle ↗</a>
-          </div>
-        </article>
+          <article class="service-card service-card--cadillac" tabindex="0">
+            <a href="#iletisim" class="service-card-arrow" aria-label="Cadillac hakkında bilgi al"
+              ><span>Bilgi al</span><b>↗</b></a
+            >
+            <div class="service-card-visual">
+              <img
+                src="/images/service-cadillac-v1.webp"
+                alt="Cadillac Pilates yay egzersizi"
+              /><span>04</span>
+            </div>
+            <div class="service-card-copy">
+              <span>DESTEK · DERİNLİK · HASSASİYET</span>
+              <h3>Cadillac</h3>
+              <p>
+                Geniş hareket repertuvarıyla bedene özel, destekli ve derinlemesine bir çalışma.
+              </p>
+            </div>
+          </article>
+        </div>
+        <p class="service-deck-hint"><span></span> Kartları keşfetmek için üzerine gelin</p>
       </div>
     </div>
   </section>
@@ -405,29 +416,89 @@
     </div>
   </section>
 
-  <section id="iletisim" class="scroll-mt-24 bg-cream px-6 py-24">
-    <div class="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
-      <div>
-        <p class="text-xs font-bold tracking-[0.2em] text-gold">BİRLİKTE BAŞLAYALIM</p>
-        <h2 class="mt-5 font-display text-5xl leading-none">
-          Kendinize iyi gelecek bir alan açın.
-        </h2>
-        <p class="mt-6 max-w-xl text-sm leading-7 text-anthracite/65">
-          Stüdyomuz ve size uygun başlangıç hakkında bilgi almak için bizimle iletişime geçin.
+  <section id="iletisim" class="contact-section scroll-mt-24">
+    <div class="contact-shell">
+      <div class="contact-copy">
+        <p class="contact-eyebrow">BİRLİKTE BAŞLAYALIM</p>
+        <h2>Kendinize iyi gelecek<br /><em>bir görüşme planlayın.</em></h2>
+        <p>
+          Hedeflerinizi, daha önceki deneyiminizi ve size en uygun çalışma düzenini konuşalım.
+          Bilgilerinizi bırakın, size en kısa sürede ulaşalım.
         </p>
+        <div class="contact-promises">
+          <span><b>01</b> İhtiyacınızı dinleriz</span>
+          <span><b>02</b> Size uygun hizmeti belirleriz</span>
+          <span><b>03</b> İlk görüşmeyi birlikte planlarız</span>
+        </div>
       </div>
-      <div class="rounded-2xl bg-anthracite p-9 text-ivory shadow-xl">
-        <p class="text-xs font-bold tracking-[0.2em] text-sand">DENİZLİ · TÜRKİYE</p>
-        <h3 class="mt-5 font-display text-4xl">Olive Pilates Stüdyosu</h3>
-        <p class="mt-4 text-sm leading-7 text-cream">
-          İlk adım, kendinize ayırdığınız küçük bir zaman olabilir.
-        </p>
-        <a
-          routerLink="/login"
-          class="mt-8 inline-flex rounded-full bg-gold px-6 py-3 text-sm font-bold text-white transition hover:bg-sand hover:text-anthracite"
-          >Üye Girişi →</a
-        >
-      </div>
+
+      <form class="contact-form-card" (ngSubmit)="submitContactRequest()" #contactNgForm="ngForm">
+        <div class="contact-form-topline"><span>GÖRÜŞME TALEBİ</span><i>↗</i></div>
+
+        <div class="contact-form-grid">
+          <label class="contact-field contact-field--wide">
+            <span>Ad Soyad</span>
+            <input
+              type="text"
+              name="fullName"
+              maxlength="150"
+              autocomplete="name"
+              [(ngModel)]="contactForm.fullName"
+              placeholder="Adınızı ve soyadınızı yazın"
+              required
+            />
+          </label>
+          <label class="contact-field">
+            <span>E-posta</span>
+            <input
+              type="email"
+              name="email"
+              maxlength="200"
+              autocomplete="email"
+              [(ngModel)]="contactForm.email"
+              placeholder="ornek@email.com"
+              required
+              email
+            />
+          </label>
+          <label class="contact-field">
+            <span>Telefon</span>
+            <input
+              type="tel"
+              name="phone"
+              maxlength="30"
+              autocomplete="tel"
+              [(ngModel)]="contactForm.phone"
+              placeholder="05xx xxx xx xx"
+              required
+            />
+          </label>
+          <label class="contact-field contact-field--wide">
+            <span>Notunuz</span>
+            <textarea
+              name="note"
+              maxlength="2000"
+              rows="4"
+              [(ngModel)]="contactForm.note"
+              placeholder="Hedefinizden veya görüşmek istediğiniz konudan kısaca bahsedin."
+              required
+            ></textarea>
+          </label>
+        </div>
+
+        <div class="contact-form-footer">
+          <small>Bilgileriniz yalnızca sizinle iletişim kurmak için kullanılır.</small>
+          <button type="submit" [disabled]="contactSubmitting || contactNgForm.invalid">
+            {{ contactSubmitting ? 'Gönderiliyor...' : 'Görüşme Talebi Gönder' }} <span>→</span>
+          </button>
+        </div>
+
+        @if (contactSubmitted) {
+          <p class="contact-success">
+            <i>✓</i> Talebiniz bize ulaştı. En kısa sürede görüşmek üzere.
+          </p>
+        }
+      </form>
     </div>
   </section>
 </main>
