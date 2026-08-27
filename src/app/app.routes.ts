@@ -66,6 +66,13 @@ export const routes: Routes = [
           ),
       },
       {
+        path: 'my-membership',
+        loadComponent: () =>
+          import('./features/my-membership/my-membership.component').then(
+            (m) => m.MyMembershipComponent,
+          ),
+      },
+      {
         path: 'members',
         loadComponent: () =>
           import('./features/members/members.component').then((m) => m.MembersComponent),

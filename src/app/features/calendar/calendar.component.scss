@@ -655,9 +655,19 @@ full-calendar {
   color: var(--color-accent-light);
 }
 
-.calendar-form-intro div { display: grid; gap: 3px; }
-.calendar-form-intro strong { color: var(--color-text); font-size: 12px; }
-.calendar-form-intro span { color: var(--color-text-muted); font-size: 9px; line-height: 1.45; }
+.calendar-form-intro div {
+  display: grid;
+  gap: 3px;
+}
+.calendar-form-intro strong {
+  color: var(--color-text);
+  font-size: 12px;
+}
+.calendar-form-intro span {
+  color: var(--color-text-muted);
+  font-size: 9px;
+  line-height: 1.45;
+}
 
 .calendar-hours-help {
   display: flex;
@@ -671,7 +681,9 @@ full-calendar {
   font-size: 9px;
 }
 
-.calendar-hours-help i { color: var(--color-accent); }
+.calendar-hours-help i {
+  color: var(--color-accent);
+}
 
 :host-context(.dark-theme) .calendar-form-intro {
   border-color: rgba(232, 216, 77, 0.18);
@@ -714,7 +726,9 @@ full-calendar {
   background:
     radial-gradient(circle at 82% 0%, rgba(214, 190, 136, 0.15), transparent 30%),
     linear-gradient(145deg, rgba(248, 240, 225, 0.98), rgba(238, 228, 209, 0.96)) !important;
-  box-shadow: 0 24px 60px rgba(53, 50, 45, 0.1), inset 0 1px rgba(255, 255, 255, 0.65) !important;
+  box-shadow:
+    0 24px 60px rgba(53, 50, 45, 0.1),
+    inset 0 1px rgba(255, 255, 255, 0.65) !important;
   --calendar-bg: rgba(248, 240, 225, 0.72);
   --calendar-header-bg: rgba(228, 215, 193, 0.78);
   --calendar-today-bg: rgba(214, 190, 136, 0.2);
@@ -750,7 +764,12 @@ full-calendar {
   border-radius: 10px !important;
   background: rgba(248, 240, 225, 0.72) !important;
   color: #515049 !important;
-  transition: transform 180ms ease, color 180ms ease, background 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+  transition:
+    transform 180ms ease,
+    color 180ms ease,
+    background 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease;
 }
 
 :host ::ng-deep .fc .fc-button:hover {
@@ -765,7 +784,9 @@ full-calendar {
   border-color: #292925 !important;
   background: #292925 !important;
   color: #fff174 !important;
-  box-shadow: 0 0 0 1px rgba(255, 241, 116, 0.12), 0 0 18px rgba(169, 134, 67, 0.16) !important;
+  box-shadow:
+    0 0 0 1px rgba(255, 241, 116, 0.12),
+    0 0 18px rgba(169, 134, 67, 0.16) !important;
 }
 
 :host ::ng-deep .fc-theme-standard .fc-scrollgrid {
@@ -775,7 +796,11 @@ full-calendar {
 }
 
 :host ::ng-deep .fc .fc-col-header-cell {
-  background: linear-gradient(180deg, rgba(228, 215, 193, 0.9), rgba(238, 228, 209, 0.78)) !important;
+  background: linear-gradient(
+    180deg,
+    rgba(228, 215, 193, 0.9),
+    rgba(238, 228, 209, 0.78)
+  ) !important;
 }
 
 :host ::ng-deep .fc .fc-col-header-cell-cushion {
@@ -786,7 +811,11 @@ full-calendar {
 }
 
 :host ::ng-deep .fc .fc-col-header-cell.fc-day-today {
-  background: linear-gradient(180deg, rgba(214, 190, 136, 0.52), rgba(214, 190, 136, 0.24)) !important;
+  background: linear-gradient(
+    180deg,
+    rgba(214, 190, 136, 0.52),
+    rgba(214, 190, 136, 0.24)
+  ) !important;
   box-shadow: inset 0 -2px #a98643;
 }
 
@@ -801,7 +830,11 @@ full-calendar {
 }
 
 :host ::ng-deep .fc .fc-day-today {
-  background: linear-gradient(180deg, rgba(214, 190, 136, 0.18), rgba(214, 190, 136, 0.07)) !important;
+  background: linear-gradient(
+    180deg,
+    rgba(214, 190, 136, 0.18),
+    rgba(214, 190, 136, 0.07)
+  ) !important;
 }
 
 :host ::ng-deep .fc .fc-event {
@@ -811,8 +844,14 @@ full-calendar {
   border-radius: 9px !important;
   background: linear-gradient(135deg, #34352f, #292a26) !important;
   color: #fff8e8 !important;
-  box-shadow: 0 5px 14px rgba(41, 41, 37, 0.2), inset 0 1px rgba(255, 255, 255, 0.06);
-  transition: transform 190ms ease, border-color 190ms ease, box-shadow 190ms ease, filter 190ms ease;
+  box-shadow:
+    0 5px 14px rgba(41, 41, 37, 0.2),
+    inset 0 1px rgba(255, 255, 255, 0.06);
+  transition:
+    transform 190ms ease,
+    border-color 190ms ease,
+    box-shadow 190ms ease,
+    filter 190ms ease;
 }
 
 :host ::ng-deep .fc .fc-event:hover {
@@ -820,7 +859,9 @@ full-calendar {
   transform: translateY(-2px) scale(1.015);
   border-color: #d6be88 !important;
   background: linear-gradient(135deg, #3b3d34, #2d2e29) !important;
-  box-shadow: 0 10px 24px rgba(41, 41, 37, 0.26), 0 0 16px rgba(174, 185, 52, 0.18);
+  box-shadow:
+    0 10px 24px rgba(41, 41, 37, 0.26),
+    0 0 16px rgba(174, 185, 52, 0.18);
 }
 
 :host ::ng-deep .fc .calendar-event--cancelled {
@@ -840,10 +881,19 @@ full-calendar {
   color: #d4ccb8;
 }
 
-:host ::ng-deep .calendar-service-chip--0 { background: #aeb934; color: #171816; }
-:host ::ng-deep .calendar-service-chip--1 { background: #a98643; }
-:host ::ng-deep .calendar-service-chip--2 { background: #6e622f; }
-:host ::ng-deep .calendar-service-chip--3 { background: #51514a; }
+:host ::ng-deep .calendar-service-chip--0 {
+  background: #aeb934;
+  color: #171816;
+}
+:host ::ng-deep .calendar-service-chip--1 {
+  background: #a98643;
+}
+:host ::ng-deep .calendar-service-chip--2 {
+  background: #6e622f;
+}
+:host ::ng-deep .calendar-service-chip--3 {
+  background: #51514a;
+}
 
 :host ::ng-deep .fc .fc-timegrid-now-indicator-line {
   border-color: #e8d84d !important;
@@ -874,7 +924,9 @@ full-calendar {
     radial-gradient(circle at 84% 0%, rgba(232, 216, 77, 0.08), transparent 30%),
     linear-gradient(rgba(33, 34, 32, 0.94), rgba(24, 25, 23, 0.97)),
     url('/images/charcoal-leather-texture-v1.png') center / 620px auto repeat !important;
-  box-shadow: 0 30px 75px rgba(0, 0, 0, 0.32), inset 0 1px rgba(255, 241, 116, 0.04) !important;
+  box-shadow:
+    0 30px 75px rgba(0, 0, 0, 0.32),
+    inset 0 1px rgba(255, 241, 116, 0.04) !important;
 }
 
 :host-context(.dark) .calendar-legend,
@@ -928,7 +980,11 @@ full-calendar {
 
 :host-context(.dark) ::ng-deep .fc .fc-day-today,
 :host-context(.dark-theme) ::ng-deep .fc .fc-day-today {
-  background: linear-gradient(180deg, rgba(232, 216, 77, 0.095), rgba(232, 216, 77, 0.025)) !important;
+  background: linear-gradient(
+    180deg,
+    rgba(232, 216, 77, 0.095),
+    rgba(232, 216, 77, 0.025)
+  ) !important;
 }
 
 @media (max-width: 768px) {

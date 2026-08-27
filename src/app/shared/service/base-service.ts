@@ -5,11 +5,7 @@ import { BaseDto } from '../model/base-dto';
 export abstract class BaseService<T extends BaseDto> {
   protected abstract readonly apiUrl: string;
 
-  protected constructor(
-    protected readonly http: HttpClient,
-  ) {}
-
-
+  protected constructor(protected readonly http: HttpClient) {}
 
   findAll(): Observable<T[]> {
     return this.http.get<T[]>(this.apiUrl);

@@ -1,8 +1,4 @@
-<div
-  class="confirm-backdrop"
-  *ngIf="visible"
-  (click)="close()"
-></div>
+<div class="confirm-backdrop" *ngIf="visible" (click)="close()"></div>
 
 <div
   class="confirm-dialog"
@@ -28,19 +24,11 @@
   </div>
 
   <div class="confirm-footer">
-    <button
-      type="button"
-      class="secondary-button"
-      (click)="close()"
-    >
+    <button type="button" class="secondary-button" (click)="close()">
       {{ cancelText }}
     </button>
 
-    <button
-      type="button"
-      class="primary-button"
-      (click)="onConfirm()"
-    >
+    <button type="button" class="primary-button" (click)="onConfirm()">
       {{ confirmText }}
     </button>
   </div>

@@ -67,7 +67,9 @@ export class DashboardComponent implements OnInit {
         next: (lessons) => {
           this.memberLessons = lessons
             .filter((lesson) => lesson.status === 'ACTIVE')
-            .sort((a, b) => new Date(a.startAt ?? 0).getTime() - new Date(b.startAt ?? 0).getTime());
+            .sort(
+              (a, b) => new Date(a.startAt ?? 0).getTime() - new Date(b.startAt ?? 0).getTime(),
+            );
           this.changeDetector.detectChanges();
         },
         error: (error) => {
@@ -96,7 +98,9 @@ export class DashboardComponent implements OnInit {
 
   get upcomingMemberLessons(): LessonDto[] {
     const now = Date.now();
-    return this.memberLessons.filter((lesson) => new Date(lesson.startAt ?? 0).getTime() >= now).slice(0, 4);
+    return this.memberLessons
+      .filter((lesson) => new Date(lesson.startAt ?? 0).getTime() >= now)
+      .slice(0, 4);
   }
 
   get nextMemberLesson(): LessonDto | null {
@@ -104,7 +108,8 @@ export class DashboardComponent implements OnInit {
   }
 
   get openLessonCount(): number {
-    return this.memberLessons.filter((lesson) => (lesson.capacity ?? 0) > lesson.reservationCount).length;
+    return this.memberLessons.filter((lesson) => (lesson.capacity ?? 0) > lesson.reservationCount)
+      .length;
   }
 
   lessonOccupancy(lesson: LessonDto): number {

@@ -47,15 +47,24 @@
                 class="status-pill"
                 [class.paid]="payment.status === 'PAID'"
                 [class.unpaid]="payment.status !== 'PAID'"
-              >{{ paymentStatusLabel(payment.status) }}</span>
+                >{{ paymentStatusLabel(payment.status) }}</span
+              >
             </td>
             <td>{{ payment.paidAt ? (payment.paidAt | date: 'dd.MM.yyyy HH:mm') : '-' }}</td>
             <td>
               <div class="table-actions">
-                <button class="table-action table-action-edit" title="Düzenle" (click)="openEditForm(payment)">
+                <button
+                  class="table-action table-action-edit"
+                  title="Düzenle"
+                  (click)="openEditForm(payment)"
+                >
                   <i class="pi pi-pencil"></i>
                 </button>
-                <button class="table-action table-action-delete" title="Sil" (click)="confirmDelete(payment)">
+                <button
+                  class="table-action table-action-delete"
+                  title="Sil"
+                  (click)="confirmDelete(payment)"
+                >
                   <i class="pi pi-trash"></i>
                 </button>
               </div>

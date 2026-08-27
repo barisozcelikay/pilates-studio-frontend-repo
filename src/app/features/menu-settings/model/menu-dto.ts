@@ -11,4 +11,3 @@ export interface MenuDto extends BaseDto {
   children: MenuDto[];
   profileIds: number[];
 }
-

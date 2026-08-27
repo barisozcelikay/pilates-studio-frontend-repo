@@ -4,7 +4,6 @@ import { AccountDto } from '../../../core/auth/model/account-dto';
 import { BaseService } from '../../../shared/service/base-service';
 import { environment } from '../../../../environments/environment';
 
-
 @Injectable({
   providedIn: 'root',
 })

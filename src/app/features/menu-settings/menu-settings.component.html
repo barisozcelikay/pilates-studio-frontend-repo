@@ -1,34 +1,22 @@
 <div class="page">
-
   <div class="page-header">
     <div class="page-header-content">
+      <span class="page-eyebrow"> YÖNETİM </span>
 
-      <span class="page-eyebrow">
-        YÖNETİM
-      </span>
+      <h1 class="page-title">Menü Ayarları</h1>
 
-      <h1 class="page-title">
-        Menü Ayarları
-      </h1>
-
-      <p class="page-description">
-        Menüler ve profil görünürlüklerini yönetin.
-      </p>
-
+      <p class="page-description">Menüler ve profil görünürlüklerini yönetin.</p>
     </div>
   </div>
 
   <div class="card">
-
     <div class="table-container">
-
       <p-treeTable
         class="data-table menu-tree-table"
         [value]="nodes"
         [loading]="loading"
         [scrollable]="true"
       >
-
         <ng-template pTemplate="header">
           <tr>
             <th>Menü</th>
@@ -36,23 +24,14 @@
             <th>İkon</th>
             <th>Sıra</th>
             <th>Durum</th>
-            <th class="action-column">
-              İşlem
-            </th>
+            <th class="action-column">İşlem</th>
           </tr>
         </ng-template>
 
-        <ng-template
-          pTemplate="body"
-          let-rowNode
-          let-rowData="rowData"
-        >
+        <ng-template pTemplate="body" let-rowNode let-rowData="rowData">
           <tr>
-
             <td>
-              <p-treeTableToggler
-                [rowNode]="rowNode"
-              />
+              <p-treeTableToggler [rowNode]="rowNode" />
 
               <span class="menu-name">
                 {{ rowData.name }}
@@ -66,18 +45,9 @@
             </td>
 
             <td>
-              <i
-                *ngIf="rowData.icon"
-                [class]="rowData.icon"
-                class="menu-icon"
-              ></i>
+              <i *ngIf="rowData.icon" [class]="rowData.icon" class="menu-icon"></i>
 
-              <span
-                *ngIf="!rowData.icon"
-                class="text-muted"
-              >
-                —
-              </span>
+              <span *ngIf="!rowData.icon" class="text-muted"> — </span>
             </td>
 
             <td>
@@ -95,9 +65,7 @@
             </td>
 
             <td class="action-column">
-
               <div class="table-actions">
-
                 <button
                   type="button"
                   class="table-action table-action-edit"
@@ -106,61 +74,36 @@
                 >
                   <i class="pi pi-pencil"></i>
                 </button>
-
               </div>
-
             </td>
-
           </tr>
         </ng-template>
 
         <ng-template pTemplate="emptymessage">
           <tr>
-            <td
-              colspan="6"
-              class="empty-message"
-            >
-              Menü bulunamadı.
-            </td>
+            <td colspan="6" class="empty-message">Menü bulunamadı.</td>
           </tr>
         </ng-template>
-
       </p-treeTable>
-
     </div>
-
   </div>
-
 </div>
-
 
 <app-drawer
   [visible]="drawerVisible"
   [title]="selectedMenu ? selectedMenu.name + ' Menüsü' : 'Menü Düzenle'"
   [width]="'420px'"
-  (visibleChange)="
-    $event ? drawerVisible = true : closeDrawer()
-  "
+  (visibleChange)="$event ? (drawerVisible = true) : closeDrawer()"
 >
-
-  <div
-    class="drawer-form"
-    *ngIf="selectedMenu"
-  >
-
+  <div class="drawer-form" *ngIf="selectedMenu">
     <!-- Menü bilgisi -->
 
     <div class="menu-info">
-
       <div class="menu-info-icon">
-        <i
-          *ngIf="selectedMenu.icon"
-          [class]="selectedMenu.icon"
-        ></i>
+        <i *ngIf="selectedMenu.icon" [class]="selectedMenu.icon"></i>
       </div>
 
       <div class="menu-info-content">
-
         <span class="menu-info-name">
           {{ selectedMenu.name }}
         </span>
@@ -168,19 +111,13 @@
         <span class="menu-info-code">
           {{ selectedMenu.code }}
         </span>
-
       </div>
-
     </div>
-
 
     <!-- Profiller -->
 
     <div class="form-group">
-
-      <label class="form-label">
-        Görüntüleyebilecek Profiller
-      </label>
+      <label class="form-label"> Görüntüleyebilecek Profiller </label>
 
       <p-multiSelect
         [options]="profiles"
@@ -197,12 +134,8 @@
       >
       </p-multiSelect>
 
-      <span class="form-help">
-        Bu menüyü hangi profillerin görebileceğini belirleyin.
-      </span>
-
+      <span class="form-help"> Bu menüyü hangi profillerin görebileceğini belirleyin. </span>
     </div>
-
 
     <!-- Durum -->
 
@@ -214,39 +147,19 @@
         [disabled]="saving"
       />
 
-      <label
-        class="form-label"
-        for="menu-active"
-      >
-        Aktif
-      </label>
+      <label class="form-label" for="menu-active"> Aktif </label>
     </div>
-
   </div>
-
 
   <!-- Footer -->
 
   <div drawer-footer>
-
     <div class="button-group">
-
-      <button
-        type="button"
-        class="secondary-button"
-        [disabled]="saving"
-        (click)="closeDrawer()"
-      >
+      <button type="button" class="secondary-button" [disabled]="saving" (click)="closeDrawer()">
         İptal
       </button>
 
-      <button
-        type="button"
-        class="primary-button"
-        [disabled]="saving"
-        (click)="save()"
-      >
-
+      <button type="button" class="primary-button" [disabled]="saving" (click)="save()">
         <i
           class="pi"
           [class.pi-check]="!saving"
@@ -257,11 +170,7 @@
         <span>
           {{ saving ? 'Kaydediliyor...' : 'Kaydet' }}
         </span>
-
       </button>
-
     </div>
-
   </div>
-
 </app-drawer>

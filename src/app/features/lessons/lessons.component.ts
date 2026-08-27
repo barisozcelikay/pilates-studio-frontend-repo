@@ -63,7 +63,10 @@ export class LessonsComponent extends BaseComponent<LessonDto> {
       next: (instructors) => {
         this.instructors = instructors.filter((instructor) => instructor.status === 'ACTIVE');
         this.instructorOptions = this.instructors
-          .filter((instructor): instructor is InstructorDto & { id: number } => instructor.id !== undefined)
+          .filter(
+            (instructor): instructor is InstructorDto & { id: number } =>
+              instructor.id !== undefined,
+          )
           .map((instructor) => ({
             label: `${instructor.firstName} ${instructor.lastName}`,
             value: instructor.id,

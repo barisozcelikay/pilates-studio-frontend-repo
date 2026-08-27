@@ -9,7 +9,6 @@ import { SelectRoleRequest } from '../model/select-role-request';
 import { AccountDto } from '../model/account-dto';
 import { environment } from '../../../../environments/environment';
 
-
 @Injectable({
   providedIn: 'root',
 })
@@ -86,9 +85,7 @@ export class AuthService {
   }
 
   getCurrentAccount(): Observable<AccountDto> {
-    return this.http.get<AccountDto>(
-      `${this.apiUrl.replace('/auth', '')}/accounts/me`
-    );
+    return this.http.get<AccountDto>(`${this.apiUrl.replace('/auth', '')}/accounts/me`);
   }
 
   getActiveRole(): string | null {

@@ -4,7 +4,6 @@ import { ProfileDto } from '../../../core/auth/model/profile-dto';
 import { environment } from '../../../../environments/environment';
 import { BaseService } from '../../../shared/service/base-service';
 
-
 @Injectable({
   providedIn: 'root',
 })
@@ -15,4 +14,3 @@ export class ProfileService extends BaseService<ProfileDto> {
     super(http);
   }
 }
-

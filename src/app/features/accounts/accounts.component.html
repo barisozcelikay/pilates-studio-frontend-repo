@@ -1,21 +1,14 @@
 <div class="page">
-
   <div class="page-header">
     <div class="page-header-content">
       <span class="page-eyebrow">KULLANICI YÖNETİMİ</span>
 
       <h1 class="page-title">Kullanıcılar</h1>
 
-      <p class="page-description">
-        Sistemdeki kullanıcı hesaplarını yönetin.
-      </p>
+      <p class="page-description">Sistemdeki kullanıcı hesaplarını yönetin.</p>
     </div>
 
-    <button
-      type="button"
-      class="primary-button"
-      (click)="openCreateForm()"
-    >
+    <button type="button" class="primary-button" (click)="openCreateForm()">
       <i class="pi pi-plus"></i>
       <span>Kullanıcı Ekle</span>
     </button>
@@ -45,9 +38,7 @@
 
         <ng-template #body let-account>
           <tr>
-            <td>
-              {{ account.firstName }} {{ account.lastName }}
-            </td>
+            <td>{{ account.firstName }} {{ account.lastName }}</td>
 
             <td>
               {{ account.email }}
@@ -62,13 +53,19 @@
             </td>
 
             <td>
-              {{ account.status === 'PENDING' ? 'Davet Bekliyor' : (account.status === 'ACTIVE' ? 'Aktif' : 'Pasif') }}
+              {{
+                account.status === 'EMAIL_CONFIRMATION_PENDING'
+                  ? 'E-Mail Onayı Bekliyor'
+                  : account.status === 'ACTIVE'
+                    ? 'Aktif'
+                    : 'Pasif'
+              }}
             </td>
 
             <td>
               {{
                 account.lastLoginAt
-                  ? (account.lastLoginAt | date:'dd.MM.yyyy HH:mm')
+                  ? (account.lastLoginAt | date: 'dd.MM.yyyy HH:mm')
                   : 'Henüz giriş yapmadı'
               }}
             </td>
@@ -99,7 +96,6 @@
       </p-table>
     </div>
   </div>
-
 </div>
 
 <app-drawer
@@ -107,16 +103,9 @@
   [title]="editing ? 'Kullanıcıyı Düzenle' : 'Kullanıcı Ekle'"
 >
   <div class="form">
-
     <div class="form-row">
-
       <div class="form-group">
-        <label
-          class="form-label"
-          for="account-first-name"
-        >
-          Ad
-        </label>
+        <label class="form-label" for="account-first-name"> Ad </label>
 
         <input
           id="account-first-name"
@@ -128,12 +117,7 @@
       </div>
 
       <div class="form-group">
-        <label
-          class="form-label"
-          for="account-last-name"
-        >
-          Soyad
-        </label>
+        <label class="form-label" for="account-last-name"> Soyad </label>
 
         <input
           id="account-last-name"
@@ -143,16 +127,10 @@
           placeholder="Soyad"
         />
       </div>
-
     </div>
 
     <div class="form-group">
-      <label
-        class="form-label"
-        for="account-email"
-      >
-        E-posta
-      </label>
+      <label class="form-label" for="account-email"> E-posta </label>
 
       <input
         id="account-email"
@@ -164,12 +142,7 @@
     </div>
 
     <div class="form-group">
-      <label
-        class="form-label"
-        for="account-phone"
-      >
-        Telefon
-      </label>
+      <label class="form-label" for="account-phone"> Telefon </label>
 
       <input
         id="account-phone"
@@ -181,12 +154,7 @@
     </div>
 
     <div class="form-group">
-      <label
-        class="form-label"
-        for="account-profile"
-      >
-        Profil
-      </label>
+      <label class="form-label" for="account-profile"> Profil </label>
 
       <p-select
         inputId="account-profile"
@@ -198,15 +166,52 @@
         [showClear]="true"
         [filter]="true"
         [disabled]="editing"
+        (ngModelChange)="onProfileChange()"
         appendTo="body"
       />
     </div>
 
+    @if (!editing && isMemberProfile) {
+      <div class="form-group">
+        <label class="form-label" for="account-package">Paket</label>
+        <p-select
+          inputId="account-package"
+          [options]="packages"
+          optionLabel="name"
+          optionValue="id"
+          [(ngModel)]="form.packageId"
+          placeholder="Paket seçin"
+          [filter]="true"
+          appendTo="body"
+        />
+        @if (selectedPackage; as package) {
+          <small class="form-help">
+            {{ package.sessionCount }} ders · {{ package.durationDays }} gün ·
+            {{ package.price }} TL
+          </small>
+        } @else {
+          <small class="form-help">Üye hesabı açılırken ilk üyelik paketi de oluşturulur.</small>
+        }
+      </div>
+    }
+
+    @if (editing) {
+      <div class="form-group">
+        <label class="form-label" for="account-status">Statü</label>
+        <p-select
+          inputId="account-status"
+          [options]="statusOptions"
+          optionLabel="label"
+          optionValue="value"
+          [(ngModel)]="form.status"
+          appendTo="body"
+        />
+      </div>
+    }
   </div>
 
   <div drawer-footer>
     <div class="button-group">
-
       <button
         type="button"
         class="secondary-button"
@@ -219,7 +224,7 @@
       <button
         type="button"
         class="primary-button"
-        [disabled]="saving"
+        [disabled]="saving || (!editing && isMemberProfile && !form.packageId)"
         (click)="save()"
       >
         <i
@@ -230,10 +235,9 @@
         ></i>
 
         <span>
-        {{ saving ? 'Kaydediliyor...' : (editing ? 'Güncelle' : 'Kaydet') }}
-      </span>
+          {{ saving ? 'Kaydediliyor...' : editing ? 'Güncelle' : 'Kaydet' }}
+        </span>
       </button>
-
     </div>
   </div>
 </app-drawer>

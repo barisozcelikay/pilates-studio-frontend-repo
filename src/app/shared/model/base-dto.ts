@@ -3,4 +3,3 @@ export class BaseDto {
   createdAt?: string;
   updatedAt?: string;
 }
-

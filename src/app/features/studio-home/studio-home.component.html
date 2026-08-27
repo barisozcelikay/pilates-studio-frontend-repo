@@ -17,40 +17,400 @@
     </div>
   </section>
 
-  <header class="studio-header sticky top-0 z-50 border-b border-white/10 bg-anthracite/95 text-ivory backdrop-blur-xl">
+  <header
+    class="studio-header sticky top-0 z-50 border-b border-white/10 bg-anthracite/95 text-ivory backdrop-blur-xl"
+  >
     <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-3">
-      <a href="#anasayfa" (click)="scrollToSection($event, 'anasayfa')" class="brand-lockup flex items-center" aria-label="Olive Pilates Studio ana sayfa"><img src="/images/olive-logo-dark-crisp-transparent-v4.png" alt="Olive Pilates Studio" class="brand-logo w-52 rounded-lg" /></a>
-      <nav class="header-nav hidden items-center gap-6 text-[11px] font-bold uppercase tracking-[0.13em] text-ivory/70 lg:flex"><a href="#studio" (click)="scrollToSection($event, 'studio')">Stüdyo</a><a href="#dersler" (click)="scrollToSection($event, 'dersler')">Dersler</a><a href="#paketler" (click)="scrollToSection($event, 'paketler')">Paketler</a><a href="#instagram" (click)="scrollToSection($event, 'instagram')">Instagram</a><a href="#iletisim" (click)="scrollToSection($event, 'iletisim')">İletişim</a></nav>
-      <a routerLink="/login" class="neon-button hidden rounded-full border border-gold/60 px-5 py-2.5 text-xs font-bold uppercase tracking-[0.12em] text-gold transition hover:-translate-y-0.5 lg:inline-flex">Üye Girişi</a>
-      <button class="rounded-lg border border-gold/50 px-3 py-2 text-gold lg:hidden" (click)="mobileMenuOpen = !mobileMenuOpen" aria-label="Menüyü aç">☰</button>
+      <a
+        href="#anasayfa"
+        (click)="scrollToSection($event, 'anasayfa')"
+        class="brand-lockup flex items-center"
+        aria-label="Olive Pilates Studio ana sayfa"
+        ><img
+          src="/images/olive-logo-dark-crisp-transparent-v4.png"
+          alt="Olive Pilates Studio"
+          class="brand-logo w-52 rounded-lg"
+      /></a>
+      <nav
+        class="header-nav hidden items-center gap-6 text-[11px] font-bold uppercase tracking-[0.13em] text-ivory/70 lg:flex"
+      >
+        <a href="#studio" (click)="scrollToSection($event, 'studio')">Stüdyo</a
+        ><a href="#dersler" (click)="scrollToSection($event, 'dersler')">Dersler</a
+        ><a href="#paketler" (click)="scrollToSection($event, 'paketler')">Paketler</a
+        ><a href="#instagram" (click)="scrollToSection($event, 'instagram')">Instagram</a
+        ><a href="#iletisim" (click)="scrollToSection($event, 'iletisim')">İletişim</a>
+      </nav>
+      <a
+        routerLink="/login"
+        class="neon-button hidden rounded-full border border-gold/60 px-5 py-2.5 text-xs font-bold uppercase tracking-[0.12em] text-gold transition hover:-translate-y-0.5 lg:inline-flex"
+        >Üye Girişi</a
+      >
+      <button
+        class="rounded-lg border border-gold/50 px-3 py-2 text-gold lg:hidden"
+        (click)="mobileMenuOpen = !mobileMenuOpen"
+        aria-label="Menüyü aç"
+      >
+        ☰
+      </button>
     </div>
-    @if (mobileMenuOpen) { <nav class="mobile-nav border-t border-sand/20 px-6 py-5 lg:hidden"><div class="grid grid-cols-2 gap-3 text-sm font-semibold"><a href="#studio" (click)="scrollToSection($event, 'studio')">Stüdyo</a><a href="#dersler" (click)="scrollToSection($event, 'dersler')">Dersler</a><a href="#paketler" (click)="scrollToSection($event, 'paketler')">Paketler</a><a href="#instagram" (click)="scrollToSection($event, 'instagram')">Instagram</a><a href="#iletisim" (click)="scrollToSection($event, 'iletisim')" class="text-gold">İletişim</a></div></nav> }
+    @if (mobileMenuOpen) {
+      <nav class="mobile-nav border-t border-sand/20 px-6 py-5 lg:hidden">
+        <div class="grid grid-cols-2 gap-3 text-sm font-semibold">
+          <a href="#studio" (click)="scrollToSection($event, 'studio')">Stüdyo</a
+          ><a href="#dersler" (click)="scrollToSection($event, 'dersler')">Dersler</a
+          ><a href="#paketler" (click)="scrollToSection($event, 'paketler')">Paketler</a
+          ><a href="#instagram" (click)="scrollToSection($event, 'instagram')">Instagram</a
+          ><a href="#iletisim" (click)="scrollToSection($event, 'iletisim')" class="text-gold"
+            >İletişim</a
+          >
+        </div>
+      </nav>
+    }
   </header>
 
-  <section class="hero-shell relative overflow-hidden bg-anthracite text-ivory"><div class="hero-orbit absolute -left-36 top-12 h-96 w-96 rounded-full border border-stone/30"></div><div class="hero-glow absolute right-0 top-24 h-96 w-96 rounded-full bg-stone/20 blur-3xl"></div><div class="relative mx-auto grid min-h-[760px] max-w-7xl items-center gap-16 px-6 py-20 lg:grid-cols-2">
-    <div class="hero-copy"><p class="mb-6 flex items-center gap-3 text-xs font-bold tracking-[0.24em] text-gold"><span class="h-px w-8 bg-gold"></span> DENİZLİ · BOUTIQUE PILATES</p><h1 class="font-display text-5xl leading-[0.92] tracking-tight sm:text-6xl lg:text-8xl">Gücünü <span class="neon-word block italic text-stone">zarafetle</span> bul.</h1><p class="mt-7 max-w-xl text-base leading-8 text-ivory/65 sm:text-lg">Olive Pilates, bedeninizi dinleyen; gücü, dengeyi ve iyi hissetmeyi aynı akışta buluşturan kişiye özel bir stüdyo deneyimidir.</p><div class="mt-9 flex flex-wrap items-center gap-5"><a href="#dersler" class="primary-cta rounded-full bg-stone px-7 py-3.5 text-sm font-extrabold text-anthracite transition hover:-translate-y-1">Dersleri Keşfet →</a><a href="#iletisim" class="text-sm font-bold text-gold underline decoration-gold decoration-2 underline-offset-8">İlk adımı atın</a></div><div class="mt-12 flex flex-wrap gap-6 text-xs font-semibold text-ivory/55"><span>✦ Kişiye özel takip</span><span>✦ Küçük gruplar</span><span>✦ Bilinçli hareket</span></div></div>
-    <div class="hero-visual relative"><div class="absolute -bottom-5 -right-4 z-10 rounded-full border border-gold/40 bg-anthracite px-6 py-5 text-center text-[10px] font-bold tracking-[0.16em] text-gold shadow-xl">HAREKET<br />İYİ GELİR</div><div class="hero-frame relative overflow-hidden rounded-t-[12rem] rounded-b-2xl border border-gold/45 bg-cream/10 p-4"><img src="https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=1200&q=85" alt="Pilates stüdyosunda reformer egzersizi" class="h-[520px] w-full rounded-t-[10rem] rounded-b-xl object-cover saturate-[.82] contrast-[1.04]" /><div class="absolute inset-0 bg-gradient-to-t from-anthracite/60 via-transparent to-stone/10"></div><p class="absolute bottom-9 left-9 text-xs font-bold tracking-[0.2em] text-gold">GÜÇ · NEFES · OLIVE</p></div></div>
-  </div></section>
+  <section class="hero-shell relative overflow-hidden bg-anthracite text-ivory">
+    <div
+      class="hero-orbit absolute -left-36 top-12 h-96 w-96 rounded-full border border-stone/30"
+    ></div>
+    <div
+      class="hero-glow absolute right-0 top-24 h-96 w-96 rounded-full bg-stone/20 blur-3xl"
+    ></div>
+    <div
+      class="relative mx-auto grid min-h-[760px] max-w-7xl items-center gap-16 px-6 py-20 lg:grid-cols-2"
+    >
+      <div class="hero-copy">
+        <p class="mb-6 flex items-center gap-3 text-xs font-bold tracking-[0.24em] text-gold">
+          <span class="h-px w-8 bg-gold"></span> DENİZLİ · BOUTIQUE PILATES
+        </p>
+        <h1 class="font-display text-5xl leading-[0.92] tracking-tight sm:text-6xl lg:text-8xl">
+          Gücünü <span class="neon-word block italic text-stone">zarafetle</span> bul.
+        </h1>
+        <p class="mt-7 max-w-xl text-base leading-8 text-ivory/65 sm:text-lg">
+          Olive Pilates, bedeninizi dinleyen; gücü, dengeyi ve iyi hissetmeyi aynı akışta buluşturan
+          kişiye özel bir stüdyo deneyimidir.
+        </p>
+        <div class="mt-9 flex flex-wrap items-center gap-5">
+          <a
+            href="#dersler"
+            class="primary-cta rounded-full bg-stone px-7 py-3.5 text-sm font-extrabold text-anthracite transition hover:-translate-y-1"
+            >Dersleri Keşfet →</a
+          ><a
+            href="#iletisim"
+            class="text-sm font-bold text-gold underline decoration-gold decoration-2 underline-offset-8"
+            >İlk adımı atın</a
+          >
+        </div>
+        <div class="mt-12 flex flex-wrap gap-6 text-xs font-semibold text-ivory/55">
+          <span>✦ Kişiye özel takip</span><span>✦ Küçük gruplar</span
+          ><span>✦ Bilinçli hareket</span>
+        </div>
+      </div>
+      <div class="hero-visual relative">
+        <div
+          class="absolute -bottom-5 -right-4 z-10 rounded-full border border-gold/40 bg-anthracite px-6 py-5 text-center text-[10px] font-bold tracking-[0.16em] text-gold shadow-xl"
+        >
+          HAREKET<br />İYİ GELİR
+        </div>
+        <div
+          class="hero-frame relative overflow-hidden rounded-t-[12rem] rounded-b-2xl border border-gold/45 bg-cream/10 p-4"
+        >
+          <img
+            src="https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=1200&q=85"
+            alt="Pilates stüdyosunda reformer egzersizi"
+            class="h-[520px] w-full rounded-t-[10rem] rounded-b-xl object-cover saturate-[.82] contrast-[1.04]"
+          />
+          <div
+            class="absolute inset-0 bg-gradient-to-t from-anthracite/60 via-transparent to-stone/10"
+          ></div>
+          <p class="absolute bottom-9 left-9 text-xs font-bold tracking-[0.2em] text-gold">
+            GÜÇ · NEFES · OLIVE
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-  <section id="studio" class="leather-section scroll-mt-24 px-6 py-16 text-ivory"><div class="mx-auto grid max-w-7xl gap-8 md:grid-cols-3"><div><p class="text-xs font-bold tracking-[0.2em] text-sand">OLIVE FELSEFESİ</p><p class="mt-4 font-display text-3xl leading-tight">“İyi hissetmek, kendi ritmini bulmakla başlar.”</p></div><div class="border-l border-ivory/20 pl-0 md:pl-8"><p class="text-3xl font-display text-gold">01</p><p class="mt-3 text-sm leading-6 text-cream">Bedeninizin bugün neye ihtiyacı olduğunu birlikte keşfederiz.</p></div><div class="border-l border-ivory/20 pl-0 md:pl-8"><p class="text-3xl font-display text-gold">02</p><p class="mt-3 text-sm leading-6 text-cream">Hedeflerinize uyum sağlayan sürdürülebilir bir rutin kurarız.</p></div></div></section>
+  <section id="studio" class="leather-section scroll-mt-24 px-6 py-16 text-ivory">
+    <div class="mx-auto grid max-w-7xl gap-8 md:grid-cols-3">
+      <div>
+        <p class="text-xs font-bold tracking-[0.2em] text-sand">OLIVE FELSEFESİ</p>
+        <p class="mt-4 font-display text-3xl leading-tight">
+          “İyi hissetmek, kendi ritmini bulmakla başlar.”
+        </p>
+      </div>
+      <div class="border-l border-ivory/20 pl-0 md:pl-8">
+        <p class="text-3xl font-display text-gold">01</p>
+        <p class="mt-3 text-sm leading-6 text-cream">
+          Bedeninizin bugün neye ihtiyacı olduğunu birlikte keşfederiz.
+        </p>
+      </div>
+      <div class="border-l border-ivory/20 pl-0 md:pl-8">
+        <p class="text-3xl font-display text-gold">02</p>
+        <p class="mt-3 text-sm leading-6 text-cream">
+          Hedeflerinize uyum sağlayan sürdürülebilir bir rutin kurarız.
+        </p>
+      </div>
+    </div>
+  </section>
 
-  <section id="yaklasim" class="approach-section mx-auto max-w-7xl scroll-mt-24 px-6 py-24"><div class="grid gap-12 lg:grid-cols-[0.8fr_1.2fr]"><div><p class="text-xs font-bold tracking-[0.2em] text-gold">YAKLAŞIMIMIZ</p><h2 class="mt-5 font-display text-5xl leading-none">Daha güçlü olmak, daha çok zorlanmak demek değildir.</h2></div><div class="grid gap-5 sm:grid-cols-3"><article class="rounded-2xl border border-sand bg-white/30 p-6"><span class="text-xs font-bold text-gold">01</span><h3 class="mt-8 text-xl font-bold">Dinle</h3><p class="mt-3 text-sm leading-6 text-anthracite/65">Bedeninizin sınırlarını ve ihtiyaçlarını fark ederek başlarız.</p></article><article class="rounded-2xl border border-sand bg-cream p-6"><span class="text-xs font-bold text-gold">02</span><h3 class="mt-8 text-xl font-bold">Hareket et</h3><p class="mt-3 text-sm leading-6 text-anthracite/65">Kontrollü tekrarlarla gücü, dengeyi ve esnekliği geliştiririz.</p></article><article class="rounded-2xl border border-sand bg-white/30 p-6"><span class="text-xs font-bold text-gold">03</span><h3 class="mt-8 text-xl font-bold">Dengelen</h3><p class="mt-3 text-sm leading-6 text-anthracite/65">Hareketi günlük yaşamınızın kalıcı parçası yaparız.</p></article></div></div></section>
+  <section id="yaklasim" class="approach-section mx-auto max-w-7xl scroll-mt-24 px-6 py-24">
+    <div class="grid gap-12 lg:grid-cols-[0.8fr_1.2fr]">
+      <div>
+        <p class="text-xs font-bold tracking-[0.2em] text-gold">YAKLAŞIMIMIZ</p>
+        <h2 class="mt-5 font-display text-5xl leading-none">
+          Daha güçlü olmak, daha çok zorlanmak demek değildir.
+        </h2>
+      </div>
+      <div class="grid gap-5 sm:grid-cols-3">
+        <article class="rounded-2xl border border-sand bg-white/30 p-6">
+          <span class="text-xs font-bold text-gold">01</span>
+          <h3 class="mt-8 text-xl font-bold">Dinle</h3>
+          <p class="mt-3 text-sm leading-6 text-anthracite/65">
+            Bedeninizin sınırlarını ve ihtiyaçlarını fark ederek başlarız.
+          </p>
+        </article>
+        <article class="rounded-2xl border border-sand bg-cream p-6">
+          <span class="text-xs font-bold text-gold">02</span>
+          <h3 class="mt-8 text-xl font-bold">Hareket et</h3>
+          <p class="mt-3 text-sm leading-6 text-anthracite/65">
+            Kontrollü tekrarlarla gücü, dengeyi ve esnekliği geliştiririz.
+          </p>
+        </article>
+        <article class="rounded-2xl border border-sand bg-white/30 p-6">
+          <span class="text-xs font-bold text-gold">03</span>
+          <h3 class="mt-8 text-xl font-bold">Dengelen</h3>
+          <p class="mt-3 text-sm leading-6 text-anthracite/65">
+            Hareketi günlük yaşamınızın kalıcı parçası yaparız.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
 
-  <section id="dersler" class="scroll-mt-24 bg-cream px-6 py-24"><div class="mx-auto max-w-7xl"><div class="flex flex-col justify-between gap-6 md:flex-row md:items-end"><div><p class="text-xs font-bold tracking-[0.2em] text-gold">STÜDYO DERSLERİ</p><h2 class="mt-5 font-display text-5xl">Her beden için ayrı bir akış.</h2></div><p class="max-w-sm text-sm leading-7 text-anthracite/65">Hedefinize, deneyiminize ve günlük ritminize göre şekillenen ders seçenekleri.</p></div><div class="mt-12 divide-y divide-sand border-y border-sand">
-    <article class="grid gap-5 py-8 md:grid-cols-[80px_1fr_180px_40px] md:items-center"><span class="text-sm font-bold text-stone">01</span><div><h3 class="text-2xl font-bold">Reformer Pilates</h3><p class="mt-2 text-sm text-anthracite/65">Ekipman destekli, kontrollü ve hedef odaklı bir çalışma deneyimi.</p></div><span class="text-xs font-bold tracking-wider text-gold">GÜÇ · ESNEKLİK</span><a href="#iletisim" class="grid h-10 w-10 place-items-center rounded-full border border-anthracite transition hover:bg-anthracite hover:text-ivory">↗</a></article>
-    <article class="grid gap-5 py-8 md:grid-cols-[80px_1fr_180px_40px] md:items-center"><span class="text-sm font-bold text-stone">02</span><div><h3 class="text-2xl font-bold">Mat Pilates</h3><p class="mt-2 text-sm text-anthracite/65">Nefes, postür ve merkez kontrolüne odaklanan akışkan bir pratik.</p></div><span class="text-xs font-bold tracking-wider text-gold">OLIVE · KONTROL</span><a href="#iletisim" class="grid h-10 w-10 place-items-center rounded-full border border-anthracite transition hover:bg-anthracite hover:text-ivory">↗</a></article>
-    <article class="grid gap-5 py-8 md:grid-cols-[80px_1fr_180px_40px] md:items-center"><span class="text-sm font-bold text-stone">03</span><div><h3 class="text-2xl font-bold">Birebir Ders</h3><p class="mt-2 text-sm text-anthracite/65">Tamamen size ayrılmış, detaylı takip içeren özel çalışma alanı.</p></div><span class="text-xs font-bold tracking-wider text-gold">ODAK · TAKİP</span><a href="#iletisim" class="grid h-10 w-10 place-items-center rounded-full border border-anthracite transition hover:bg-anthracite hover:text-ivory">↗</a></article>
-  </div></div></section>
+  <section id="dersler" class="scroll-mt-24 bg-cream px-6 py-24">
+    <div class="mx-auto max-w-7xl">
+      <div class="flex flex-col justify-between gap-6 md:flex-row md:items-end">
+        <div>
+          <p class="text-xs font-bold tracking-[0.2em] text-gold">STÜDYO DERSLERİ</p>
+          <h2 class="mt-5 font-display text-5xl">Her beden için ayrı bir akış.</h2>
+        </div>
+        <p class="max-w-sm text-sm leading-7 text-anthracite/65">
+          Hedefinize, deneyiminize ve günlük ritminize göre şekillenen ders seçenekleri.
+        </p>
+      </div>
+      <div class="mt-12 divide-y divide-sand border-y border-sand">
+        <article class="grid gap-5 py-8 md:grid-cols-[80px_1fr_180px_40px] md:items-center">
+          <span class="text-sm font-bold text-stone">01</span>
+          <div>
+            <h3 class="text-2xl font-bold">Reformer Pilates</h3>
+            <p class="mt-2 text-sm text-anthracite/65">
+              Ekipman destekli, kontrollü ve hedef odaklı bir çalışma deneyimi.
+            </p>
+          </div>
+          <span class="text-xs font-bold tracking-wider text-gold">GÜÇ · ESNEKLİK</span
+          ><a
+            href="#iletisim"
+            class="grid h-10 w-10 place-items-center rounded-full border border-anthracite transition hover:bg-anthracite hover:text-ivory"
+            >↗</a
+          >
+        </article>
+        <article class="grid gap-5 py-8 md:grid-cols-[80px_1fr_180px_40px] md:items-center">
+          <span class="text-sm font-bold text-stone">02</span>
+          <div>
+            <h3 class="text-2xl font-bold">Mat Pilates</h3>
+            <p class="mt-2 text-sm text-anthracite/65">
+              Nefes, postür ve merkez kontrolüne odaklanan akışkan bir pratik.
+            </p>
+          </div>
+          <span class="text-xs font-bold tracking-wider text-gold">OLIVE · KONTROL</span
+          ><a
+            href="#iletisim"
+            class="grid h-10 w-10 place-items-center rounded-full border border-anthracite transition hover:bg-anthracite hover:text-ivory"
+            >↗</a
+          >
+        </article>
+        <article class="grid gap-5 py-8 md:grid-cols-[80px_1fr_180px_40px] md:items-center">
+          <span class="text-sm font-bold text-stone">03</span>
+          <div>
+            <h3 class="text-2xl font-bold">Birebir Ders</h3>
+            <p class="mt-2 text-sm text-anthracite/65">
+              Tamamen size ayrılmış, detaylı takip içeren özel çalışma alanı.
+            </p>
+          </div>
+          <span class="text-xs font-bold tracking-wider text-gold">ODAK · TAKİP</span
+          ><a
+            href="#iletisim"
+            class="grid h-10 w-10 place-items-center rounded-full border border-anthracite transition hover:bg-anthracite hover:text-ivory"
+            >↗</a
+          >
+        </article>
+      </div>
+    </div>
+  </section>
 
-  <section class="studio-story-section mx-auto max-w-7xl px-6 py-24"><div class="overflow-hidden rounded-3xl bg-stone"><div class="grid lg:grid-cols-2"><img src="https://images.unsplash.com/photo-1599901860904-17e6ed7083a0?auto=format&fit=crop&w=1200&q=85" alt="Pilates stüdyosu atmosferi" class="h-full min-h-[380px] w-full object-cover" /><div class="story-copy flex flex-col justify-center p-10 lg:p-16"><p class="text-xs font-bold tracking-[0.2em] text-anthracite/65">SAKİN BİR ALAN</p><h2 class="mt-5 font-display text-5xl leading-none">Kendinize ayırdığınız zamanın kıymetini biliyoruz.</h2><p class="mt-6 max-w-md text-sm leading-7 text-anthracite/75">Sade ve sıcak stüdyo atmosferinde günün hızını dışarıda bırakıp kendi ritminize dönersiniz.</p></div></div></div></section>
+  <section class="studio-story-section mx-auto max-w-7xl px-6 py-24">
+    <div class="overflow-hidden rounded-3xl bg-stone">
+      <div class="grid lg:grid-cols-2">
+        <img
+          src="https://images.unsplash.com/photo-1599901860904-17e6ed7083a0?auto=format&fit=crop&w=1200&q=85"
+          alt="Pilates stüdyosu atmosferi"
+          class="h-full min-h-[380px] w-full object-cover"
+        />
+        <div class="story-copy flex flex-col justify-center p-10 lg:p-16">
+          <p class="text-xs font-bold tracking-[0.2em] text-anthracite/65">SAKİN BİR ALAN</p>
+          <h2 class="mt-5 font-display text-5xl leading-none">
+            Kendinize ayırdığınız zamanın kıymetini biliyoruz.
+          </h2>
+          <p class="mt-6 max-w-md text-sm leading-7 text-anthracite/75">
+            Sade ve sıcak stüdyo atmosferinde günün hızını dışarıda bırakıp kendi ritminize
+            dönersiniz.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-  <section id="paketler" class="leather-section scroll-mt-24 px-6 py-24 text-ivory"><div class="mx-auto max-w-7xl"><div class="text-center"><p class="text-xs font-bold tracking-[0.2em] text-sand">PAKETLER</p><h2 class="mt-5 font-display text-5xl">Size uygun ritmi seçin.</h2><p class="mx-auto mt-5 max-w-xl text-sm leading-7 text-cream">Paket içeriğini hedeflerinize göre birlikte netleştirelim. Başlangıçta önemli olan, size iyi gelen düzeni bulmak.</p></div><div class="mt-14 grid gap-5 lg:grid-cols-3"><article class="rounded-2xl border border-ivory/20 p-8"><p class="text-sm font-bold text-sand">Başlangıç</p><h3 class="mt-4 text-3xl font-display">4 Ders</h3><p class="mt-4 text-sm leading-7 text-cream">Pilatesle yeniden bağ kurmak ve rutine yumuşak bir giriş yapmak için.</p><a href="#iletisim" class="mt-10 inline-block text-sm font-bold text-gold">Bilgi al →</a></article><article class="rounded-2xl bg-gold p-8 text-white shadow-2xl shadow-black/20"><p class="text-sm font-bold text-white/80">Olive · Önerilen</p><h3 class="mt-4 text-3xl font-display">8 Ders</h3><p class="mt-4 text-sm leading-7 text-white/85">Düzenli hareket alışkanlığı edinmek ve gelişimi yakından takip etmek için.</p><a href="#iletisim" class="mt-10 inline-block rounded-full bg-anthracite px-5 py-3 text-sm font-bold text-ivory">Tanışma planla</a></article><article class="rounded-2xl border border-ivory/20 p-8"><p class="text-sm font-bold text-sand">Kişisel</p><h3 class="mt-4 text-3xl font-display">Birebir</h3><p class="mt-4 text-sm leading-7 text-cream">Hedeflerinize ve bedeninizin ihtiyacına göre özel plan için.</p><a href="#iletisim" class="mt-10 inline-block text-sm font-bold text-gold">Bilgi al →</a></article></div></div></section>
+  <section id="paketler" class="leather-section scroll-mt-24 px-6 py-24 text-ivory">
+    <div class="mx-auto max-w-7xl">
+      <div class="text-center">
+        <p class="text-xs font-bold tracking-[0.2em] text-sand">PAKETLER</p>
+        <h2 class="mt-5 font-display text-5xl">Size uygun ritmi seçin.</h2>
+        <p class="mx-auto mt-5 max-w-xl text-sm leading-7 text-cream">
+          Paket içeriğini hedeflerinize göre birlikte netleştirelim. Başlangıçta önemli olan, size
+          iyi gelen düzeni bulmak.
+        </p>
+      </div>
+      <div class="mt-14 grid gap-5 lg:grid-cols-3">
+        <article class="rounded-2xl border border-ivory/20 p-8">
+          <p class="text-sm font-bold text-sand">Başlangıç</p>
+          <h3 class="mt-4 text-3xl font-display">4 Ders</h3>
+          <p class="mt-4 text-sm leading-7 text-cream">
+            Pilatesle yeniden bağ kurmak ve rutine yumuşak bir giriş yapmak için.
+          </p>
+          <a href="#iletisim" class="mt-10 inline-block text-sm font-bold text-gold">Bilgi al →</a>
+        </article>
+        <article class="rounded-2xl bg-gold p-8 text-white shadow-2xl shadow-black/20">
+          <p class="text-sm font-bold text-white/80">Olive · Önerilen</p>
+          <h3 class="mt-4 text-3xl font-display">8 Ders</h3>
+          <p class="mt-4 text-sm leading-7 text-white/85">
+            Düzenli hareket alışkanlığı edinmek ve gelişimi yakından takip etmek için.
+          </p>
+          <a
+            href="#iletisim"
+            class="mt-10 inline-block rounded-full bg-anthracite px-5 py-3 text-sm font-bold text-ivory"
+            >Tanışma planla</a
+          >
+        </article>
+        <article class="rounded-2xl border border-ivory/20 p-8">
+          <p class="text-sm font-bold text-sand">Kişisel</p>
+          <h3 class="mt-4 text-3xl font-display">Birebir</h3>
+          <p class="mt-4 text-sm leading-7 text-cream">
+            Hedeflerinize ve bedeninizin ihtiyacına göre özel plan için.
+          </p>
+          <a href="#iletisim" class="mt-10 inline-block text-sm font-bold text-gold">Bilgi al →</a>
+        </article>
+      </div>
+    </div>
+  </section>
 
-  <section id="instagram" class="instagram-section scroll-mt-24 bg-ivory px-6 py-24"><div class="mx-auto max-w-7xl"><div class="flex flex-col gap-6 md:flex-row md:items-end md:justify-between"><div><p class="text-xs font-bold tracking-[0.2em] text-gold">STÜDYODAN KARELER</p><h2 class="mt-5 font-display text-5xl">Olive akışını takip edin.</h2></div><div class="max-w-sm"><p class="text-sm leading-7 text-anthracite/65">Derslerden, stüdyo atmosferinden ve günlük hareket ritüellerimizden ilham veren kareler.</p><a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" class="instagram-follow mt-4 inline-flex items-center gap-2 text-sm font-bold text-anthracite">@olivepilatesstudio <span>↗</span></a></div></div><div class="instagram-grid mt-12">@for (post of instagramPosts; track post.image) { <figure class="instagram-card group"><img [src]="post.image" [alt]="post.alt" loading="lazy" /><figcaption><span class="instagram-icon">◎</span><p>{{ post.caption }}</p></figcaption></figure> }</div></div></section>
+  <section id="instagram" class="instagram-section scroll-mt-24 bg-ivory px-6 py-24">
+    <div class="mx-auto max-w-7xl">
+      <div class="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+        <div>
+          <p class="text-xs font-bold tracking-[0.2em] text-gold">STÜDYODAN KARELER</p>
+          <h2 class="mt-5 font-display text-5xl">Olive akışını takip edin.</h2>
+        </div>
+        <div class="max-w-sm">
+          <p class="text-sm leading-7 text-anthracite/65">
+            Derslerden, stüdyo atmosferinden ve günlük hareket ritüellerimizden ilham veren kareler.
+          </p>
+          <a
+            href="https://www.instagram.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="instagram-follow mt-4 inline-flex items-center gap-2 text-sm font-bold text-anthracite"
+            >@olivepilatesstudio <span>↗</span></a
+          >
+        </div>
+      </div>
+      <div class="instagram-grid mt-12">
+        @for (post of instagramPosts; track post.image) {
+          <figure class="instagram-card group">
+            <img [src]="post.image" [alt]="post.alt" loading="lazy" />
+            <figcaption>
+              <span class="instagram-icon">◎</span>
+              <p>{{ post.caption }}</p>
+            </figcaption>
+          </figure>
+        }
+      </div>
+    </div>
+  </section>
 
-  <section id="sss" class="faq-section mx-auto max-w-4xl scroll-mt-24 px-6 py-24"><div class="text-center"><p class="text-xs font-bold tracking-[0.2em] text-gold">MERAK EDİLENLER</p><h2 class="mt-5 font-display text-5xl">Sık sorulan sorular</h2></div><div class="mt-12 divide-y divide-sand border-y border-sand">@for (faq of faqs; track faq.question; let index = $index) { <article class="py-2"><button class="flex w-full items-center justify-between py-5 text-left text-base font-bold" (click)="toggleFaq(index)">{{ faq.question }}<span class="text-2xl font-light text-gold">{{ openFaqIndex === index ? '−' : '+' }}</span></button>@if (openFaqIndex === index) { <p class="pb-5 pr-10 text-sm leading-7 text-anthracite/65">{{ faq.answer }}</p> }</article> }</div></section>
+  <section id="sss" class="faq-section mx-auto max-w-4xl scroll-mt-24 px-6 py-24">
+    <div class="text-center">
+      <p class="text-xs font-bold tracking-[0.2em] text-gold">MERAK EDİLENLER</p>
+      <h2 class="mt-5 font-display text-5xl">Sık sorulan sorular</h2>
+    </div>
+    <div class="mt-12 divide-y divide-sand border-y border-sand">
+      @for (faq of faqs; track faq.question; let index = $index) {
+        <article class="py-2">
+          <button
+            class="flex w-full items-center justify-between py-5 text-left text-base font-bold"
+            (click)="toggleFaq(index)"
+          >
+            {{ faq.question
+            }}<span class="text-2xl font-light text-gold">{{
+              openFaqIndex === index ? '−' : '+'
+            }}</span>
+          </button>
+          @if (openFaqIndex === index) {
+            <p class="pb-5 pr-10 text-sm leading-7 text-anthracite/65">{{ faq.answer }}</p>
+          }
+        </article>
+      }
+    </div>
+  </section>
 
-  <section id="iletisim" class="scroll-mt-24 bg-cream px-6 py-24"><div class="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-center"><div><p class="text-xs font-bold tracking-[0.2em] text-gold">BİRLİKTE BAŞLAYALIM</p><h2 class="mt-5 font-display text-5xl leading-none">Kendinize iyi gelecek bir alan açın.</h2><p class="mt-6 max-w-xl text-sm leading-7 text-anthracite/65">Stüdyomuz ve size uygun başlangıç hakkında bilgi almak için bizimle iletişime geçin.</p></div><div class="rounded-2xl bg-anthracite p-9 text-ivory shadow-xl"><p class="text-xs font-bold tracking-[0.2em] text-sand">DENİZLİ · TÜRKİYE</p><h3 class="mt-5 font-display text-4xl">Olive Pilates Stüdyosu</h3><p class="mt-4 text-sm leading-7 text-cream">İlk adım, kendinize ayırdığınız küçük bir zaman olabilir.</p><a routerLink="/login" class="mt-8 inline-flex rounded-full bg-gold px-6 py-3 text-sm font-bold text-white transition hover:bg-sand hover:text-anthracite">Üye Girişi →</a></div></div></section>
+  <section id="iletisim" class="scroll-mt-24 bg-cream px-6 py-24">
+    <div class="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
+      <div>
+        <p class="text-xs font-bold tracking-[0.2em] text-gold">BİRLİKTE BAŞLAYALIM</p>
+        <h2 class="mt-5 font-display text-5xl leading-none">
+          Kendinize iyi gelecek bir alan açın.
+        </h2>
+        <p class="mt-6 max-w-xl text-sm leading-7 text-anthracite/65">
+          Stüdyomuz ve size uygun başlangıç hakkında bilgi almak için bizimle iletişime geçin.
+        </p>
+      </div>
+      <div class="rounded-2xl bg-anthracite p-9 text-ivory shadow-xl">
+        <p class="text-xs font-bold tracking-[0.2em] text-sand">DENİZLİ · TÜRKİYE</p>
+        <h3 class="mt-5 font-display text-4xl">Olive Pilates Stüdyosu</h3>
+        <p class="mt-4 text-sm leading-7 text-cream">
+          İlk adım, kendinize ayırdığınız küçük bir zaman olabilir.
+        </p>
+        <a
+          routerLink="/login"
+          class="mt-8 inline-flex rounded-full bg-gold px-6 py-3 text-sm font-bold text-white transition hover:bg-sand hover:text-anthracite"
+          >Üye Girişi →</a
+        >
+      </div>
+    </div>
+  </section>
 </main>
 
-<footer class="leather-section px-6 py-10 text-cream"><div class="mx-auto flex max-w-7xl flex-col gap-6 text-sm md:flex-row md:items-center md:justify-between"><div><p class="font-display text-2xl text-ivory">OLIVE</p><p class="mt-1 text-xs text-sand">Hareket · Nefes · Denge</p></div><div class="flex gap-5 text-xs font-bold"><a href="#dersler" class="hover:text-gold">Dersler</a><a href="#iletisim" class="hover:text-gold">İletişim</a></div><p class="text-xs text-sand">© 2026 Olive Pilates Stüdyosu</p></div></footer>
+<footer class="leather-section px-6 py-10 text-cream">
+  <div
+    class="mx-auto flex max-w-7xl flex-col gap-6 text-sm md:flex-row md:items-center md:justify-between"
+  >
+    <div>
+      <p class="font-display text-2xl text-ivory">OLIVE</p>
+      <p class="mt-1 text-xs text-sand">Hareket · Nefes · Denge</p>
+    </div>
+    <div class="flex gap-5 text-xs font-bold">
+      <a href="#dersler" class="hover:text-gold">Dersler</a
+      ><a href="#iletisim" class="hover:text-gold">İletişim</a>
+    </div>
+    <p class="text-xs text-sand">© 2026 Olive Pilates Stüdyosu</p>
+  </div>
+</footer>

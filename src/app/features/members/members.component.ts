@@ -33,14 +33,37 @@ export class MembersComponent extends BaseComponent<MemberDto> {
   packages: StudioPackageDto[] = [];
   selectedPackageId: number | null = null;
 
-  constructor(memberService: MemberService, cdr: ChangeDetectorRef, private readonly membershipService: MembershipService, packageService: StudioPackageService) {
+  constructor(
+    memberService: MemberService,
+    cdr: ChangeDetectorRef,
+    private readonly membershipService: MembershipService,
+    packageService: StudioPackageService,
+  ) {
     super(memberService, cdr, MemberDto);
-    packageService.findAll().subscribe({ next: (packages) => this.packages = packages.filter((item) => item.active) });
+    packageService
+      .findAll()
+      .subscribe({ next: (packages) => (this.packages = packages.filter((item) => item.active)) });
   }
 
-  protected override openEditForm(member: MemberDto): void { super.openEditForm(member); this.memberships = []; this.selectedPackageId = null; if (member.id) this.membershipService.findAll(member.id).subscribe({ next: (items) => this.memberships = items }); }
+  protected override openEditForm(member: MemberDto): void {
+    super.openEditForm(member);
+    this.memberships = [];
+    this.selectedPackageId = null;
+    if (member.id)
+      this.membershipService
+        .findAll(member.id)
+        .subscribe({ next: (items) => (this.memberships = items) });
+  }
 
-  assignPackage(): void { if (!this.form.id || !this.selectedPackageId) return; this.membershipService.create(this.form.id, this.selectedPackageId).subscribe({ next: () => this.membershipService.findAll(this.form.id!).subscribe({ next: (items) => this.memberships = items }) }); }
+  assignPackage(): void {
+    if (!this.form.id || !this.selectedPackageId) return;
+    this.membershipService.create(this.form.id, this.selectedPackageId).subscribe({
+      next: () =>
+        this.membershipService
+          .findAll(this.form.id!)
+          .subscribe({ next: (items) => (this.memberships = items) }),
+    });
+  }
 
   protected override save(): void {
     this.form.membershipStartDate = this.toDateValue(this.form.membershipStartDate);

@@ -4,4 +4,3 @@ export class CalendarDto extends BaseDto {
   name = '';
   surname = '';
 }
-

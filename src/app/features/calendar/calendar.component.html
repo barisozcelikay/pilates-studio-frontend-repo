@@ -1,14 +1,11 @@
 <div class="page">
-
   <div class="page-header">
     <div class="page-header-content">
       <span class="page-eyebrow">DERS TAKVİMİ</span>
 
       <h1 class="page-title">Takvim</h1>
 
-      <p class="page-description">
-        Stüdyodaki dersleri takvim üzerinden görüntüleyin.
-      </p>
+      <p class="page-description">Stüdyodaki dersleri takvim üzerinden görüntüleyin.</p>
 
       <div class="calendar-legend" aria-label="Takvim açıklamaları">
         <span><i class="legend-dot legend-dot--lesson"></i>Aktif ders</span>
@@ -17,25 +14,31 @@
       </div>
     </div>
 
-    <button type="button" class="primary-button calendar-create-button" *ngIf="canCreateLesson" (click)="openLessonDrawer()">
+    <button
+      type="button"
+      class="primary-button calendar-create-button"
+      *ngIf="canCreateLesson"
+      (click)="openLessonDrawer()"
+    >
       <i class="pi pi-plus"></i>
       <span>Ders Oluştur</span>
     </button>
   </div>
 
-  <div class="card calendar-card" [class.calendar-card--creator]="canCreateLesson" aria-label="Ders takvimi">
-    <full-calendar
-      [options]="calendarOptions">
-    </full-calendar>
+  <div
+    class="card calendar-card"
+    [class.calendar-card--creator]="canCreateLesson"
+    aria-label="Ders takvimi"
+  >
+    <full-calendar [options]="calendarOptions"> </full-calendar>
   </div>
-
 </div>
 
 <app-drawer [(visible)]="reservationDrawerVisible" title="Derse Üye Rezervasyonu">
   <div class="form" *ngIf="selectedLesson as lesson">
     <div class="reservation-lesson-summary">
       <strong>{{ lesson.name }}</strong>
-      <span>{{ lesson.startAt | date:'dd.MM.yyyy HH:mm' }}</span>
+      <span>{{ lesson.startAt | date: 'dd.MM.yyyy HH:mm' }}</span>
       <small>{{ lesson.reservationCount }} / {{ lesson.capacity }} kontenjan dolu</small>
     </div>
 
@@ -48,22 +51,58 @@
         [(ngModel)]="selectedMemberId"
         placeholder="Üye seçin"
         [filter]="true"
-        appendTo="body">
+        appendTo="body"
+      >
         <ng-template let-member #item>{{ member.firstName }} {{ member.lastName }}</ng-template>
-        <ng-template let-member #selectedItem>{{ member.firstName }} {{ member.lastName }}</ng-template>
+        <ng-template let-member #selectedItem
+          >{{ member.firstName }} {{ member.lastName }}</ng-template
+        >
       </p-select>
     </div>
 
-    <p class="reservation-note" *ngIf="!canSelectMember && !myReservation">Bu derse kendi adınıza rezervasyon oluşturacaksınız.</p>
-    <p class="reservation-note" *ngIf="myReservation">Bu ders için {{ myReservation.status === 'CONFIRMED' ? 'onaylı' : (myReservation.status === 'ATTENDED' ? 'katılımı işlenmiş' : 'iptal edilmiş') }} bir rezervasyonunuz var.</p>
+    <p class="reservation-note" *ngIf="!canSelectMember && !myReservation">
+      Bu derse kendi adınıza rezervasyon oluşturacaksınız.
+    </p>
+    <p class="reservation-note" *ngIf="myReservation">
+      Bu ders için
+      {{
+        myReservation.status === 'CONFIRMED'
+          ? 'onaylı'
+          : myReservation.status === 'ATTENDED'
+            ? 'katılımı işlenmiş'
+            : 'iptal edilmiş'
+      }}
+      bir rezervasyonunuz var.
+    </p>
     <p class="reservation-error" *ngIf="reservationError">{{ reservationError }}</p>
   </div>
 
   <div drawer-footer>
     <div class="button-group">
-      <button type="button" class="secondary-button" [disabled]="reserving" (click)="reservationDrawerVisible = false">İptal</button>
-      <button type="button" class="table-action table-action-delete" *ngIf="myReservation?.status === 'CONFIRMED'" [disabled]="reserving" (click)="cancelMyReservation()">Rezervasyonu İptal Et</button>
-      <button type="button" class="primary-button" *ngIf="!myReservation" [disabled]="isReservationUnavailable()" (click)="reserve()">
+      <button
+        type="button"
+        class="secondary-button"
+        [disabled]="reserving"
+        (click)="reservationDrawerVisible = false"
+      >
+        İptal
+      </button>
+      <button
+        type="button"
+        class="table-action table-action-delete"
+        *ngIf="myReservation?.status === 'CONFIRMED'"
+        [disabled]="reserving"
+        (click)="cancelMyReservation()"
+      >
+        Rezervasyonu İptal Et
+      </button>
+      <button
+        type="button"
+        class="primary-button"
+        *ngIf="!myReservation"
+        [disabled]="isReservationUnavailable()"
+        (click)="reserve()"
+      >
         {{ reserving ? 'Kaydediliyor...' : 'Rezervasyon Yap' }}
       </button>
     </div>
@@ -74,44 +113,110 @@
   <div class="form calendar-lesson-form">
     <div class="calendar-form-intro">
       <i class="pi pi-calendar-plus"></i>
-      <div><strong>Yeni ders planla</strong><span>Takvimde seçtiğiniz tarih ve saat otomatik olarak dolduruldu.</span></div>
+      <div>
+        <strong>Yeni ders planla</strong
+        ><span>Takvimde seçtiğiniz tarih ve saat otomatik olarak dolduruldu.</span>
+      </div>
     </div>
 
     <div class="form-group">
       <label class="form-label" for="calendar-lesson-name">Ders Adı</label>
-      <input id="calendar-lesson-name" type="text" pInputText [(ngModel)]="lessonForm.name" placeholder="Örn. Reformer Pilates" />
+      <input
+        id="calendar-lesson-name"
+        type="text"
+        pInputText
+        [(ngModel)]="lessonForm.name"
+        placeholder="Örn. Reformer Pilates"
+      />
     </div>
 
     <div class="form-group">
       <label class="form-label" for="calendar-lesson-description">Açıklama</label>
-      <textarea id="calendar-lesson-description" pTextarea [(ngModel)]="lessonForm.description" rows="3" placeholder="Ders hakkında kısa bilgi"></textarea>
+      <textarea
+        id="calendar-lesson-description"
+        pTextarea
+        [(ngModel)]="lessonForm.description"
+        rows="3"
+        placeholder="Ders hakkında kısa bilgi"
+      ></textarea>
     </div>
 
     <div class="form-row">
       <div class="form-group">
         <label class="form-label" for="calendar-lesson-start">Başlangıç</label>
-        <p-datepicker inputId="calendar-lesson-start" [(ngModel)]="lessonForm.startAt" [showTime]="true" [showIcon]="true" [stepMinute]="30" hourFormat="24" dateFormat="dd.mm.yy" appendTo="body" (onSelect)="normalizeLessonTime('start')" />
+        <p-datepicker
+          inputId="calendar-lesson-start"
+          [(ngModel)]="lessonForm.startAt"
+          [showTime]="true"
+          [showIcon]="true"
+          [stepMinute]="30"
+          hourFormat="24"
+          dateFormat="dd.mm.yy"
+          appendTo="body"
+          (onSelect)="normalizeLessonTime('start')"
+        />
       </div>
       <div class="form-group">
         <label class="form-label" for="calendar-lesson-end">Bitiş</label>
-        <p-datepicker inputId="calendar-lesson-end" [(ngModel)]="lessonForm.endAt" [showTime]="true" [showIcon]="true" [stepMinute]="30" hourFormat="24" dateFormat="dd.mm.yy" appendTo="body" (onSelect)="normalizeLessonTime('end')" />
+        <p-datepicker
+          inputId="calendar-lesson-end"
+          [(ngModel)]="lessonForm.endAt"
+          [showTime]="true"
+          [showIcon]="true"
+          [stepMinute]="30"
+          hourFormat="24"
+          dateFormat="dd.mm.yy"
+          appendTo="body"
+          (onSelect)="normalizeLessonTime('end')"
+        />
       </div>
     </div>
-    <small class="calendar-hours-help"><i class="pi pi-clock"></i>Dersler yalnızca 07:00–22:00 arasında, 30 dakikalık adımlarla planlanabilir.</small>
+    <small class="calendar-hours-help"
+      ><i class="pi pi-clock"></i>Dersler yalnızca 07:00–22:00 arasında, 30 dakikalık adımlarla
+      planlanabilir.</small
+    >
 
     <div class="form-group">
       <label class="form-label" for="calendar-lesson-capacity">Kontenjan</label>
-      <input id="calendar-lesson-capacity" type="number" min="1" pInputText [(ngModel)]="lessonForm.capacity" />
+      <input
+        id="calendar-lesson-capacity"
+        type="number"
+        min="1"
+        pInputText
+        [(ngModel)]="lessonForm.capacity"
+      />
     </div>
 
     <div class="form-group">
       <label class="form-label" for="calendar-lesson-instructors">Eğitmenler</label>
-      <p-multiselect inputId="calendar-lesson-instructors" [options]="instructorOptions" optionLabel="label" optionValue="value" [(ngModel)]="selectedInstructorIds" placeholder="Eğitmen seçin" [showClear]="true" [filter]="true" display="chip" appendTo="body" />
+      <p-multiselect
+        inputId="calendar-lesson-instructors"
+        [options]="instructorOptions"
+        optionLabel="label"
+        optionValue="value"
+        [(ngModel)]="selectedInstructorIds"
+        placeholder="Eğitmen seçin"
+        [showClear]="true"
+        [filter]="true"
+        display="chip"
+        appendTo="body"
+      />
     </div>
 
     <div class="form-group">
       <label class="form-label" for="calendar-lesson-services">Hizmetler</label>
-      <p-multiselect inputId="calendar-lesson-services" [options]="services" optionLabel="name" optionValue="id" [(ngModel)]="selectedServiceIds" placeholder="Hizmet seçin" [showClear]="true" [filter]="true" display="chip" appendTo="body" />
+      <p-multiselect
+        inputId="calendar-lesson-services"
+        [options]="services"
+        optionLabel="name"
+        optionValue="id"
+        [(ngModel)]="selectedServiceIds"
+        placeholder="Hizmet seçin"
+        [showClear]="true"
+        [filter]="true"
+        display="chip"
+        appendTo="body"
+      />
     </div>
 
     <p class="reservation-error" *ngIf="lessonError">{{ lessonError }}</p>
@@ -119,9 +224,21 @@
 
   <div drawer-footer>
     <div class="button-group">
-      <button type="button" class="secondary-button" [disabled]="lessonSaving" (click)="lessonDrawerVisible = false">İptal</button>
+      <button
+        type="button"
+        class="secondary-button"
+        [disabled]="lessonSaving"
+        (click)="lessonDrawerVisible = false"
+      >
+        İptal
+      </button>
       <button type="button" class="primary-button" [disabled]="lessonSaving" (click)="saveLesson()">
-        <i class="pi" [class.pi-check]="!lessonSaving" [class.pi-spin]="lessonSaving" [class.pi-spinner]="lessonSaving"></i>
+        <i
+          class="pi"
+          [class.pi-check]="!lessonSaving"
+          [class.pi-spin]="lessonSaving"
+          [class.pi-spinner]="lessonSaving"
+        ></i>
         <span>{{ lessonSaving ? 'Oluşturuluyor...' : 'Dersi Oluştur' }}</span>
       </button>
     </div>

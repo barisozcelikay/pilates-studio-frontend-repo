@@ -4,7 +4,6 @@ import { environment } from '../../../../environments/environment';
 import { BaseService } from '../../../shared/service/base-service';
 import { LessonDto } from '../model/lesson-dto';
 
-
 @Injectable({
   providedIn: 'root',
 })
@@ -15,4 +14,3 @@ export class LessonService extends BaseService<LessonDto> {
     super(http);
   }
 }
-

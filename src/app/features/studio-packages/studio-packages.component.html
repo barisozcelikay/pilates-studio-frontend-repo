@@ -1,51 +1,25 @@
 <div class="page">
-
   <div class="page-header">
-
     <div class="page-header-content">
+      <span class="page-eyebrow"> PAKET YÖNETİMİ </span>
 
-      <span class="page-eyebrow">
-        PAKET YÖNETİMİ
-      </span>
+      <h1 class="page-title">Paketler</h1>
 
-      <h1 class="page-title">
-        Paketler
-      </h1>
-
-      <p class="page-description">
-        Stüdyoda sunulan üyelik ve ders paketlerini yönetin.
-      </p>
-
+      <p class="page-description">Stüdyoda sunulan üyelik ve ders paketlerini yönetin.</p>
     </div>
 
-    <button
-      type="button"
-      class="primary-button"
-      (click)="openCreateForm()"
-    >
+    <button type="button" class="primary-button" (click)="openCreateForm()">
       <i class="pi pi-plus"></i>
 
-      <span>
-        Yeni Paket
-      </span>
+      <span> Yeni Paket </span>
     </button>
-
   </div>
 
-
   <div class="card">
-
     <div class="table-container">
-
-      <p-table
-        class="data-table"
-        [value]="items"
-      >
-
+      <p-table class="data-table" [value]="items">
         <ng-template #header>
-
           <tr>
-
             <th>Kod</th>
 
             <th>Paket</th>
@@ -65,74 +39,49 @@
             <th>Son Güncellenme Tarihi</th>
 
             <th>İşlemler</th>
-
           </tr>
-
         </ng-template>
 
-
-        <ng-template
-          #body
-          let-package
-        >
-
+        <ng-template #body let-package>
           <tr>
-
             <td>
               {{ package.code }}
             </td>
 
             <td>
-
               <div class="package-info">
-
                 <span class="package-name">
                   {{ package.name }}
                 </span>
 
-                <small
-                  *ngIf="package.description"
-                  class="text-muted"
-                >
+                <small *ngIf="package.description" class="text-muted">
                   {{ package.description }}
                 </small>
-
               </div>
-
             </td>
 
-            <td>
-              {{ package.durationDays }} Gün
-            </td>
+            <td>{{ package.durationDays }} Gün</td>
 
-            <td>
-              {{ package.sessionCount }} Ders
-            </td>
+            <td>{{ package.sessionCount }} Ders</td>
 
-            <td>
-              {{ package.cancellationRightCount }} İptal
-            </td>
+            <td>{{ package.cancellationRightCount }} İptal</td>
 
-            <td>
-              {{ package.price | number:'1.2-2' }} ₺
-            </td>
+            <td>{{ package.price | number: '1.2-2' }} ₺</td>
 
             <td>
               {{ package.active ? 'Aktif' : 'Pasif' }}
             </td>
 
             <td>
-              {{ package.createdAt | date:'dd.MM.yyyy HH:mm' }}
+              {{ package.createdAt | date: 'dd.MM.yyyy HH:mm' }}
             </td>
 
             <td>
-              {{ package.updatedAt | date:'dd.MM.yyyy HH:mm' }}
+              {{ package.updatedAt | date: 'dd.MM.yyyy HH:mm' }}
             </td>
 
             <td>
-
               <div class="table-actions">
-
                 <button
                   type="button"
                   class="table-action table-action-edit"
@@ -150,42 +99,21 @@
                 >
                   <i class="pi pi-trash"></i>
                 </button>
-
               </div>
-
             </td>
-
           </tr>
-
         </ng-template>
-
       </p-table>
-
     </div>
-
   </div>
-
 </div>
 
-
-<app-drawer
-  [(visible)]="drawerVisible"
-  [title]="editing ? 'Paketi Düzenle' : 'Yeni Paket'"
->
-
+<app-drawer [(visible)]="drawerVisible" [title]="editing ? 'Paketi Düzenle' : 'Yeni Paket'">
   <div class="form">
-
-
     <!-- KOD -->
 
     <div class="form-group">
-
-      <label
-        class="form-label"
-        for="package-code"
-      >
-        Paket Kodu
-      </label>
+      <label class="form-label" for="package-code"> Paket Kodu </label>
 
       <input
         id="package-code"
@@ -196,26 +124,13 @@
         placeholder="Örn. REFORMER_12"
       />
 
-      <small
-        *ngIf="editing"
-        class="form-help"
-      >
-        Paket kodu değiştirilemez.
-      </small>
-
+      <small *ngIf="editing" class="form-help"> Paket kodu değiştirilemez. </small>
     </div>
-
 
     <!-- PAKET ADI -->
 
     <div class="form-group">
-
-      <label
-        class="form-label"
-        for="package-name"
-      >
-        Paket Adı
-      </label>
+      <label class="form-label" for="package-name"> Paket Adı </label>
 
       <input
         id="package-name"
@@ -224,20 +139,12 @@
         [(ngModel)]="form.name"
         placeholder="Örn. 12 Ders Reformer"
       />
-
     </div>
-
 
     <!-- AÇIKLAMA -->
 
     <div class="form-group">
-
-      <label
-        class="form-label"
-        for="package-description"
-      >
-        Açıklama
-      </label>
+      <label class="form-label" for="package-description"> Açıklama </label>
 
       <textarea
         id="package-description"
@@ -246,20 +153,12 @@
         rows="3"
         placeholder="Paket hakkında kısa açıklama"
       ></textarea>
-
     </div>
-
 
     <!-- SÜRE -->
 
     <div class="form-group">
-
-      <label
-        class="form-label"
-        for="duration-days"
-      >
-        Geçerlilik Süresi
-      </label>
+      <label class="form-label" for="duration-days"> Geçerlilik Süresi </label>
 
       <input
         id="duration-days"
@@ -273,9 +172,7 @@
       <small class="form-help">
         Paketin satın alındıktan sonra kaç gün geçerli olacağını belirtir.
       </small>
-
     </div>
-
 
     <!-- FİYAT -->
 
@@ -302,17 +199,13 @@
         min="0"
         placeholder="2"
       />
-      <small class="form-help">Üyenin üyelik süresince kullanabileceği toplam rezervasyon iptal hakkı.</small>
+      <small class="form-help"
+        >Üyenin üyelik süresince kullanabileceği toplam rezervasyon iptal hakkı.</small
+      >
     </div>
 
     <div class="form-group">
-
-      <label
-        class="form-label"
-        for="price"
-      >
-        Fiyat
-      </label>
+      <label class="form-label" for="price"> Fiyat </label>
 
       <p-inputNumber
         inputId="price"
@@ -323,36 +216,19 @@
         [min]="0"
       >
       </p-inputNumber>
-
     </div>
-
 
     <!-- AKTİF -->
 
     <div class="form-checkbox">
+      <p-checkbox inputId="active" [(ngModel)]="form.active" [binary]="true" />
 
-      <p-checkbox
-        inputId="active"
-        [(ngModel)]="form.active"
-        [binary]="true"
-      />
-
-      <label
-        class="form-label"
-        for="active"
-      >
-        Aktif
-      </label>
-
+      <label class="form-label" for="active"> Aktif </label>
     </div>
-
   </div>
 
-
   <div drawer-footer>
-
     <div class="button-group">
-
       <button
         type="button"
         class="secondary-button"
@@ -362,13 +238,7 @@
         İptal
       </button>
 
-      <button
-        type="button"
-        class="primary-button"
-        [disabled]="saving"
-        (click)="save()"
-      >
-
+      <button type="button" class="primary-button" [disabled]="saving" (click)="save()">
         <i
           class="pi"
           [class.pi-check]="!saving"
@@ -379,23 +249,16 @@
         <span>
           {{ saving ? 'Kaydediliyor...' : 'Kaydet' }}
         </span>
-
       </button>
-
     </div>
-
   </div>
-
 </app-drawer>
-
 
 <app-confirm-dialog
   [(visible)]="confirmVisible"
   title="Paketi Sil"
   [message]="
-    itemToDelete
-      ? '“' + itemToDelete.name + '” paketini silmek istediğinize emin misiniz?'
-      : ''
+    itemToDelete ? '“' + itemToDelete.name + '” paketini silmek istediğinize emin misiniz?' : ''
   "
   confirmText="Sil"
   cancelText="İptal"

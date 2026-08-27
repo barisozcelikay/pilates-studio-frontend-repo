@@ -2,7 +2,6 @@ import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../../core/auth/service/auth-service';
 
-
 @Component({
   selector: 'app-select-role',
   standalone: true,

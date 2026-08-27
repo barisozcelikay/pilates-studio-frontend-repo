@@ -36,35 +36,55 @@ export class StudioHomeComponent implements AfterViewInit, OnDestroy {
       const introLogo = host.querySelector<HTMLElement>('.intro-logo-wrap');
       const brandLogo = host.querySelector<HTMLElement>('.brand-logo');
       const header = host.querySelector<HTMLElement>('.studio-header');
-      const transitionDistance = Math.max((introStage?.offsetHeight ?? viewportHeight * 1.45) - viewportHeight, 1);
+      const transitionDistance = Math.max(
+        (introStage?.offsetHeight ?? viewportHeight * 1.45) - viewportHeight,
+        1,
+      );
       const progress = Math.min(Math.max(window.scrollY / transitionDistance, 0), 1);
       const easedProgress = progress * progress * (3 - 2 * progress);
       const brandRect = brandLogo?.getBoundingClientRect();
       const headerRect = header?.getBoundingClientRect();
       const introWidth = introLogo?.offsetWidth ?? Math.min(window.innerWidth * 0.78, 880);
       const targetCenterX = brandRect ? brandRect.left + brandRect.width / 2 : 128;
-      const targetCenterY = brandRect ? brandRect.top - (headerRect?.top ?? 0) + brandRect.height / 2 : 48;
-      const targetScale = brandRect ? Math.min(Math.max(brandRect.width / Math.max(introWidth, 1), 0.18), 0.42) : 0.3;
+      const targetCenterY = brandRect
+        ? brandRect.top - (headerRect?.top ?? 0) + brandRect.height / 2
+        : 48;
+      const targetScale = brandRect
+        ? Math.min(Math.max(brandRect.width / Math.max(introWidth, 1), 0.18), 0.42)
+        : 0.3;
       const headerProgress = Math.min(Math.max((progress - 0.76) / 0.2, 0), 1);
       const heroProgress = Math.min(Math.max((progress - 0.36) / 0.64, 0), 1);
       const style = host.style;
       style.setProperty('--intro-progress', progress.toFixed(4));
-      style.setProperty('--intro-x', `${((targetCenterX - window.innerWidth / 2) * easedProgress).toFixed(2)}px`);
-      style.setProperty('--intro-y', `${((targetCenterY - viewportHeight / 2) * easedProgress).toFixed(2)}px`);
+      style.setProperty(
+        '--intro-x',
+        `${((targetCenterX - window.innerWidth / 2) * easedProgress).toFixed(2)}px`,
+      );
+      style.setProperty(
+        '--intro-y',
+        `${((targetCenterY - viewportHeight / 2) * easedProgress).toFixed(2)}px`,
+      );
       style.setProperty('--intro-scale', (1 - (1 - targetScale) * easedProgress).toFixed(4));
-      style.setProperty('--intro-opacity', Math.max(1 - Math.max((progress - 0.82) / 0.18, 0), 0).toFixed(4));
+      style.setProperty(
+        '--intro-opacity',
+        Math.max(1 - Math.max((progress - 0.82) / 0.18, 0), 0).toFixed(4),
+      );
       style.setProperty('--intro-ambient-opacity', Math.max(1 - progress, 0).toFixed(4));
       style.setProperty('--intro-grid-opacity', Math.max(0.22 * (1 - progress), 0).toFixed(4));
       style.setProperty('--intro-cue-opacity', Math.max(1 - progress * 3, 0).toFixed(4));
       style.setProperty('--header-progress', headerProgress.toFixed(4));
-      style.setProperty('--header-nav-progress', Math.min(Math.max((progress - 0.82) / 0.16, 0), 1).toFixed(4));
+      style.setProperty(
+        '--header-nav-progress',
+        Math.min(Math.max((progress - 0.82) / 0.16, 0), 1).toFixed(4),
+      );
       style.setProperty('--hero-progress', heroProgress.toFixed(4));
-      const documentProgress = window.scrollY / Math.max(document.documentElement.scrollHeight - viewportHeight, 1);
+      const documentProgress =
+        window.scrollY / Math.max(document.documentElement.scrollHeight - viewportHeight, 1);
       style.setProperty('--page-progress', Math.min(Math.max(documentProgress, 0), 1).toFixed(5));
       if (header) header.style.pointerEvents = headerProgress > 0.9 ? 'auto' : 'none';
 
-      const parallaxEnabled = window.innerWidth > 768
-        && !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const parallaxEnabled =
+        window.innerWidth > 768 && !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
       this.parallaxLayers.forEach(({ element, speed }) => {
         if (!parallaxEnabled) {
@@ -85,32 +105,38 @@ export class StudioHomeComponent implements AfterViewInit, OnDestroy {
 
   readonly instagramPosts = [
     {
-      image: 'https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=900&q=85',
+      image:
+        'https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=900&q=85',
       alt: 'Reformer pilates dersi',
       caption: 'Güç, kontrol ve zarafetin aynı akışta buluştuğu anlar.',
     },
     {
-      image: 'https://images.unsplash.com/photo-1599901860904-17e6ed7083a0?auto=format&fit=crop&w=900&q=85',
+      image:
+        'https://images.unsplash.com/photo-1599901860904-17e6ed7083a0?auto=format&fit=crop&w=900&q=85',
       alt: 'Pilates stüdyosu atmosferi',
       caption: 'Kendinize ayırdığınız sakin bir alan.',
     },
     {
-      image: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=900&q=85',
+      image:
+        'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=900&q=85',
       alt: 'Kontrollü pilates hareketi',
       caption: 'Her harekette biraz daha dengeli, biraz daha güçlü.',
     },
     {
-      image: 'https://images.unsplash.com/photo-1518611012118-f0c5e29f4c9f?auto=format&fit=crop&w=900&q=85',
+      image:
+        'https://images.unsplash.com/photo-1518611012118-f0c5e29f4c9f?auto=format&fit=crop&w=900&q=85',
       alt: 'Pilates egzersizi',
       caption: 'Bedeninizi dinleyerek ilerleyen kişisel bir yolculuk.',
     },
     {
-      image: 'https://images.unsplash.com/photo-1552196563-55cd4e45efb3?auto=format&fit=crop&w=900&q=85',
+      image:
+        'https://images.unsplash.com/photo-1552196563-55cd4e45efb3?auto=format&fit=crop&w=900&q=85',
       alt: 'Esneme ve nefes çalışması',
       caption: 'Nefes alın, uzayın ve kendi ritminizi bulun.',
     },
     {
-      image: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=900&q=85',
+      image:
+        'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=900&q=85',
       alt: 'Mat üzerinde pilates çalışması',
       caption: 'İyi hissetmek, kendinize verdiğiniz zamanla başlar.',
     },
@@ -119,15 +145,18 @@ export class StudioHomeComponent implements AfterViewInit, OnDestroy {
   readonly faqs = [
     {
       question: 'Daha önce pilates yapmadım, başlayabilir miyim?',
-      answer: 'Elbette. İlk görüşmede deneyiminizi ve ihtiyaçlarınızı değerlendirir, size uygun başlangıç akışını birlikte belirleriz.',
+      answer:
+        'Elbette. İlk görüşmede deneyiminizi ve ihtiyaçlarınızı değerlendirir, size uygun başlangıç akışını birlikte belirleriz.',
     },
     {
       question: 'Grup dersleri kimler için uygun?',
-      answer: 'Küçük grup dersleri, eğitmenin rehberliğini yakından hissederken birlikte hareket etmenin motivasyonunu isteyenler için uygundur.',
+      answer:
+        'Küçük grup dersleri, eğitmenin rehberliğini yakından hissederken birlikte hareket etmenin motivasyonunu isteyenler için uygundur.',
     },
     {
       question: 'Birebir dersin farkı nedir?',
-      answer: 'Birebir derslerde tempo, egzersiz seçimi ve program tamamen sizin hedeflerinize ve bedeninizin ihtiyacına göre şekillenir.',
+      answer:
+        'Birebir derslerde tempo, egzersiz seçimi ve program tamamen sizin hedeflerinize ve bedeninizin ihtiyacına göre şekillenir.',
     },
   ];
 
@@ -145,10 +174,10 @@ export class StudioHomeComponent implements AfterViewInit, OnDestroy {
       const textNode = currentNode as Text;
       const parent = textNode.parentElement;
       if (
-        parent
-        && /\bolive\b/i.test(textNode.data)
-        && !textNode.data.includes('@')
-        && !parent.closest('.olive-signature, script, style')
+        parent &&
+        /\bolive\b/i.test(textNode.data) &&
+        !textNode.data.includes('@') &&
+        !parent.closest('.olive-signature, script, style')
       ) {
         matches.push(textNode);
       }

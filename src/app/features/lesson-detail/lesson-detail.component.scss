@@ -1,20 +1,108 @@
-.lesson-detail-page { max-width: 1180px; margin: 0 auto; }
-.lesson-hero { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; margin: 22px 0 28px; }
-.lesson-hero h1 { margin: 4px 0 8px; color: var(--color-text); }
-.lesson-hero p, .section-heading p { margin: 0; color: var(--color-text-muted); }
-.reservation-summary { min-width: 130px; padding: 16px 20px; border: 1px solid var(--color-border); border-radius: 14px; background: var(--color-surface-soft); text-align: center; }
-.reservation-summary strong { display: block; color: var(--color-primary); font-size: 22px; }
-.reservation-summary span { color: var(--color-text-muted); font-size: 12px; }
-.attendee-card { padding: 8px 24px; }
-.section-heading { display: flex; justify-content: space-between; align-items: center; margin: 18px 0 12px; }
-.section-actions { display: flex; align-items: center; gap: 14px; margin-left: auto; }
-.section-heading h2 { margin: 0 0 4px; color: var(--color-text); font-size: 18px; }
-.lesson-date { color: var(--color-text-secondary); font-size: 13px; }
-.attendee-table { width: 100%; border-collapse: collapse; color: var(--color-text-secondary); }
-.attendee-table th, .attendee-table td { padding: 15px 12px; border-bottom: 1px solid var(--color-border-light); text-align: left; }
-.attendee-table th { color: var(--color-text-muted); font-size: 11px; text-transform: uppercase; }
-.attendee-table td strong { color: var(--color-text); }
-.status-pill { color: var(--color-primary-light); font-size: 12px; font-weight: 600; }
-.empty-row { color: var(--color-text-muted); text-align: center !important; }
-.action-error { margin: 0 0 12px; color: var(--color-error); font-size: 13px; }
-@media (max-width: 700px) { .lesson-hero, .section-heading, .section-actions { align-items: flex-start; flex-direction: column; } .section-actions { margin-left: 0; } .attendee-card { padding: 8px 14px; } }
+.lesson-detail-page {
+  max-width: 1180px;
+  margin: 0 auto;
+}
+.lesson-hero {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  margin: 22px 0 28px;
+}
+.lesson-hero h1 {
+  margin: 4px 0 8px;
+  color: var(--color-text);
+}
+.lesson-hero p,
+.section-heading p {
+  margin: 0;
+  color: var(--color-text-muted);
+}
+.reservation-summary {
+  min-width: 130px;
+  padding: 16px 20px;
+  border: 1px solid var(--color-border);
+  border-radius: 14px;
+  background: var(--color-surface-soft);
+  text-align: center;
+}
+.reservation-summary strong {
+  display: block;
+  color: var(--color-primary);
+  font-size: 22px;
+}
+.reservation-summary span {
+  color: var(--color-text-muted);
+  font-size: 12px;
+}
+.attendee-card {
+  padding: 8px 24px;
+}
+.section-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 18px 0 12px;
+}
+.section-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-left: auto;
+}
+.section-heading h2 {
+  margin: 0 0 4px;
+  color: var(--color-text);
+  font-size: 18px;
+}
+.lesson-date {
+  color: var(--color-text-secondary);
+  font-size: 13px;
+}
+.attendee-table {
+  width: 100%;
+  border-collapse: collapse;
+  color: var(--color-text-secondary);
+}
+.attendee-table th,
+.attendee-table td {
+  padding: 15px 12px;
+  border-bottom: 1px solid var(--color-border-light);
+  text-align: left;
+}
+.attendee-table th {
+  color: var(--color-text-muted);
+  font-size: 11px;
+  text-transform: uppercase;
+}
+.attendee-table td strong {
+  color: var(--color-text);
+}
+.status-pill {
+  color: var(--color-primary-light);
+  font-size: 12px;
+  font-weight: 600;
+}
+.empty-row {
+  color: var(--color-text-muted);
+  text-align: center !important;
+}
+.action-error {
+  margin: 0 0 12px;
+  color: var(--color-error);
+  font-size: 13px;
+}
+@media (max-width: 700px) {
+  .lesson-hero,
+  .section-heading,
+  .section-actions {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .section-actions {
+    margin-left: 0;
+  }
+  .attendee-card {
+    padding: 8px 14px;
+  }
+}

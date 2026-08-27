@@ -29,7 +29,18 @@ import { StudioServiceService } from '../studio-services/service/studio-service-
 @Component({
   selector: 'app-calendar',
   standalone: true,
-  imports: [FullCalendarModule, DrawerComponent, Select, MultiSelect, DatePicker, InputTextModule, TextareaModule, FormsModule, DatePipe, NgIf],
+  imports: [
+    FullCalendarModule,
+    DrawerComponent,
+    Select,
+    MultiSelect,
+    DatePicker,
+    InputTextModule,
+    TextareaModule,
+    FormsModule,
+    DatePipe,
+    NgIf,
+  ],
   templateUrl: './calendar.component.html',
   styleUrl: './calendar.component.scss',
 })
@@ -147,7 +158,12 @@ export class CalendarComponent implements OnInit {
 
   saveLesson(): void {
     if (!this.canCreateLesson || this.lessonSaving) return;
-    if (!this.lessonForm.name.trim() || !this.lessonForm.startAt || !this.lessonForm.endAt || !this.lessonForm.capacity) {
+    if (
+      !this.lessonForm.name.trim() ||
+      !this.lessonForm.startAt ||
+      !this.lessonForm.endAt ||
+      !this.lessonForm.capacity
+    ) {
       this.lessonError = 'Ders adı, başlangıç, bitiş ve kontenjan alanları zorunludur.';
       return;
     }
@@ -155,7 +171,9 @@ export class CalendarComponent implements OnInit {
       this.lessonError = 'Bitiş saati başlangıç saatinden sonra olmalıdır.';
       return;
     }
-    if (!this.isWithinStudioHours(new Date(this.lessonForm.startAt), new Date(this.lessonForm.endAt))) {
+    if (
+      !this.isWithinStudioHours(new Date(this.lessonForm.startAt), new Date(this.lessonForm.endAt))
+    ) {
       this.lessonError = 'Dersler aynı gün içinde 07:00–22:00 saatleri arasında planlanmalıdır.';
       return;
     }
@@ -196,7 +214,8 @@ export class CalendarComponent implements OnInit {
       const end = this.lessonForm.endAt ? new Date(this.lessonForm.endAt) : new Date(date);
       if (end.getTime() <= date.getTime() || !this.isWithinStudioHours(date, end)) {
         end.setTime(date.getTime() + 60 * 60 * 1000);
-        if (end.getHours() > 22 || (end.getHours() === 22 && end.getMinutes() > 0)) end.setHours(22, 0, 0, 0);
+        if (end.getHours() > 22 || (end.getHours() === 22 && end.getMinutes() > 0))
+          end.setHours(22, 0, 0, 0);
         this.lessonForm.endAt = end;
       }
       return;
@@ -207,7 +226,8 @@ export class CalendarComponent implements OnInit {
     const start = this.lessonForm.startAt ? new Date(this.lessonForm.startAt) : null;
     if (start && date.getTime() <= start.getTime()) {
       date.setTime(start.getTime() + 30 * 60 * 1000);
-      if (date.getHours() > 22 || (date.getHours() === 22 && date.getMinutes() > 0)) date.setHours(22, 0, 0, 0);
+      if (date.getHours() > 22 || (date.getHours() === 22 && date.getMinutes() > 0))
+        date.setHours(22, 0, 0, 0);
     }
     this.lessonForm.endAt = date;
   }
@@ -311,7 +331,9 @@ export class CalendarComponent implements OnInit {
             reservationCount: lesson.reservationCount,
             capacity: lesson.capacity,
           },
-          classNames: [lesson.status === 'CANCELLED' ? 'calendar-event--cancelled' : 'calendar-event--active'],
+          classNames: [
+            lesson.status === 'CANCELLED' ? 'calendar-event--cancelled' : 'calendar-event--active',
+          ],
           backgroundColor: lesson.status === 'CANCELLED' ? '#b45f5f' : undefined,
           borderColor: lesson.status === 'CANCELLED' ? '#b45f5f' : undefined,
         }));
@@ -371,8 +393,14 @@ export class CalendarComponent implements OnInit {
       next: (instructors) => {
         this.instructors = instructors.filter((instructor) => instructor.status === 'ACTIVE');
         this.instructorOptions = this.instructors
-          .filter((instructor): instructor is InstructorDto & { id: number } => instructor.id !== undefined)
-          .map((instructor) => ({ label: `${instructor.firstName} ${instructor.lastName}`, value: instructor.id }));
+          .filter(
+            (instructor): instructor is InstructorDto & { id: number } =>
+              instructor.id !== undefined,
+          )
+          .map((instructor) => ({
+            label: `${instructor.firstName} ${instructor.lastName}`,
+            value: instructor.id,
+          }));
         this.cdr.markForCheck();
       },
     });
@@ -385,9 +413,10 @@ export class CalendarComponent implements OnInit {
   }
 
   private isWithinStudioHours(start: Date, end: Date): boolean {
-    const sameDay = start.getFullYear() === end.getFullYear()
-      && start.getMonth() === end.getMonth()
-      && start.getDate() === end.getDate();
+    const sameDay =
+      start.getFullYear() === end.getFullYear() &&
+      start.getMonth() === end.getMonth() &&
+      start.getDate() === end.getDate();
     const startMinutes = start.getHours() * 60 + start.getMinutes();
     const endMinutes = end.getHours() * 60 + end.getMinutes();
     return sameDay && startMinutes >= 7 * 60 && startMinutes < 22 * 60 && endMinutes <= 22 * 60;

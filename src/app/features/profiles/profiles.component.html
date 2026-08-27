@@ -5,16 +5,10 @@
 
       <h1 class="page-title">Profiller</h1>
 
-      <p class="page-description">
-        Sistemdeki kullanıcı profillerini yönetin.
-      </p>
+      <p class="page-description">Sistemdeki kullanıcı profillerini yönetin.</p>
     </div>
 
-    <button
-      type="button"
-      class="primary-button"
-      (click)="openCreateForm()"
-    >
+    <button type="button" class="primary-button" (click)="openCreateForm()">
       <i class="pi pi-plus"></i>
       <span>Yeni Profil</span>
     </button>
@@ -22,10 +16,7 @@
 
   <div class="card">
     <div class="table-container">
-      <p-table
-        class="data-table"
-        [value]="items"
-      >
+      <p-table class="data-table" [value]="items">
         <ng-template #header>
           <tr>
             <th>Kod</th>
@@ -48,11 +39,11 @@
             </td>
 
             <td>
-              {{(profile.createdAt | date:'dd.MM.yyyy HH:mm') }}
+              {{ profile.createdAt | date: 'dd.MM.yyyy HH:mm' }}
             </td>
 
             <td>
-              {{(profile.updatedAt | date:'dd.MM.yyyy HH:mm') }}
+              {{ profile.updatedAt | date: 'dd.MM.yyyy HH:mm' }}
             </td>
 
             <td>
@@ -83,19 +74,10 @@
   </div>
 </div>
 
-<app-drawer
-  [(visible)]="drawerVisible"
-  [title]="editing ? 'Profili Düzenle' : 'Yeni Profil'"
->
+<app-drawer [(visible)]="drawerVisible" [title]="editing ? 'Profili Düzenle' : 'Yeni Profil'">
   <div class="form">
-
     <div class="form-group">
-      <label
-        class="form-label"
-        for="profile-code"
-      >
-        Kod
-      </label>
+      <label class="form-label" for="profile-code"> Kod </label>
 
       <input
         id="profile-code"
@@ -106,63 +88,27 @@
         placeholder="PROFILE_..."
       />
 
-      <small
-        *ngIf="editing"
-        class="form-help"
-      >
-        Profil kodu değiştirilemez.
-      </small>
+      <small *ngIf="editing" class="form-help"> Profil kodu değiştirilemez. </small>
     </div>
 
     <div class="form-group">
-      <label
-        class="form-label"
-        for="name"
-      >
-        Profil Adı
-      </label>
+      <label class="form-label" for="name"> Profil Adı </label>
 
-      <input
-        id="name"
-        type="text"
-        pInputText
-        [(ngModel)]="form.name"
-        placeholder="Örn. Eğitmen"
-      />
+      <input id="name" type="text" pInputText [(ngModel)]="form.name" placeholder="Örn. Eğitmen" />
     </div>
 
     <div class="form-checkbox">
-      <p-checkbox
-        inputId="active"
-        [(ngModel)]="form.active"
-        [binary]="true"
-      />
+      <p-checkbox inputId="active" [(ngModel)]="form.active" [binary]="true" />
 
-      <label
-        class="form-label"
-        for="active"
-      >
-        Aktif
-      </label>
+      <label class="form-label" for="active"> Aktif </label>
     </div>
-
   </div>
 
   <div drawer-footer>
     <div class="button-group">
-      <button
-        type="button"
-        class="secondary-button"
-        (click)="drawerVisible = false"
-      >
-        İptal
-      </button>
+      <button type="button" class="secondary-button" (click)="drawerVisible = false">İptal</button>
 
-      <button
-        type="button"
-        class="primary-button"
-        (click)="save()"
-      >
+      <button type="button" class="primary-button" (click)="save()">
         <i class="pi pi-check"></i>
         <span>Kaydet</span>
       </button>
@@ -173,9 +119,7 @@
   [(visible)]="confirmVisible"
   title="Profili Sil"
   [message]="
-    itemToDelete
-      ? '“' + itemToDelete.name + '” profilini silmek istediğinize emin misiniz?'
-      : ''
+    itemToDelete ? '“' + itemToDelete.name + '” profilini silmek istediğinize emin misiniz?' : ''
   "
   confirmText="Sil"
   cancelText="İptal"

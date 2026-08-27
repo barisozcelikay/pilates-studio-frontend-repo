@@ -4,7 +4,6 @@ import { Observable } from 'rxjs';
 import { MenuDto } from '../model/menu-dto';
 import { environment } from '../../../../environments/environment';
 
-
 @Injectable({
   providedIn: 'root',
 })

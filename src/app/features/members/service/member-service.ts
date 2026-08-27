@@ -4,7 +4,6 @@ import { environment } from '../../../../environments/environment';
 import { BaseService } from '../../../shared/service/base-service';
 import { MemberDto } from '../model/member-dto';
 
-
 @Injectable({
   providedIn: 'root',
 })

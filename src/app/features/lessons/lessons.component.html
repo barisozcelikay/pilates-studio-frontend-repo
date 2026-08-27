@@ -1,21 +1,14 @@
 <div class="page">
-
   <div class="page-header">
     <div class="page-header-content">
       <span class="page-eyebrow">DERS YÖNETİMİ</span>
 
       <h1 class="page-title">Ders Listesi</h1>
 
-      <p class="page-description">
-        Stüdyonuzdaki dersleri yönetin.
-      </p>
+      <p class="page-description">Stüdyonuzdaki dersleri yönetin.</p>
     </div>
 
-    <button
-      type="button"
-      class="primary-button"
-      (click)="openCreateForm()"
-    >
+    <button type="button" class="primary-button" (click)="openCreateForm()">
       <i class="pi pi-plus"></i>
       <span>Yeni Ders</span>
     </button>
@@ -23,7 +16,6 @@
 
   <div class="card">
     <div class="table-container">
-
       <p-table
         class="data-table"
         [value]="items"
@@ -32,7 +24,6 @@
         [rows]="10"
         [rowsPerPageOptions]="[10, 25, 50]"
       >
-
         <ng-template #header>
           <tr>
             <th>Ders</th>
@@ -49,7 +40,6 @@
 
         <ng-template #body let-class>
           <tr>
-
             <td>
               <div class="class-info">
                 <span class="class-name">
@@ -66,29 +56,32 @@
               {{ class.capacity || '—' }}
             </td>
 
+            <td>{{ class.reservationCount }} / {{ class.capacity || '—' }}</td>
+
             <td>
-              {{ class.reservationCount }} / {{ class.capacity || '—' }}
+              {{ class.startAt | date: 'dd.MM.yyyy HH:mm' }}
             </td>
 
             <td>
-              {{ class.startAt | date:'dd.MM.yyyy HH:mm' }}
+              {{
+                class.status === 'ACTIVE'
+                  ? 'Aktif'
+                  : class.status === 'CANCELLED'
+                    ? 'İptal Edildi'
+                    : 'Tamamlandı'
+              }}
             </td>
 
             <td>
-              {{ class.status === 'ACTIVE' ? 'Aktif' : (class.status === 'CANCELLED' ? 'İptal Edildi' : 'Tamamlandı') }}
+              {{ class.createdAt | date: 'dd.MM.yyyy HH:mm' }}
             </td>
 
             <td>
-              {{ class.createdAt | date:'dd.MM.yyyy HH:mm' }}
-            </td>
-
-            <td>
-              {{ class.updatedAt | date:'dd.MM.yyyy HH:mm' }}
+              {{ class.updatedAt | date: 'dd.MM.yyyy HH:mm' }}
             </td>
 
             <td>
               <div class="table-actions">
-
                 <button
                   type="button"
                   class="table-action table-action-edit"
@@ -115,41 +108,64 @@
                 >
                   <i class="pi pi-trash"></i>
                 </button>
-
               </div>
             </td>
-
           </tr>
         </ng-template>
-
       </p-table>
-
     </div>
   </div>
-
 </div>
 
 <app-drawer [(visible)]="drawerVisible" [title]="editing ? 'Dersi Düzenle' : 'Yeni Ders'">
   <div class="form">
     <div class="form-group">
       <label class="form-label" for="lesson-name">Ders Adı</label>
-      <input id="lesson-name" type="text" pInputText [(ngModel)]="form.name" placeholder="Örn. Reformer Pilates" />
+      <input
+        id="lesson-name"
+        type="text"
+        pInputText
+        [(ngModel)]="form.name"
+        placeholder="Örn. Reformer Pilates"
+      />
     </div>
 
     <div class="form-group">
       <label class="form-label" for="lesson-description">Açıklama</label>
-      <textarea id="lesson-description" pTextarea [(ngModel)]="form.description" rows="3" placeholder="Ders açıklaması"></textarea>
+      <textarea
+        id="lesson-description"
+        pTextarea
+        [(ngModel)]="form.description"
+        rows="3"
+        placeholder="Ders açıklaması"
+      ></textarea>
     </div>
 
     <div class="form-row">
       <div class="form-group">
         <label class="form-label" for="lesson-start-at">Başlangıç</label>
-        <p-datepicker inputId="lesson-start-at" [(ngModel)]="form.startAt" [showTime]="true" [showIcon]="true" hourFormat="24" dateFormat="dd.mm.yy" appendTo="body" />
+        <p-datepicker
+          inputId="lesson-start-at"
+          [(ngModel)]="form.startAt"
+          [showTime]="true"
+          [showIcon]="true"
+          hourFormat="24"
+          dateFormat="dd.mm.yy"
+          appendTo="body"
+        />
       </div>
 
       <div class="form-group">
         <label class="form-label" for="lesson-end-at">Bitiş</label>
-        <p-datepicker inputId="lesson-end-at" [(ngModel)]="form.endAt" [showTime]="true" [showIcon]="true" hourFormat="24" dateFormat="dd.mm.yy" appendTo="body" />
+        <p-datepicker
+          inputId="lesson-end-at"
+          [(ngModel)]="form.endAt"
+          [showTime]="true"
+          [showIcon]="true"
+          hourFormat="24"
+          dateFormat="dd.mm.yy"
+          appendTo="body"
+        />
       </div>
     </div>
 
@@ -161,7 +177,13 @@
 
       <div class="form-group">
         <label class="form-label" for="lesson-status">Durum</label>
-        <p-select inputId="lesson-status" [options]="statusOptions" optionLabel="label" optionValue="value" [(ngModel)]="form.status" />
+        <p-select
+          inputId="lesson-status"
+          [options]="statusOptions"
+          optionLabel="label"
+          optionValue="value"
+          [(ngModel)]="form.status"
+        />
       </div>
     </div>
 
@@ -202,10 +224,22 @@
 
   <div drawer-footer>
     <div class="button-group">
-      <button type="button" class="secondary-button" [disabled]="saving" (click)="drawerVisible = false">İptal</button>
+      <button
+        type="button"
+        class="secondary-button"
+        [disabled]="saving"
+        (click)="drawerVisible = false"
+      >
+        İptal
+      </button>
       <button type="button" class="primary-button" [disabled]="saving" (click)="save()">
-        <i class="pi" [class.pi-check]="!saving" [class.pi-spin]="saving" [class.pi-spinner]="saving"></i>
-        <span>{{ saving ? 'Kaydediliyor...' : (editing ? 'Güncelle' : 'Kaydet') }}</span>
+        <i
+          class="pi"
+          [class.pi-check]="!saving"
+          [class.pi-spin]="saving"
+          [class.pi-spinner]="saving"
+        ></i>
+        <span>{{ saving ? 'Kaydediliyor...' : editing ? 'Güncelle' : 'Kaydet' }}</span>
       </button>
     </div>
   </div>
@@ -214,7 +248,9 @@
 <app-confirm-dialog
   [(visible)]="confirmVisible"
   title="Dersi Sil"
-  [message]="itemToDelete ? '“' + itemToDelete.name + '” dersini silmek istediğinize emin misiniz?' : ''"
+  [message]="
+    itemToDelete ? '“' + itemToDelete.name + '” dersini silmek istediğinize emin misiniz?' : ''
+  "
   confirmText="Sil"
   cancelText="İptal"
   (confirm)="delete()"

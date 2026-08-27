@@ -28,17 +28,15 @@
 
             <h1>Hesabınıza giriş yapın</h1>
 
-            <p><span class="olive-signature">Olive</span> Pilates hesabınıza devam etmek için bilgilerinizi girin.</p>
+            <p>
+              <span class="olive-signature">Olive</span> Pilates hesabınıza devam etmek için
+              bilgilerinizi girin.
+            </p>
           </div>
 
           <!-- FORM -->
 
-        <form
-          [formGroup]="loginForm"
-          (ngSubmit)="login()"
-          class="login-form"
-          autocomplete="on"
-        >
+          <form [formGroup]="loginForm" (ngSubmit)="login()" class="login-form" autocomplete="on">
             <!-- EMAIL -->
 
             <div class="form-group">
@@ -67,14 +65,14 @@
                 <a href="/forgot-password"> Şifremi unuttum </a>
               </div>
 
-            <p-password
-              formControlName="password"
-              [feedback]="false"
-              [toggleMask]="true"
-              inputId="password"
-              autocomplete="current-password"
-              placeholder="Şifrenizi girin"
-            />
+              <p-password
+                formControlName="password"
+                [feedback]="false"
+                [toggleMask]="true"
+                inputId="password"
+                autocomplete="current-password"
+                placeholder="Şifrenizi girin"
+              />
             </div>
 
             <!-- ERROR -->

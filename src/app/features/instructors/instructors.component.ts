@@ -11,13 +11,7 @@ import { DrawerComponent } from '../../shared/component/drawer/drawer.component'
 @Component({
   selector: 'app-instructors',
   standalone: true,
-  imports: [
-    TableModule,
-    FormsModule,
-    InputTextModule,
-    TextareaModule,
-    DrawerComponent,
-  ],
+  imports: [TableModule, FormsModule, InputTextModule, TextareaModule, DrawerComponent],
   templateUrl: './instructors.component.html',
 })
 export class InstructorsComponent extends BaseComponent<InstructorDto> {

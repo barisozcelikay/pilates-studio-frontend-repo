@@ -5,7 +5,6 @@ import { AuthService } from '../../../core/auth/service/auth-service';
 import { MenuDto } from '../../menu-settings/model/menu-dto';
 import { MenuService } from '../../menu-settings/service/menu-service';
 
-
 @Component({
   selector: 'app-main-layout',
   standalone: true,

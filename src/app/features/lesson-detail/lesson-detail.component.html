@@ -4,9 +4,11 @@
   <section class="lesson-hero" *ngIf="lesson as selectedLesson">
     <div>
       <span class="page-eyebrow">DERS DETAYI</span>
-      <h1>{{ selectedLesson.name }} - {{ selectedLesson.startAt | date:'dd.MM.yyyy HH:mm' }}</h1>
+      <h1>{{ selectedLesson.name }} - {{ selectedLesson.startAt | date: 'dd.MM.yyyy HH:mm' }}</h1>
       <p>{{ selectedLesson.description || 'Ders açıklaması girilmemiş.' }}</p>
-      <p *ngIf="selectedLesson.serviceNames.length"><strong>Hizmetler:</strong> {{ selectedLesson.serviceNames.join(', ') }}</p>
+      <p *ngIf="selectedLesson.serviceNames.length">
+        <strong>Hizmetler:</strong> {{ selectedLesson.serviceNames.join(', ') }}
+      </p>
     </div>
     <div class="reservation-summary">
       <strong>{{ selectedLesson.reservationCount }} / {{ selectedLesson.capacity }}</strong>
@@ -21,32 +23,73 @@
         <p>Onaylanmış ders rezervasyonları burada görünür.</p>
       </div>
       <div class="section-actions">
-        <button type="button" class="primary-button" (click)="openAddMemberDrawer()"><i class="pi pi-user-plus"></i> Üye Ekle</button>
+        <button type="button" class="primary-button" (click)="openAddMemberDrawer()">
+          <i class="pi pi-user-plus"></i> Üye Ekle
+        </button>
       </div>
     </div>
 
     <div class="table-container">
       <p class="action-error" *ngIf="actionError">{{ actionError }}</p>
       <table class="attendee-table">
-        <thead><tr><th>Üye</th><th>E-posta</th><th>Telefon</th><th>Rezervasyon Tarihi</th><th>Durum</th><th>İşlemler</th></tr></thead>
+        <thead>
+          <tr>
+            <th>Üye</th>
+            <th>E-posta</th>
+            <th>Telefon</th>
+            <th>Rezervasyon Tarihi</th>
+            <th>Durum</th>
+            <th>İşlemler</th>
+          </tr>
+        </thead>
         <tbody>
           <tr *ngFor="let reservation of reservations">
-            <td><strong>{{ reservation.memberName }}</strong></td>
+            <td>
+              <strong>{{ reservation.memberName }}</strong>
+            </td>
             <td>{{ reservation.memberEmail || '—' }}</td>
             <td>{{ reservation.memberPhone || '—' }}</td>
-            <td>{{ reservation.createdAt | date:'dd.MM.yyyy HH:mm' }}</td>
-            <td><span class="status-pill">{{ statusLabel(reservation.status) }}</span></td>
+            <td>{{ reservation.createdAt | date: 'dd.MM.yyyy HH:mm' }}</td>
+            <td>
+              <span class="status-pill">{{ statusLabel(reservation.status) }}</span>
+            </td>
             <td>
               <div class="table-actions">
                 <ng-container *ngIf="reservation.status === 'CONFIRMED'">
-                  <button type="button" class="table-action table-action-edit" [disabled]="processingReservationId === reservation.id" (click)="requestAction(reservation, 'attend')" aria-label="Katılımı onayla"><i class="pi pi-check"></i></button>
-                  <button type="button" class="table-action table-action-delete" [disabled]="processingReservationId === reservation.id" (click)="requestAction(reservation, 'cancel')" aria-label="İptal hakkından düşür"><i class="pi pi-minus-circle"></i></button>
+                  <button
+                    type="button"
+                    class="table-action table-action-edit"
+                    [disabled]="processingReservationId === reservation.id"
+                    (click)="requestAction(reservation, 'attend')"
+                    aria-label="Katılımı onayla"
+                  >
+                    <i class="pi pi-check"></i>
+                  </button>
+                  <button
+                    type="button"
+                    class="table-action table-action-delete"
+                    [disabled]="processingReservationId === reservation.id"
+                    (click)="requestAction(reservation, 'cancel')"
+                    aria-label="İptal hakkından düşür"
+                  >
+                    <i class="pi pi-minus-circle"></i>
+                  </button>
                 </ng-container>
-                <button type="button" class="table-action table-action-delete" [disabled]="processingReservationId === reservation.id" (click)="requestAction(reservation, 'delete')" aria-label="Rezervasyonu sil"><i class="pi pi-trash"></i></button>
+                <button
+                  type="button"
+                  class="table-action table-action-delete"
+                  [disabled]="processingReservationId === reservation.id"
+                  (click)="requestAction(reservation, 'delete')"
+                  aria-label="Rezervasyonu sil"
+                >
+                  <i class="pi pi-trash"></i>
+                </button>
               </div>
             </td>
           </tr>
-          <tr *ngIf="!loading && !reservations.length"><td colspan="6" class="empty-row">Bu derse henüz üye katılmadı.</td></tr>
+          <tr *ngIf="!loading && !reservations.length">
+            <td colspan="6" class="empty-row">Bu derse henüz üye katılmadı.</td>
+          </tr>
         </tbody>
       </table>
     </div>
@@ -57,14 +100,43 @@
   <div class="form">
     <div class="form-group">
       <label class="form-label">Üye</label>
-      <p-select [options]="members" optionLabel="firstName" optionValue="id" [(ngModel)]="selectedMemberId" placeholder="Üye seçin" [filter]="true" appendTo="body">
+      <p-select
+        [options]="members"
+        optionLabel="firstName"
+        optionValue="id"
+        [(ngModel)]="selectedMemberId"
+        placeholder="Üye seçin"
+        [filter]="true"
+        appendTo="body"
+      >
         <ng-template let-member #item>{{ member.firstName }} {{ member.lastName }}</ng-template>
-        <ng-template let-member #selectedItem>{{ member.firstName }} {{ member.lastName }}</ng-template>
+        <ng-template let-member #selectedItem
+          >{{ member.firstName }} {{ member.lastName }}</ng-template
+        >
       </p-select>
       <small class="form-error" *ngIf="addMemberError">{{ addMemberError }}</small>
     </div>
   </div>
-  <div drawer-footer><div class="button-group"><button type="button" class="secondary-button" (click)="addMemberDrawerVisible = false">İptal</button><button type="button" class="primary-button" [disabled]="!selectedMemberId || addingMember" (click)="addMember()">{{ addingMember ? 'Ekleniyor...' : 'Ekle' }}</button></div></div>
+  <div drawer-footer>
+    <div class="button-group">
+      <button type="button" class="secondary-button" (click)="addMemberDrawerVisible = false">
+        İptal</button
+      ><button
+        type="button"
+        class="primary-button"
+        [disabled]="!selectedMemberId || addingMember"
+        (click)="addMember()"
+      >
+        {{ addingMember ? 'Ekleniyor...' : 'Ekle' }}
+      </button>
+    </div>
+  </div>
 </app-drawer>
 
-<app-confirm-dialog [(visible)]="confirmVisible" [title]="confirmTitle" [message]="confirmMessage" [confirmText]="confirmText" (confirm)="confirmAction()" />
+<app-confirm-dialog
+  [(visible)]="confirmVisible"
+  [title]="confirmTitle"
+  [message]="confirmMessage"
+  [confirmText]="confirmText"
+  (confirm)="confirmAction()"
+/>

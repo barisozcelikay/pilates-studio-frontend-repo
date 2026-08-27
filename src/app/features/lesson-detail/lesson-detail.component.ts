@@ -15,7 +15,16 @@ import { Observable } from 'rxjs';
 @Component({
   selector: 'app-lesson-detail',
   standalone: true,
-  imports: [DatePipe, NgFor, NgIf, RouterLink, FormsModule, Select, DrawerComponent, ConfirmDialogComponent],
+  imports: [
+    DatePipe,
+    NgFor,
+    NgIf,
+    RouterLink,
+    FormsModule,
+    Select,
+    DrawerComponent,
+    ConfirmDialogComponent,
+  ],
   templateUrl: './lesson-detail.component.html',
   styleUrl: './lesson-detail.component.scss',
 })
@@ -92,9 +101,21 @@ export class LessonDetailComponent implements OnInit {
     this.pendingAction = action;
     this.actionError = '';
     const actionCopy = {
-      attend: ['Katılımı Onayla', 'Üyenin ders hakkından 1 kullanım düşülecek. Devam etmek istiyor musunuz?', 'Katıldı'],
-      cancel: ['İptal Hakkından Düşür', 'Üyenin iptal hakkından 1 kullanım düşülecek. Devam etmek istiyor musunuz?', 'İptal Et'],
-      delete: ['Rezervasyonu Sil', 'Rezervasyon kaydı kalıcı olarak silinecek. Daha önce düşülen haklar geri yüklenmez.', 'Sil'],
+      attend: [
+        'Katılımı Onayla',
+        'Üyenin ders hakkından 1 kullanım düşülecek. Devam etmek istiyor musunuz?',
+        'Katıldı',
+      ],
+      cancel: [
+        'İptal Hakkından Düşür',
+        'Üyenin iptal hakkından 1 kullanım düşülecek. Devam etmek istiyor musunuz?',
+        'İptal Et',
+      ],
+      delete: [
+        'Rezervasyonu Sil',
+        'Rezervasyon kaydı kalıcı olarak silinecek. Daha önce düşülen haklar geri yüklenmez.',
+        'Sil',
+      ],
     }[action];
     this.confirmTitle = actionCopy[0];
     this.confirmMessage = actionCopy[1];
@@ -107,9 +128,12 @@ export class LessonDetailComponent implements OnInit {
     const action = this.pendingAction;
     if (!reservation || !action) return;
     this.processingReservationId = reservation.id;
-    const request: Observable<unknown> = action === 'attend' ? this.reservationService.markAttended(reservation.id)
-      : action === 'cancel' ? this.reservationService.cancel(reservation.id)
-      : this.reservationService.delete(reservation.id);
+    const request: Observable<unknown> =
+      action === 'attend'
+        ? this.reservationService.markAttended(reservation.id)
+        : action === 'cancel'
+          ? this.reservationService.cancel(reservation.id)
+          : this.reservationService.delete(reservation.id);
     request.subscribe({
       next: () => {
         if (action === 'delete') {
@@ -127,7 +151,12 @@ export class LessonDetailComponent implements OnInit {
   }
 
   statusLabel(status: ReservationDto['status']): string {
-    return { CONFIRMED: 'Rezerve edildi', ATTENDED: 'Katıldı', CANCELLED_WITH_RIGHT: 'İptal hakkından düşürüldü', REMOVED: 'Dersten çıkarıldı' }[status];
+    return {
+      CONFIRMED: 'Rezerve edildi',
+      ATTENDED: 'Katıldı',
+      CANCELLED_WITH_RIGHT: 'İptal hakkından düşürüldü',
+      REMOVED: 'Dersten çıkarıldı',
+    }[status];
   }
 
   private refresh(): void {

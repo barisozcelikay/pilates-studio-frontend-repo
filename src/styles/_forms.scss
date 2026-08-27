@@ -51,7 +51,6 @@
   gap: v.$space-4;
 }
 
-
 /* ==============================
    PRIME INPUT
    ============================== */
@@ -96,8 +95,7 @@
 
       border-color: var(--color-primary-light) !important;
 
-      box-shadow:
-        0 0 0 2px rgba(127, 174, 151, 0.14) !important;
+      box-shadow: 0 0 0 2px rgba(127, 174, 151, 0.14) !important;
     }
 
     &:disabled,
@@ -116,7 +114,6 @@
     }
   }
 }
-
 
 /* ==============================
    PRIME SELECT
@@ -152,8 +149,7 @@
     &:not(.p-disabled).p-focus {
       border-color: var(--color-primary-light);
 
-      box-shadow:
-        0 0 0 2px rgba(127, 174, 151, 0.14);
+      box-shadow: 0 0 0 2px rgba(127, 174, 151, 0.14);
     }
   }
 
@@ -172,7 +168,6 @@
   }
 }
 
-
 /* ==============================
    SELECT OVERLAY
    ============================== */
@@ -184,8 +179,7 @@
   border: 1px solid var(--color-border) !important;
   border-radius: v.$radius-md !important;
 
-  box-shadow:
-    0 12px 32px rgba(0, 0, 0, 0.28);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.28);
 
   color-scheme: light;
 }
@@ -348,7 +342,6 @@
   padding: 20px 0 0 !important;
 }
 
-
 /* ==============================
    SELECT SEARCH
    ============================== */
@@ -382,8 +375,7 @@
   &:focus {
     border-color: var(--color-primary-light) !important;
 
-    box-shadow:
-      0 0 0 2px rgba(127, 174, 151, 0.14) !important;
+    box-shadow: 0 0 0 2px rgba(127, 174, 151, 0.14) !important;
 
     outline: none !important;
   }
@@ -411,7 +403,6 @@
   }
 }
 
-
 /* ==============================
    CHECKBOX
    ============================== */
@@ -427,7 +418,6 @@
     cursor: pointer;
   }
 }
-
 
 /* ==============================
    RESPONSIVE

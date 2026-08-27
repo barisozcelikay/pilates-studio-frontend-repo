@@ -22,15 +22,21 @@ export class ReservationService {
   constructor(private readonly http: HttpClient) {}
 
   findAllByLessonId(lessonId: number): Observable<ReservationDto[]> {
-    return this.http.get<ReservationDto[]>(`${environment.apiUrl}/lessons/${lessonId}/reservations`);
+    return this.http.get<ReservationDto[]>(
+      `${environment.apiUrl}/lessons/${lessonId}/reservations`,
+    );
   }
 
   findMyReservation(lessonId: number): Observable<ReservationDto> {
-    return this.http.get<ReservationDto>(`${environment.apiUrl}/reservations/my?lessonId=${lessonId}`);
+    return this.http.get<ReservationDto>(
+      `${environment.apiUrl}/reservations/my?lessonId=${lessonId}`,
+    );
   }
 
   findAllByMemberId(memberId: number): Observable<ReservationDto[]> {
-    return this.http.get<ReservationDto[]>(`${environment.apiUrl}/members/${memberId}/reservations`);
+    return this.http.get<ReservationDto[]>(
+      `${environment.apiUrl}/members/${memberId}/reservations`,
+    );
   }
 
   create(lessonId: number, memberId?: number | null): Observable<ReservationDto> {
@@ -41,15 +47,24 @@ export class ReservationService {
   }
 
   markAttended(reservationId: number): Observable<ReservationDto> {
-    return this.http.post<ReservationDto>(`${environment.apiUrl}/reservations/${reservationId}/attend`, {});
+    return this.http.post<ReservationDto>(
+      `${environment.apiUrl}/reservations/${reservationId}/attend`,
+      {},
+    );
   }
 
   cancel(reservationId: number): Observable<ReservationDto> {
-    return this.http.post<ReservationDto>(`${environment.apiUrl}/reservations/${reservationId}/cancel`, {});
+    return this.http.post<ReservationDto>(
+      `${environment.apiUrl}/reservations/${reservationId}/cancel`,
+      {},
+    );
   }
 
   remove(reservationId: number): Observable<ReservationDto> {
-    return this.http.post<ReservationDto>(`${environment.apiUrl}/reservations/${reservationId}/remove`, {});
+    return this.http.post<ReservationDto>(
+      `${environment.apiUrl}/reservations/${reservationId}/remove`,
+      {},
+    );
   }
 
   delete(reservationId: number): Observable<void> {
