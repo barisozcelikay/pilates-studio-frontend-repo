@@ -1,0 +1,9 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "pilates-studio-frontend-repo",
+  "compatibility_date": "2026-08-29",
+  "assets": {
+    "directory": "./dist/pilates-studio-frontend/browser",
+    "not_found_handling": "single-page-application"
+  }
+}
