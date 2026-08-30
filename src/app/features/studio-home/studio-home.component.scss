@@ -1580,8 +1580,19 @@ section {
   }
 
   .intro-logo-wrap {
-    width: 112vw;
+    width: 92vw;
+    max-width: 440px;
+    justify-self: center;
+    margin-inline: auto;
     transform: translate3d(var(--intro-x), var(--intro-y), 0) scale(var(--intro-scale));
+    transform-origin: center center;
+  }
+
+  .intro-logo {
+    left: 50%;
+    width: 100%;
+    max-width: 100%;
+    transform: translate(-50%, -50%);
   }
 
   .instagram-grid {
