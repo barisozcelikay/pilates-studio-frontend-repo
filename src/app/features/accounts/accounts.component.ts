@@ -82,10 +82,11 @@ export class AccountsComponent extends BaseComponent<AccountDto> {
     if (
       !this.form.firstName.trim() ||
       !this.form.lastName.trim() ||
+      !this.form.email.trim() ||
       !this.form.phone.trim() ||
       !this.form.profileId
     ) {
-      this.toastService.warning('Ad, soyad, telefon ve profil alanları zorunludur.');
+      this.toastService.warning('Ad, soyad, e-posta, telefon ve profil alanları zorunludur.');
       return;
     }
     if (!this.editing && this.isMemberProfile && !this.form.packageId) {
