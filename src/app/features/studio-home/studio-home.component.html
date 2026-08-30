@@ -51,16 +51,19 @@
         class="neon-button hidden rounded-full border border-gold/60 px-5 py-2.5 text-xs font-bold uppercase tracking-[0.12em] text-gold transition hover:-translate-y-0.5 lg:inline-flex"
         >Üye Girişi</a
       >
+      <a routerLink="/login" class="mobile-login-button lg:hidden">Üye Girişi</a>
       <button
-        class="rounded-lg border border-gold/50 px-3 py-2 text-gold lg:hidden"
+        class="mobile-menu-toggle rounded-lg border border-gold/50 px-3 py-2 text-gold lg:hidden"
         (click)="mobileMenuOpen = !mobileMenuOpen"
-        aria-label="Menüyü aç"
+        [attr.aria-expanded]="mobileMenuOpen"
+        aria-controls="mobile-navigation"
+        [attr.aria-label]="mobileMenuOpen ? 'Menüyü kapat' : 'Menüyü aç'"
       >
-        ☰
+        <i class="pi" [class.pi-bars]="!mobileMenuOpen" [class.pi-times]="mobileMenuOpen"></i>
       </button>
     </div>
     @if (mobileMenuOpen) {
-      <nav class="mobile-nav border-t border-sand/20 px-6 py-5 lg:hidden">
+      <nav id="mobile-navigation" class="mobile-nav border-t border-sand/20 px-6 py-5 lg:hidden">
         <div class="grid grid-cols-2 gap-3 text-sm font-semibold">
           <a href="#studio" (click)="scrollToSection($event, 'studio')">Stüdyo</a
           ><a href="#dersler" (click)="scrollToSection($event, 'dersler')">Dersler</a
@@ -69,6 +72,7 @@
           ><a href="#iletisim" (click)="scrollToSection($event, 'iletisim')" class="text-gold"
             >İletişim</a
           >
+          <a routerLink="/login" class="mobile-nav-login col-span-2">Üye Girişi →</a>
         </div>
       </nav>
     }

@@ -46,3 +46,33 @@
 
   font-size: 13px;
 }
+
+@media (max-width: 700px) {
+  .page {
+    gap: v.$space-5;
+    padding: 0;
+  }
+
+  .page-header {
+    align-items: stretch;
+    flex-direction: column;
+    gap: v.$space-4;
+  }
+
+  .page-header > .primary-button,
+  .page-header > .secondary-button {
+    align-self: stretch;
+    justify-content: center;
+    width: 100%;
+    min-height: 44px;
+  }
+
+  .page-title {
+    font-size: clamp(22px, 7vw, 26px);
+  }
+
+  .page-description {
+    font-size: 12px;
+    line-height: 1.55;
+  }
+}

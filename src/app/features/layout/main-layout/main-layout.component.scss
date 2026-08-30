@@ -50,6 +50,10 @@
   }
 }
 
+.mobile-topbar-logo {
+  display: none;
+}
+
 // ============================================================
 // SIDEBAR
 // ============================================================
@@ -1038,9 +1042,19 @@
 
   .topbar > div:first-child {
     display: flex;
-    flex-direction: column;
+    align-items: center;
+    flex-direction: row;
+    gap: 10px;
 
     min-width: 0;
+  }
+
+  .mobile-topbar-logo {
+    display: block;
+    width: 112px;
+    height: 38px;
+    object-fit: contain;
+    object-position: left center;
   }
 
   .page-eyebrow {
@@ -1102,7 +1116,8 @@
   // ----------------------------------------------------------
 
   .dashboard-content {
-    padding: 25px 18px 40px;
+    min-width: 0;
+    padding: 22px 16px calc(36px + env(safe-area-inset-bottom));
   }
 
   .welcome-text {
@@ -1139,8 +1154,8 @@
   }
 
   .dashboard-content {
-    padding-left: 14px;
-    padding-right: 14px;
+    padding-left: 12px;
+    padding-right: 12px;
   }
 
   .topbar h1 {
@@ -1153,6 +1168,14 @@
 
   .topbar-actions {
     gap: 6px;
+  }
+
+  .mobile-topbar-logo {
+    width: 92px;
+  }
+
+  .topbar-actions .icon-button:nth-child(2) {
+    display: none;
   }
 
   .mobile-menu-button,

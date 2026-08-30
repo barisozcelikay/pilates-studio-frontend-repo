@@ -144,14 +144,31 @@
   }
 
   .drawer-header {
-    padding: v.$space-4 v.$space-5;
+    padding: calc(v.$space-4 + env(safe-area-inset-top)) v.$space-4 v.$space-4;
   }
 
   .drawer-content {
-    padding: v.$space-5;
+    padding: v.$space-4;
   }
 
   .drawer-footer {
-    padding: v.$space-4 v.$space-5;
+    padding: v.$space-3 v.$space-4 calc(v.$space-3 + env(safe-area-inset-bottom));
+  }
+
+  .drawer-footer-actions,
+  .drawer-footer-actions > .button-group {
+    width: 100%;
+  }
+
+  .drawer-footer-actions .button-group {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.35fr);
+    gap: v.$space-3;
+  }
+
+  .drawer-footer-actions button {
+    justify-content: center;
+    width: 100%;
+    min-height: 44px;
   }
 }
