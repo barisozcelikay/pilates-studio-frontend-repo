@@ -104,6 +104,8 @@
 
 html,
 body {
+  margin: 0;
+  padding: 0;
   background: var(--app-background);
   background-attachment: fixed;
   color: var(--color-text);
@@ -111,6 +113,10 @@ body {
   transition:
     background-color 0.2s ease,
     color 0.2s ease;
+}
+
+app-root {
+  display: block;
 }
 
 ::selection {
