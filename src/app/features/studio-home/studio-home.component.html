@@ -1,524 +1,331 @@
-<main id="anasayfa" class="studio-home-page min-h-screen font-body text-anthracite">
-  <section class="intro-logo-stage" aria-label="Olive Pilates Studio giriş">
-    <div class="intro-logo-sticky">
-      <div class="intro-ambient intro-ambient-left"></div>
-      <div class="intro-ambient intro-ambient-right"></div>
-      <div class="intro-logo-wrap">
-        <img
-          src="/images/olive-logo-transparent-v2.png"
-          alt=""
-          class="intro-logo intro-logo-base"
-          aria-hidden="true"
-        />
-        <img
-          src="/images/olive-logo-transparent-v2.png"
-          alt="Olive Pilates Studio"
-          class="intro-logo intro-logo-reveal"
-        />
-      </div>
-      <div class="intro-scroll-cue" aria-hidden="true">
-        <span>Keşfet</span>
-        <i></i>
-      </div>
-    </div>
-  </section>
-
+<main id="anasayfa" class="landing">
   <header
-    class="studio-header sticky top-0 z-50 border-b border-white/10 bg-anthracite/95 text-ivory backdrop-blur-xl"
+    class="header"
+    [class.header--compact]="headerCompact"
+    [class.header--hidden]="headerHidden"
+    [class.header--open]="mobileMenuOpen"
   >
-    <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-3">
+    <a
+      class="header__brand"
+      href="#anasayfa"
+      (click)="scrollToSection($event, 'anasayfa')"
+      aria-label="Olive Pilates Studio ana sayfa"
+    >
+      <img [src]="iconLogoUrl" alt="" />
+      <span><b>olive</b><small>Pilates Studio</small></span>
+    </a>
+
+    <nav class="header__nav" aria-label="Ana menü">
       <a
-        href="#anasayfa"
-        (click)="scrollToSection($event, 'anasayfa')"
-        class="brand-lockup flex items-center"
-        aria-label="Olive Pilates Studio ana sayfa"
-        ><img
-          src="/images/olive-logo-transparent-v2.png"
-          alt="Olive Pilates Studio"
-          class="brand-logo w-52 rounded-lg"
-      /></a>
-      <nav
-        class="header-nav hidden items-center gap-6 text-[11px] font-bold uppercase tracking-[0.13em] text-ivory/70 lg:flex"
+        href="#hakkimizda"
+        [class.active]="activeSection === 'hakkimizda'"
+        (click)="scrollToSection($event, 'hakkimizda')"
+        >hakkımızda</a
       >
-        <a href="#studio" (click)="scrollToSection($event, 'studio')">Stüdyo</a
-        ><a href="#dersler" (click)="scrollToSection($event, 'dersler')">Dersler</a
-        ><a href="#paketler" (click)="scrollToSection($event, 'paketler')">Paketler</a
-        ><a href="#instagram" (click)="scrollToSection($event, 'instagram')">Instagram</a
-        ><a href="#iletisim" (click)="scrollToSection($event, 'iletisim')">İletişim</a>
-      </nav>
       <a
-        routerLink="/login"
-        class="neon-button hidden rounded-full border border-gold/60 px-5 py-2.5 text-xs font-bold uppercase tracking-[0.12em] text-gold transition hover:-translate-y-0.5 lg:inline-flex"
-        >Üye Girişi</a
+        href="#dersler"
+        [class.active]="activeSection === 'dersler'"
+        (click)="scrollToSection($event, 'dersler')"
+        >dersler</a
       >
-      <a routerLink="/login" class="mobile-login-button lg:hidden">Üye Girişi</a>
+      <a
+        href="#yaklasim"
+        [class.active]="activeSection === 'yaklasim'"
+        (click)="scrollToSection($event, 'yaklasim')"
+        >yaklaşım</a
+      >
+      <a
+        href="#konum"
+        [class.active]="activeSection === 'konum'"
+        (click)="scrollToSection($event, 'konum')"
+        >konum</a
+      >
+    </nav>
+
+    <div class="header__actions">
+      <a routerLink="/login" class="header__cta">Üye girişi <span>→</span></a>
       <button
-        class="mobile-menu-toggle rounded-lg border border-gold/50 px-3 py-2 text-gold lg:hidden"
-        (click)="mobileMenuOpen = !mobileMenuOpen"
+        class="menu-button"
+        type="button"
+        aria-controls="mobile-menu"
         [attr.aria-expanded]="mobileMenuOpen"
-        aria-controls="mobile-navigation"
         [attr.aria-label]="mobileMenuOpen ? 'Menüyü kapat' : 'Menüyü aç'"
+        (click)="mobileMenuOpen = !mobileMenuOpen"
       >
-        <i class="pi" [class.pi-bars]="!mobileMenuOpen" [class.pi-times]="mobileMenuOpen"></i>
+        <span></span><span></span>
       </button>
     </div>
+
     @if (mobileMenuOpen) {
-      <nav id="mobile-navigation" class="mobile-nav border-t border-sand/20 px-6 py-5 lg:hidden">
-        <div class="grid grid-cols-2 gap-3 text-sm font-semibold">
-          <a href="#studio" (click)="scrollToSection($event, 'studio')">Stüdyo</a
-          ><a href="#dersler" (click)="scrollToSection($event, 'dersler')">Dersler</a
-          ><a href="#paketler" (click)="scrollToSection($event, 'paketler')">Paketler</a
-          ><a href="#instagram" (click)="scrollToSection($event, 'instagram')">Instagram</a
-          ><a href="#iletisim" (click)="scrollToSection($event, 'iletisim')" class="text-gold"
-            >İletişim</a
-          >
-          <a routerLink="/login" class="mobile-nav-login col-span-2">Üye Girişi →</a>
-        </div>
+      <nav id="mobile-menu" class="mobile-menu" aria-label="Mobil menü">
+        <a href="#hakkimizda" (click)="scrollToSection($event, 'hakkimizda')"
+          ><span>01</span>Hakkımızda</a
+        >
+        <a href="#dersler" (click)="scrollToSection($event, 'dersler')"><span>02</span>Dersler</a>
+        <a href="#yaklasim" (click)="scrollToSection($event, 'yaklasim')"
+          ><span>03</span>Yaklaşım</a
+        >
+        <a href="#konum" (click)="scrollToSection($event, 'konum')"><span>04</span>Konum</a>
+        <a href="#iletisim" (click)="scrollToSection($event, 'iletisim')"
+          ><span>05</span>İletişim</a
+        >
+        <a routerLink="/login" class="mobile-menu__login">Üye girişi <b>→</b></a>
       </nav>
     }
   </header>
 
-  <section class="hero-shell relative overflow-hidden bg-anthracite text-ivory">
-    <div
-      class="hero-orbit absolute -left-36 top-12 h-96 w-96 rounded-full border border-stone/30"
-    ></div>
-    <div
-      class="hero-glow absolute right-0 top-24 h-96 w-96 rounded-full bg-stone/20 blur-3xl"
-    ></div>
-    <div
-      class="relative mx-auto grid min-h-[760px] max-w-7xl items-center gap-16 px-6 py-20 lg:grid-cols-2"
-    >
-      <div class="hero-copy">
-        <p class="mb-6 flex items-center gap-3 text-xs font-bold tracking-[0.24em] text-gold">
-          <span class="h-px w-8 bg-gold"></span> DENİZLİ · BOUTIQUE PILATES
-        </p>
-        <h1 class="font-display text-5xl leading-[0.92] tracking-tight sm:text-6xl lg:text-8xl">
-          Gücünü <span class="neon-word block italic text-stone">zarafetle</span> bul.
-        </h1>
-        <p class="mt-7 max-w-xl text-base leading-8 text-ivory/65 sm:text-lg">
-          Olive Pilates, bedeninizi dinleyen; gücü, dengeyi ve iyi hissetmeyi aynı akışta buluşturan
-          kişiye özel bir stüdyo deneyimidir.
-        </p>
-        <div class="mt-9 flex flex-wrap items-center gap-5">
-          <a
-            href="#dersler"
-            class="primary-cta rounded-full bg-stone px-7 py-3.5 text-sm font-extrabold text-anthracite transition hover:-translate-y-1"
-            >Dersleri Keşfet →</a
-          ><a
-            href="#iletisim"
-            class="text-sm font-bold text-gold underline decoration-gold decoration-2 underline-offset-8"
-            >İlk adımı atın</a
-          >
-        </div>
-        <div class="mt-12 flex flex-wrap gap-6 text-xs font-semibold text-ivory/55">
-          <span>✦ Kişiye özel takip</span><span>✦ Küçük gruplar</span
-          ><span>✦ Bilinçli hareket</span>
-        </div>
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="hero__copy">
+      <p class="hero__place" data-reveal>İncek · Gölbaşı</p>
+      <h1 id="hero-title" data-reveal>
+        Bedenin için<br />
+        <em>tasarlandı.</em>
+      </h1>
+      <p class="hero__lead" data-reveal>
+        Sana özel, sakin ve güçlü bir pilates deneyimi.
+      </p>
+      <div class="hero__actions" data-reveal>
+        <a class="button button--light" routerLink="/login">Üye girişi <span>→</span></a>
       </div>
-      <div class="hero-visual relative">
-        <div
-          class="absolute -bottom-5 -right-4 z-10 rounded-full border border-gold/40 bg-anthracite px-6 py-5 text-center text-[10px] font-bold tracking-[0.16em] text-gold shadow-xl"
-        >
-          HAREKET<br />İYİ GELİR
-        </div>
-        <div
-          class="hero-frame relative overflow-hidden rounded-t-[12rem] rounded-b-2xl border border-gold/45 bg-cream/10 p-4"
-        >
-          <img
-            src="https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=1200&q=85"
-            alt="Pilates stüdyosunda reformer egzersizi"
-            class="h-[520px] w-full rounded-t-[10rem] rounded-b-xl object-cover saturate-[.82] contrast-[1.04]"
-          />
-          <div
-            class="absolute inset-0 bg-gradient-to-t from-anthracite/60 via-transparent to-stone/10"
-          ></div>
-          <p class="absolute bottom-9 left-9 text-xs font-bold tracking-[0.2em] text-gold">
-            GÜÇ · NEFES · OLIVE
-          </p>
-        </div>
+      <div class="hero__social" data-reveal aria-label="Hızlı bağlantılar">
+        <a href="#konum" (click)="scrollToSection($event, 'konum')" aria-label="Konumu görüntüle" title="İncek, Gölbaşı">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg>
+        </a>
+        <a [href]="instagramUrl" target="_blank" rel="noopener noreferrer" aria-label="Instagram hesabımız" title="Instagram">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle class="fill" cx="17.4" cy="6.7" r="1"/></svg>
+        </a>
       </div>
+    </div>
+
+  </section>
+
+  <div class="marquee" aria-hidden="true">
+    <div>
+      <span>Güç</span><b>✦</b><span>Denge</span><b>✦</b><span>Nefes</span><b>✦</b><span>Akış</span
+      ><b>✦</b><span>Farkındalık</span><b>✦</b> <span>Güç</span><b>✦</b><span>Denge</span><b>✦</b
+      ><span>Nefes</span><b>✦</b><span>Akış</span><b>✦</b><span>Farkındalık</span><b>✦</b>
+    </div>
+  </div>
+
+  <section id="hakkimizda" class="about section section--cream">
+    <div class="about__intro" data-reveal>
+      <p class="eyebrow eyebrow--dark"><i></i> Hakkımızda</p>
+      <h2>İyi hissetmenin<br /><em>hareket hâli.</em></h2>
+    </div>
+    <div class="about__story" data-reveal>
+      <p class="about__lead">
+        Olive, bedenini değiştirmeye çalıştığın bir salon değil; onu dinlemeyi yeniden öğrendiğin
+        sakin bir stüdyo.
+      </p>
+      <p>
+        Her bedenin ritmi, geçmişi ve hedefi farklı. Bu yüzden dersleri ezberlenmiş kalıplarla
+        değil, seni tanıyarak tasarlıyoruz. Küçük grup ve birebir seçenekleriyle her harekette yakın
+        eğitmen takibi sunuyoruz.
+      </p>
+      <a href="#yaklasim" (click)="scrollToSection($event, 'yaklasim')"
+        >Olive yaklaşımını keşfet <span>↘</span></a
+      >
+    </div>
+    <div class="about__mark" data-reveal>
+      <img [src]="studioSignUrl" alt="Olive Pilates Studio tabela ve stüdyo girişi" />
+      <span><small>Stüdyodan</small>Olive’in imzası</span>
     </div>
   </section>
 
-  <section id="studio" class="leather-section scroll-mt-24 px-6 py-16 text-ivory">
-    <div class="mx-auto grid max-w-7xl gap-8 md:grid-cols-3">
+  <section id="dersler" class="lessons section">
+    <div class="section-heading" data-reveal>
       <div>
-        <p class="text-xs font-bold tracking-[0.2em] text-sand">OLIVE FELSEFESİ</p>
-        <p class="mt-4 font-display text-3xl leading-tight">
-          “İyi hissetmek, kendi ritmini bulmakla başlar.”
-        </p>
+        <p class="eyebrow eyebrow--dark"><i></i> Dersler</p>
+        <h2>İhtiyacına göre<br /><em>hareket alanı.</em></h2>
       </div>
-      <div class="border-l border-ivory/20 pl-0 md:pl-8">
-        <p class="text-3xl font-display text-gold">01</p>
-        <p class="mt-3 text-sm leading-6 text-cream">
-          Bedeninizin bugün neye ihtiyacı olduğunu birlikte keşfederiz.
-        </p>
-      </div>
-      <div class="border-l border-ivory/20 pl-0 md:pl-8">
-        <p class="text-3xl font-display text-gold">02</p>
-        <p class="mt-3 text-sm leading-6 text-cream">
-          Hedeflerinize uyum sağlayan sürdürülebilir bir rutin kurarız.
-        </p>
-      </div>
+      <p>
+        Güçlenmek, esnemek, duruşunu iyileştirmek ya da sadece kendine alan açmak için. Her ders
+        aynı özenle sana göre şekillenir.
+      </p>
     </div>
-  </section>
 
-  <section id="yaklasim" class="approach-section mx-auto max-w-7xl scroll-mt-24 px-6 py-24">
-    <div class="grid gap-12 lg:grid-cols-[0.8fr_1.2fr]">
-      <div>
-        <p class="text-xs font-bold tracking-[0.2em] text-gold">YAKLAŞIMIMIZ</p>
-        <h2 class="mt-5 font-display text-5xl leading-none">
-          Daha güçlü olmak, daha çok zorlanmak demek değildir.
-        </h2>
-      </div>
-      <div class="grid gap-5 sm:grid-cols-3">
-        <article class="rounded-2xl border border-sand bg-white/30 p-6">
-          <span class="text-xs font-bold text-gold">01</span>
-          <h3 class="mt-8 text-xl font-bold">Dinle</h3>
-          <p class="mt-3 text-sm leading-6 text-anthracite/65">
-            Bedeninizin sınırlarını ve ihtiyaçlarını fark ederek başlarız.
-          </p>
-        </article>
-        <article class="rounded-2xl border border-sand bg-cream p-6">
-          <span class="text-xs font-bold text-gold">02</span>
-          <h3 class="mt-8 text-xl font-bold">Hareket et</h3>
-          <p class="mt-3 text-sm leading-6 text-anthracite/65">
-            Kontrollü tekrarlarla gücü, dengeyi ve esnekliği geliştiririz.
-          </p>
-        </article>
-        <article class="rounded-2xl border border-sand bg-white/30 p-6">
-          <span class="text-xs font-bold text-gold">03</span>
-          <h3 class="mt-8 text-xl font-bold">Dengelen</h3>
-          <p class="mt-3 text-sm leading-6 text-anthracite/65">
-            Hareketi günlük yaşamınızın kalıcı parçası yaparız.
-          </p>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <section id="dersler" class="movement-section scroll-mt-24">
-    <div class="movement-shell">
-      <div class="movement-heading">
-        <div>
-          <p class="movement-eyebrow">OLIVE DENEYİMLERİ</p>
-          <h2>Dört disiplin,<br /><em>tek bir denge.</em></h2>
-        </div>
-        <div class="movement-intro">
-          <span class="movement-count">04 / HİZMET</span>
-          <p>Kartların üzerine gelin; bedeninize en iyi gelecek Olive deneyimini keşfedin.</p>
-        </div>
-      </div>
-
-      <div class="service-deck-stage">
-        <div class="service-deck" aria-label="Olive Pilates hizmetleri">
-          <article class="service-card service-card--mat" tabindex="0">
-            <a
-              href="#iletisim"
-              class="service-card-arrow"
-              aria-label="Mat Pilates hakkında bilgi al"
-              ><span>Bilgi al</span><b>↗</b></a
-            >
-            <div class="service-card-visual">
-              <img
-                src="/images/service-mat-pilates-v1.webp"
-                alt="Mat Pilates teaser hareketi"
-              /><span>01</span>
-            </div>
-            <div class="service-card-copy">
-              <span>MERKEZ · NEFES · AKIŞ</span>
-              <h3>Mat Pilates</h3>
-              <p>
-                Merkez gücünü, mobiliteyi ve beden farkındalığını kendi ağırlığınızla geliştirin.
-              </p>
-            </div>
-          </article>
-
-          <article class="service-card service-card--aerial" tabindex="0">
-            <a href="#iletisim" class="service-card-arrow" aria-label="Hamak Yoga hakkında bilgi al"
-              ><span>Bilgi al</span><b>↗</b></a
-            >
-            <div class="service-card-visual">
-              <img
-                src="/images/service-aerial-yoga-v1.webp"
-                alt="Hamak Yoga ters duruş hareketi"
-              /><span>02</span>
-            </div>
-            <div class="service-card-copy">
-              <span>ÖZGÜRLÜK · ESNEKLİK · DENGE</span>
-              <h3>Hamak Yoga</h3>
-              <p>Yer çekimini desteğe dönüştürün; omurgaya alan açarken hafifliği deneyimleyin.</p>
-            </div>
-          </article>
-
-          <article class="service-card service-card--reformer" tabindex="0">
-            <a href="#iletisim" class="service-card-arrow" aria-label="Reformer hakkında bilgi al"
-              ><span>Bilgi al</span><b>↗</b></a
-            >
-            <div class="service-card-visual">
-              <img src="/images/service-reformer-v1.webp" alt="Reformer Pilates hareketi" /><span
-                >03</span
-              >
-            </div>
-            <div class="service-card-copy">
-              <span>GÜÇ · HİZALAMA · KONTROL</span>
-              <h3>Reformer</h3>
-              <p>Yay direnci ve akıcı geçişlerle bedeninizi kontrollü biçimde güçlendirin.</p>
-            </div>
-          </article>
-
-          <article class="service-card service-card--cadillac" tabindex="0">
-            <a href="#iletisim" class="service-card-arrow" aria-label="Cadillac hakkında bilgi al"
-              ><span>Bilgi al</span><b>↗</b></a
-            >
-            <div class="service-card-visual">
-              <img
-                src="/images/service-cadillac-v1.webp"
-                alt="Cadillac Pilates yay egzersizi"
-              /><span>04</span>
-            </div>
-            <div class="service-card-copy">
-              <span>DESTEK · DERİNLİK · HASSASİYET</span>
-              <h3>Cadillac</h3>
-              <p>
-                Geniş hareket repertuvarıyla bedene özel, destekli ve derinlemesine bir çalışma.
-              </p>
-            </div>
-          </article>
-        </div>
-        <p class="service-deck-hint"><span></span> Kartları keşfetmek için üzerine gelin</p>
-      </div>
-    </div>
-  </section>
-
-  <section class="studio-story-section mx-auto max-w-7xl px-6 py-24">
-    <div class="overflow-hidden rounded-3xl bg-stone">
-      <div class="grid lg:grid-cols-2">
-        <img
-          src="https://images.unsplash.com/photo-1599901860904-17e6ed7083a0?auto=format&fit=crop&w=1200&q=85"
-          alt="Pilates stüdyosu atmosferi"
-          class="h-full min-h-[380px] w-full object-cover"
-        />
-        <div class="story-copy flex flex-col justify-center p-10 lg:p-16">
-          <p class="text-xs font-bold tracking-[0.2em] text-anthracite/65">SAKİN BİR ALAN</p>
-          <h2 class="mt-5 font-display text-5xl leading-none">
-            Kendinize ayırdığınız zamanın kıymetini biliyoruz.
-          </h2>
-          <p class="mt-6 max-w-md text-sm leading-7 text-anthracite/75">
-            Sade ve sıcak stüdyo atmosferinde günün hızını dışarıda bırakıp kendi ritminize
-            dönersiniz.
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="paketler" class="leather-section scroll-mt-24 px-6 py-24 text-ivory">
-    <div class="mx-auto max-w-7xl">
-      <div class="text-center">
-        <p class="text-xs font-bold tracking-[0.2em] text-sand">PAKETLER</p>
-        <h2 class="mt-5 font-display text-5xl">Size uygun ritmi seçin.</h2>
-        <p class="mx-auto mt-5 max-w-xl text-sm leading-7 text-cream">
-          Paket içeriğini hedeflerinize göre birlikte netleştirelim. Başlangıçta önemli olan, size
-          iyi gelen düzeni bulmak.
-        </p>
-      </div>
-      <div class="mt-14 grid gap-5 lg:grid-cols-3">
-        <article class="rounded-2xl border border-ivory/20 p-8">
-          <p class="text-sm font-bold text-sand">Başlangıç</p>
-          <h3 class="mt-4 text-3xl font-display">4 Ders</h3>
-          <p class="mt-4 text-sm leading-7 text-cream">
-            Pilatesle yeniden bağ kurmak ve rutine yumuşak bir giriş yapmak için.
-          </p>
-          <a href="#iletisim" class="mt-10 inline-block text-sm font-bold text-gold">Bilgi al →</a>
-        </article>
-        <article class="rounded-2xl bg-gold p-8 text-white shadow-2xl shadow-black/20">
-          <p class="text-sm font-bold text-white/80">Olive · Önerilen</p>
-          <h3 class="mt-4 text-3xl font-display">8 Ders</h3>
-          <p class="mt-4 text-sm leading-7 text-white/85">
-            Düzenli hareket alışkanlığı edinmek ve gelişimi yakından takip etmek için.
-          </p>
+    <div class="lesson-grid">
+      @for (lesson of lessons; track lesson.number) {
+        <article class="lesson-card" data-reveal>
+          <header>
+            <span>{{ lesson.number }}</span
+            ><b>{{ lesson.accent }}</b>
+          </header>
+          <div class="lesson-card__symbol" aria-hidden="true"><i></i><i></i><i></i></div>
+          <h3>{{ lesson.title }}</h3>
+          <p>{{ lesson.description }}</p>
+          <footer>
+            <span>{{ lesson.duration }}</span
+            ><span>{{ lesson.level }}</span>
+          </footer>
           <a
             href="#iletisim"
-            class="mt-10 inline-block rounded-full bg-anthracite px-5 py-3 text-sm font-bold text-ivory"
-            >Tanışma planla</a
+            (click)="scrollToSection($event, 'iletisim')"
+            [attr.aria-label]="lesson.title + ' için bilgi al'"
+            >↗</a
           >
-        </article>
-        <article class="rounded-2xl border border-ivory/20 p-8">
-          <p class="text-sm font-bold text-sand">Kişisel</p>
-          <h3 class="mt-4 text-3xl font-display">Birebir</h3>
-          <p class="mt-4 text-sm leading-7 text-cream">
-            Hedeflerinize ve bedeninizin ihtiyacına göre özel plan için.
-          </p>
-          <a href="#iletisim" class="mt-10 inline-block text-sm font-bold text-gold">Bilgi al →</a>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <section id="instagram" class="instagram-section scroll-mt-24 bg-ivory px-6 py-24">
-    <div class="mx-auto max-w-7xl">
-      <div class="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-        <div>
-          <p class="text-xs font-bold tracking-[0.2em] text-gold">STÜDYODAN KARELER</p>
-          <h2 class="mt-5 font-display text-5xl">Olive akışını takip edin.</h2>
-        </div>
-        <div class="max-w-sm">
-          <p class="text-sm leading-7 text-anthracite/65">
-            Derslerden, stüdyo atmosferinden ve günlük hareket ritüellerimizden ilham veren kareler.
-          </p>
-          <a
-            href="https://www.instagram.com/beyzadoespilates/"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="instagram-follow mt-4 inline-flex items-center gap-2 text-sm font-bold text-anthracite"
-            >@beyzadoespilates <span>↗</span></a
-          >
-        </div>
-      </div>
-      <div class="instagram-grid mt-12">
-        @for (post of instagramPosts; track post.image) {
-          <a
-            class="instagram-card group"
-            href="https://www.instagram.com/beyzadoespilates/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <img [src]="post.image" [alt]="post.alt" loading="lazy" />
-            <span class="instagram-card-caption">
-              <span class="instagram-icon">◎</span>
-              <p>{{ post.caption }}</p>
-            </span>
-          </a>
-        }
-      </div>
-    </div>
-  </section>
-
-  <section id="sss" class="faq-section mx-auto max-w-4xl scroll-mt-24 px-6 py-24">
-    <div class="text-center">
-      <p class="text-xs font-bold tracking-[0.2em] text-gold">MERAK EDİLENLER</p>
-      <h2 class="mt-5 font-display text-5xl">Sık sorulan sorular</h2>
-    </div>
-    <div class="mt-12 divide-y divide-sand border-y border-sand">
-      @for (faq of faqs; track faq.question; let index = $index) {
-        <article class="py-2">
-          <button
-            class="flex w-full items-center justify-between py-5 text-left text-base font-bold"
-            (click)="toggleFaq(index)"
-          >
-            {{ faq.question
-            }}<span class="text-2xl font-light text-gold">{{
-              openFaqIndex === index ? '−' : '+'
-            }}</span>
-          </button>
-          @if (openFaqIndex === index) {
-            <p class="pb-5 pr-10 text-sm leading-7 text-anthracite/65">{{ faq.answer }}</p>
-          }
         </article>
       }
     </div>
   </section>
 
-  <section id="iletisim" class="contact-section scroll-mt-24">
-    <div class="contact-shell">
-      <div class="contact-copy">
-        <p class="contact-eyebrow">BİRLİKTE BAŞLAYALIM</p>
-        <h2>Kendinize iyi gelecek<br /><em>bir görüşme planlayın.</em></h2>
-        <p>
-          Hedeflerinizi, daha önceki deneyiminizi ve size en uygun çalışma düzenini konuşalım.
-          Bilgilerinizi bırakın, size en kısa sürede ulaşalım.
-        </p>
-        <div class="contact-promises">
-          <span><b>01</b> İhtiyacınızı dinleriz</span>
-          <span><b>02</b> Size uygun hizmeti belirleriz</span>
-          <span><b>03</b> İlk görüşmeyi birlikte planlarız</span>
-        </div>
-      </div>
-
-      <form class="contact-form-card" (ngSubmit)="submitContactRequest()" #contactNgForm="ngForm">
-        <div class="contact-form-topline"><span>GÖRÜŞME TALEBİ</span><i>↗</i></div>
-
-        <div class="contact-form-grid">
-          <label class="contact-field contact-field--wide">
-            <span>Ad Soyad</span>
-            <input
-              type="text"
-              name="fullName"
-              maxlength="150"
-              autocomplete="name"
-              [(ngModel)]="contactForm.fullName"
-              placeholder="Adınızı ve soyadınızı yazın"
-              required
-            />
-          </label>
-          <label class="contact-field">
-            <span>E-posta</span>
-            <input
-              type="email"
-              name="email"
-              maxlength="200"
-              autocomplete="email"
-              [(ngModel)]="contactForm.email"
-              placeholder="ornek@email.com"
-              required
-              email
-            />
-          </label>
-          <label class="contact-field">
-            <span>Telefon</span>
-            <input
-              type="tel"
-              name="phone"
-              maxlength="30"
-              autocomplete="tel"
-              [(ngModel)]="contactForm.phone"
-              placeholder="05xx xxx xx xx"
-              required
-            />
-          </label>
-          <label class="contact-field contact-field--wide">
-            <span>Notunuz</span>
-            <textarea
-              name="note"
-              maxlength="2000"
-              rows="4"
-              [(ngModel)]="contactForm.note"
-              placeholder="Hedefinizden veya görüşmek istediğiniz konudan kısaca bahsedin."
-              required
-            ></textarea>
-          </label>
-        </div>
-
-        <div class="contact-form-footer">
-          <small>Bilgileriniz yalnızca sizinle iletişim kurmak için kullanılır.</small>
-          <button type="submit" [disabled]="contactSubmitting || contactNgForm.invalid">
-            {{ contactSubmitting ? 'Gönderiliyor...' : 'Görüşme Talebi Gönder' }} <span>→</span>
-          </button>
-        </div>
-
-        @if (contactSubmitted) {
-          <p class="contact-success">
-            <i>✓</i> Talebiniz bize ulaştı. En kısa sürede görüşmek üzere.
-          </p>
-        }
-      </form>
+  <section id="yaklasim" class="approach section section--dark">
+    <div class="approach__heading" data-reveal>
+      <p class="eyebrow"><i></i> Olive yaklaşımı</p>
+      <h2>Performans değil,<br /><em>iyi hissetme pratiği.</em></h2>
+      <p>İlk görüşmeden düzenli gelişime kadar her adım sade, anlaşılır ve sana özel.</p>
+    </div>
+    <div class="approach__steps">
+      @for (principle of principles; track principle.number) {
+        <article data-reveal>
+          <span>{{ principle.number }}</span>
+          <div>
+            <h3>{{ principle.title }}</h3>
+            <p>{{ principle.text }}</p>
+          </div>
+          <b aria-hidden="true">↘</b>
+        </article>
+      }
     </div>
   </section>
-</main>
 
-<footer class="leather-section px-6 py-10 text-cream">
-  <div
-    class="mx-auto flex max-w-7xl flex-col gap-6 text-sm md:flex-row md:items-center md:justify-between"
-  >
-    <div>
-      <p class="font-display text-2xl text-ivory">OLIVE</p>
-      <p class="mt-1 text-xs text-sand">Hareket · Nefes · Denge</p>
+  <section class="quote">
+    <div data-reveal>
+      <span aria-hidden="true">“</span>
+      <blockquote>Bedenine ayırdığın zaman,<br /><em>kendine verdiğin en iyi söz.</em></blockquote>
     </div>
-    <div class="flex gap-5 text-xs font-bold">
-      <a href="#dersler" class="hover:text-gold">Dersler</a
-      ><a href="#iletisim" class="hover:text-gold">İletişim</a>
+    <a href="#iletisim" (click)="scrollToSection($event, 'iletisim')"
+      >Harekete başla <span>→</span></a
+    >
+  </section>
+
+  <section id="konum" class="location section">
+    <div class="location__copy" data-reveal>
+      <p class="eyebrow eyebrow--dark"><i></i> Konum</p>
+      <h2>Sana yakın,<br /><em>şehrin ritminden uzak.</em></h2>
+      <p>İncek’teki stüdyomuzu haritada görüntüleyin ve size en uygun rotayı oluşturun.</p>
+      <div class="location__details">
+        <span><b>Adres</b>{{ address }}</span>
+        <span><b>Ziyaret</b>Randevu ile</span>
+      </div>
+      <a
+        class="button button--dark"
+        [href]="directionsUrl"
+        target="_blank"
+        rel="noopener noreferrer"
+        >Google Maps’te yol tarifi <span>↗</span></a
+      >
     </div>
-    <p class="text-xs text-sand">© 2026 Olive Pilates Stüdyosu</p>
-  </div>
-</footer>
+    <div class="map-card" data-reveal>
+      <iframe
+        [src]="mapEmbedUrl"
+        title="Olive Pilates Studio İncek Gölbaşı konumu"
+        loading="lazy"
+        allowfullscreen
+        referrerpolicy="no-referrer-when-downgrade"
+      ></iframe>
+      <div class="map-card__badge">
+        <img [src]="logoUrl" alt="" /><span><b>Olive Pilates Studio</b>İncek · Gölbaşı</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="iletisim" class="contact section section--dark">
+    <div class="contact__copy" data-reveal>
+      <p class="eyebrow"><i></i> İletişim</p>
+      <h2>İlk adımı<br /><em>birlikte atalım.</em></h2>
+      <p>
+        Hedefini ve sana en uygun ders düzenini konuşalım. Formunu bırak; en kısa sürede sana
+        ulaşalım.
+      </p>
+      <a [href]="instagramUrl" target="_blank" rel="noopener noreferrer" class="instagram-link"
+        ><span>◎</span>
+        <div><small>Instagram</small><b>&#64;beyzadoespilates</b></div>
+        <i>↗</i></a
+      >
+    </div>
+
+    <form
+      class="contact-form"
+      (ngSubmit)="submitContactRequest()"
+      #contactNgForm="ngForm"
+      data-reveal
+    >
+      <div class="contact-form__head"><span>Tanışma formu</span><small>01 — 04</small></div>
+      <label class="field field--wide"
+        ><span>Ad Soyad</span
+        ><input
+          type="text"
+          name="fullName"
+          maxlength="150"
+          autocomplete="name"
+          [(ngModel)]="contactForm.fullName"
+          placeholder="Adınız ve soyadınız"
+          required
+      /></label>
+      <label class="field"
+        ><span>E-posta</span
+        ><input
+          type="email"
+          name="email"
+          maxlength="200"
+          autocomplete="email"
+          [(ngModel)]="contactForm.email"
+          placeholder="ornek@email.com"
+          required
+          email
+      /></label>
+      <label class="field"
+        ><span>Telefon</span
+        ><input
+          type="tel"
+          name="phone"
+          maxlength="30"
+          autocomplete="tel"
+          [(ngModel)]="contactForm.phone"
+          placeholder="05xx xxx xx xx"
+          required
+      /></label>
+      <label class="field field--wide"
+        ><span>Nasıl yardımcı olabiliriz?</span
+        ><textarea
+          name="note"
+          maxlength="2000"
+          rows="4"
+          [(ngModel)]="contactForm.note"
+          placeholder="Hedefinizden veya merak ettiğiniz konudan bahsedin."
+          required
+        ></textarea>
+      </label>
+      <div class="contact-form__submit field--wide">
+        <small>Bilgilerin yalnızca seninle iletişim kurmak için kullanılır.</small>
+        <button type="submit" [disabled]="contactSubmitting || contactNgForm.invalid">
+          {{ contactSubmitting ? 'Gönderiliyor…' : 'Görüşme talebi gönder' }} <span>→</span>
+        </button>
+      </div>
+      @if (contactSubmitted) {
+        <p class="contact-form__success field--wide">
+          ✓ Talebin bize ulaştı. En kısa sürede görüşmek üzere.
+        </p>
+      }
+    </form>
+  </section>
+
+  <footer class="footer">
+    <a
+      href="#anasayfa"
+      class="footer__brand"
+      (click)="scrollToSection($event, 'anasayfa')"
+      aria-label="Sayfanın başına dön"
+      ><img [src]="logoUrl" alt="Olive Pilates Studio"
+    /></a>
+    <p>Hareket · Nefes · Denge</p>
+    <nav aria-label="Alt menü">
+      <a href="#hakkimizda" (click)="scrollToSection($event, 'hakkimizda')">Hakkımızda</a
+      ><a href="#dersler" (click)="scrollToSection($event, 'dersler')">Dersler</a
+      ><a href="#konum" (click)="scrollToSection($event, 'konum')">Konum</a
+      ><a routerLink="/login">Üye girişi</a>
+    </nav>
+    <span>© 2026 Olive Pilates Studio</span>
+  </footer>
+</main>
