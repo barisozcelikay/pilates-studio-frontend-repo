@@ -2256,9 +2256,9 @@ button {
   padding: clamp(8rem, 15vh, 10rem) clamp(1.25rem, 4vw, 4.5rem) clamp(3rem, 7vh, 5rem);
   color: #fffaf1;
   background-image:
-    linear-gradient(90deg, rgba(18, 16, 12, 0.72) 0%, rgba(18, 16, 12, 0.34) 42%, rgba(18, 16, 12, 0.06) 74%),
-    linear-gradient(0deg, rgba(18, 16, 12, 0.3), transparent 45%),
-    url('/images/olive-studio-hero-v1.png');
+    linear-gradient(90deg, rgba(18, 16, 12, 0.42) 0%, rgba(18, 16, 12, 0.15) 42%, transparent 74%),
+    linear-gradient(0deg, rgba(18, 16, 12, 0.16), transparent 45%),
+    url('/images/olive-studio-hero-real-moody-v3.webp');
   background-position: center;
   background-size: cover;
 }
@@ -2314,8 +2314,8 @@ button {
     min-height: 100svh;
     padding: 7rem 1.25rem 2.25rem;
     background-image:
-      linear-gradient(180deg, rgba(17, 15, 12, 0.08) 15%, rgba(17, 15, 12, 0.74) 74%, rgba(17, 15, 12, 0.9) 100%),
-      url('/images/olive-studio-hero-v1.png');
+      linear-gradient(180deg, rgba(17, 15, 12, 0.04) 15%, rgba(17, 15, 12, 0.62) 74%, rgba(17, 15, 12, 0.82) 100%),
+      url('/images/olive-studio-hero-real-moody-v3.webp');
     background-position: 61% center;
   }
   .hero__copy { grid-row: auto; width: 100%; }
