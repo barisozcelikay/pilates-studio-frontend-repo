@@ -11,8 +11,7 @@
       (click)="scrollToSection($event, 'anasayfa')"
       aria-label="Olive Pilates Studio ana sayfa"
     >
-      <img [src]="iconLogoUrl" alt="" />
-      <span><b>olive</b><small>Pilates Studio</small></span>
+      <img [src]="logoUrl" alt="" />
     </a>
 
     <nav class="header__nav" aria-label="Ana menü">
@@ -145,19 +144,33 @@
     </div>
 
     <div class="lesson-grid">
-      @for (lesson of lessons; track lesson.number) {
-        <article class="lesson-card" data-reveal>
-          <header>
-            <span>{{ lesson.number }}</span
-            ><b>{{ lesson.accent }}</b>
-          </header>
-          <div class="lesson-card__symbol" aria-hidden="true"><i></i><i></i><i></i></div>
+      @for (lesson of lessons; track lesson.title) {
+        <article class="lesson-card" [class.lesson-card--soon]="lesson.comingSoon" data-reveal>
+          @if (lesson.comingSoon) {
+            <span class="lesson-card__badge">Çok yakında</span>
+          }
+          <div class="lesson-art" aria-hidden="true">
+            <svg [attr.viewBox]="'0 0 ' + lesson.artWidth + ' ' + lesson.artHeight" focusable="false">
+              <defs>
+                <mask [attr.id]="'lesson-reveal-' + lesson.illustration">
+                  <path
+                    class="lesson-art__brush"
+                    [attr.d]="lesson.revealPath"
+                    [attr.stroke-width]="lesson.brushWidth"
+                    pathLength="1"
+                  />
+                </mask>
+              </defs>
+              <image
+                [attr.href]="lesson.artUrl"
+                [attr.width]="lesson.artWidth"
+                [attr.height]="lesson.artHeight"
+                [attr.mask]="'url(#lesson-reveal-' + lesson.illustration + ')'"
+              />
+            </svg>
+          </div>
           <h3>{{ lesson.title }}</h3>
           <p>{{ lesson.description }}</p>
-          <footer>
-            <span>{{ lesson.duration }}</span
-            ><span>{{ lesson.level }}</span>
-          </footer>
           <a
             href="#iletisim"
             (click)="scrollToSection($event, 'iletisim')"
@@ -213,7 +226,7 @@
         [href]="directionsUrl"
         target="_blank"
         rel="noopener noreferrer"
-        >Google Maps’te yol tarifi <span>↗</span></a
+        >Yol tarifi <span>↗</span></a
       >
     </div>
     <div class="map-card" data-reveal>
@@ -225,7 +238,7 @@
         referrerpolicy="no-referrer-when-downgrade"
       ></iframe>
       <div class="map-card__badge">
-        <img [src]="logoUrl" alt="" /><span><b>Olive Pilates Studio</b>İncek · Gölbaşı</span>
+        <img [src]="mapMarkUrl" alt="" /><span><b>Olive Pilates Studio</b>İncek · Gölbaşı</span>
       </div>
     </div>
   </section>
