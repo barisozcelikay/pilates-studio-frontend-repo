@@ -10,12 +10,15 @@ import {
 } from '../contact-requests/contact-request.service';
 
 interface Lesson {
-  number: string;
   title: string;
   description: string;
-  duration: string;
-  level: string;
-  accent: string;
+  illustration: 'reformer' | 'cadillac' | 'mat' | 'hammock';
+  artUrl: string;
+  artWidth: number;
+  artHeight: number;
+  brushWidth: number;
+  revealPath: string;
+  comingSoon?: boolean;
 }
 
 const SECTION_IDS = ['anasayfa', 'hakkimizda', 'dersler', 'yaklasim', 'konum', 'iletisim'];
@@ -36,50 +39,59 @@ export class StudioHomeComponent implements AfterViewInit, OnDestroy {
   contactSubmitted = false;
   contactForm: ContactRequestPayload = this.emptyContactForm();
 
-  readonly logoUrl = '/images/olive-logo-lockup-transparent.svg';
-  readonly iconLogoUrl = '/images/olive-logo-icon-primary-v2.png';
+  readonly logoUrl = '/images/olive-brand-lockup-dark.svg';
+  readonly mapMarkUrl = '/images/olive-brand-mark-dark.svg';
   readonly studioSignUrl = '/images/olive-studio-sign-v1.jpg';
   readonly instagramUrl = 'https://www.instagram.com/beyzadoespilates/';
-  readonly address = 'İncek, 3035. Cadde 143A, 06830 Gölbaşı/Ankara';
+  readonly address = 'İncek, 3035. Cadde 143/2, 06830 Gölbaşı/Ankara';
   readonly mapSearchLabel = this.address;
   readonly mapEmbedUrl: SafeResourceUrl;
   readonly directionsUrl: string;
 
   readonly lessons: Lesson[] = [
     {
-      number: '01',
       title: 'Reformer Pilates',
       description:
         'Direnç, denge ve kontrollü akışla bütün bedeni güçlendiren kişiselleştirilmiş seanslar.',
-      duration: '50 dakika',
-      level: 'Her seviye',
-      accent: 'Güç',
+      illustration: 'reformer',
+      artUrl: '/images/lesson-drawings/reformer-ink.png',
+      artWidth: 650,
+      artHeight: 380,
+      brushWidth: 105,
+      revealPath: 'M10 355 H640 V280 H10 V205 H640 V130 H10 V55 H640',
     },
     {
-      number: '02',
       title: 'Cadillac',
       description:
         'Hareket alanını güvenle genişleten, mobilite ve postür odağında destekli çalışmalar.',
-      duration: '50 dakika',
-      level: 'Kişiye özel',
-      accent: 'Mobilite',
+      illustration: 'cadillac',
+      artUrl: '/images/lesson-drawings/cadillac-ink.png',
+      artWidth: 480,
+      artHeight: 484,
+      brushWidth: 105,
+      revealPath: 'M10 465 H470 V385 H10 V305 H470 V225 H10 V145 H470 V65 H10',
     },
     {
-      number: '03',
       title: 'Mat Pilates',
       description: 'Nefes, merkez kuvveti ve beden farkındalığını bir araya getiren akıcı dersler.',
-      duration: '50 dakika',
-      level: 'Her seviye',
-      accent: 'Denge',
+      illustration: 'mat',
+      artUrl: '/images/lesson-drawings/mat-ink.png',
+      artWidth: 630,
+      artHeight: 300,
+      brushWidth: 100,
+      revealPath: 'M10 285 H620 V215 H10 V145 H620 V75 H10 V10 H620',
     },
     {
-      number: '04',
       title: 'Hamak Yoga',
       description:
         'Yer çekimini desteğe dönüştüren; esneklik, hafiflik ve özgürlük hissi veren pratik.',
-      duration: '50 dakika',
-      level: 'Başlangıç dostu',
-      accent: 'Akış',
+      illustration: 'hammock',
+      artUrl: '/images/lesson-drawings/hammock-ink.png',
+      artWidth: 520,
+      artHeight: 490,
+      brushWidth: 105,
+      revealPath: 'M10 470 H510 V390 H10 V310 H510 V230 H10 V150 H510 V70 H10',
+      comingSoon: true,
     },
   ];
 
@@ -115,7 +127,13 @@ export class StudioHomeComponent implements AfterViewInit, OnDestroy {
     this.mapEmbedUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
       `https://www.google.com/maps?q=${query}&output=embed`,
     );
-    this.directionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${query}`;
+    const isAppleMobile =
+      typeof navigator !== 'undefined' &&
+      (/iPad|iPhone|iPod/.test(navigator.userAgent) ||
+        (navigator.userAgent.includes('Macintosh') && navigator.maxTouchPoints > 1));
+    this.directionsUrl = isAppleMobile
+      ? `https://maps.apple.com/?daddr=${query}`
+      : `https://www.google.com/maps/dir/?api=1&destination=${query}`;
   }
 
   @HostListener('window:scroll')
@@ -173,6 +191,13 @@ export class StudioHomeComponent implements AfterViewInit, OnDestroy {
     SECTION_IDS.map((id) => document.getElementById(id))
       .filter((section): section is HTMLElement => !!section)
       .forEach((section) => this.sectionObserver?.observe(section));
+
+    const initialSection = window.location.hash.slice(1);
+    if (SECTION_IDS.includes(initialSection)) {
+      requestAnimationFrame(() => {
+        document.getElementById(initialSection)?.scrollIntoView({ behavior: 'auto', block: 'start' });
+      });
+    }
   }
 
   ngOnDestroy(): void {
@@ -185,7 +210,7 @@ export class StudioHomeComponent implements AfterViewInit, OnDestroy {
     this.mobileMenuOpen = false;
     this.headerHidden = false;
     document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    history.replaceState(null, '', sectionId === 'anasayfa' ? '/home' : `/home#${sectionId}`);
+    history.replaceState(null, '', sectionId === 'anasayfa' ? '/' : `/#${sectionId}`);
   }
 
   submitContactRequest(): void {

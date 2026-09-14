@@ -1057,6 +1057,15 @@
     object-position: left center;
   }
 
+  .mobile-topbar-logo--dark,
+  .dashboard.dark-mode .mobile-topbar-logo--light {
+    display: none;
+  }
+
+  .dashboard.dark-mode .mobile-topbar-logo--dark {
+    display: block;
+  }
+
   .page-eyebrow {
     margin-bottom: 3px;
 
