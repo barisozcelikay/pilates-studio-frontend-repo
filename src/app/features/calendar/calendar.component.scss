@@ -228,7 +228,7 @@
    ========================================================= */
 
 :host ::ng-deep .fc .fc-timegrid-slot {
-  height: 2.25rem;
+  height: 2.75rem;
 
   background: var(--calendar-bg) !important;
   border-color: var(--calendar-border-light) !important;
@@ -236,6 +236,15 @@
 
 :host ::ng-deep .fc .fc-timegrid-slot:hover {
   background: #e9e1d3 !important;
+}
+
+/* =========================================================
+   CLICKABLE AREAS
+   ========================================================= */
+
+:host ::ng-deep .fc .fc-timegrid-col,
+:host ::ng-deep .fc .fc-daygrid-day-frame {
+  cursor: pointer;
 }
 
 /* =========================================================
@@ -310,10 +319,12 @@
 
 :host ::ng-deep .calendar-lesson-event {
   display: grid;
-  gap: 3px;
+  align-content: start;
+  gap: 2px;
   min-width: 0;
   height: 100%;
   padding: 2px 1px;
+  line-height: 1.2;
 }
 
 :host ::ng-deep .calendar-lesson-event__title {
@@ -321,6 +332,7 @@
   color: #35322d;
   font-size: 11px;
   font-weight: 700;
+  line-height: 1.2;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
@@ -412,14 +424,6 @@
 
 :host ::ng-deep .fc .fc-timegrid-now-indicator-arrow {
   border-top-color: var(--calendar-gold) !important;
-}
-
-/* =========================================================
-   CLICKABLE AREAS
-   ========================================================= */
-
-:host ::ng-deep .fc .fc-timegrid-col {
-  cursor: pointer;
 }
 
 /* =========================================================
@@ -696,7 +700,7 @@ full-calendar {
 /* FullCalendar calculates this layer numerically. Keep a real fallback height
    so the time grid can never collapse while the route/layout is settling. */
 :host ::ng-deep .fc .fc-view-harness {
-  min-height: 630px;
+  min-height: 500px;
 }
 
 .calendar-legend {
@@ -718,19 +722,6 @@ full-calendar {
 .calendar-create-button {
   min-width: 148px;
   box-shadow: 0 0 18px rgba(174, 185, 52, 0.16);
-}
-
-.calendar-card--creator::after {
-  content: 'Boş bir saat alanına tıklayarak hızlıca ders oluşturabilirsiniz.';
-  display: none;
-  color: var(--calendar-muted);
-  font-size: 10px;
-  text-align: right;
-}
-
-:host ::ng-deep .calendar-card--creator .fc-timegrid-slot-lane,
-:host ::ng-deep .calendar-card--creator .fc-daygrid-day-frame {
-  cursor: cell;
 }
 
 .calendar-form-intro {
@@ -919,6 +910,91 @@ full-calendar {
   box-shadow: inset 0 -2px #a98643;
 }
 
+/* =========================================================
+   WEEK SELECTOR (month view row → jump to that week)
+   ========================================================= */
+
+:host ::ng-deep .fc .fc-daygrid-week-number {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  width: 1.6rem;
+  height: 1.6rem;
+  margin: 0.45rem auto 0;
+  padding: 0;
+
+  border: 1px solid rgba(169, 134, 67, 0.28);
+  border-radius: 999px;
+
+  background: rgba(248, 240, 225, 0.85);
+  box-shadow: 0 1px 2px rgba(41, 41, 37, 0.08);
+
+  text-decoration: none !important;
+  cursor: pointer;
+
+  transition:
+    transform 180ms ease,
+    background 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+:host ::ng-deep .fc .fc-daygrid-week-number:hover,
+:host ::ng-deep .fc .fc-daygrid-week-number:focus-visible {
+  transform: translateY(-1px) scale(1.06);
+  border-color: #a98643 !important;
+  background: #a98643 !important;
+  box-shadow: 0 5px 14px rgba(169, 134, 67, 0.32);
+}
+
+:host ::ng-deep .fc .fc-daygrid-week-number:focus-visible {
+  outline: 2px solid #a98643;
+  outline-offset: 2px;
+}
+
+:host ::ng-deep .fc .calendar-week-select {
+  color: #a9967e !important;
+  font-size: 0.7rem;
+  transition:
+    color 180ms ease,
+    transform 180ms ease;
+}
+
+:host ::ng-deep .fc .fc-daygrid-week-number:hover .calendar-week-select,
+:host ::ng-deep .fc .fc-daygrid-week-number:focus-visible .calendar-week-select {
+  color: #fff174 !important;
+  transform: translateX(1px);
+}
+
+:host-context(.dark) ::ng-deep .fc .fc-daygrid-week-number,
+:host-context(.dark-theme) ::ng-deep .fc .fc-daygrid-week-number {
+  border-color: rgba(110, 98, 47, 0.72);
+  background: rgba(44, 45, 42, 0.94);
+  box-shadow: none;
+}
+
+:host-context(.dark) ::ng-deep .fc .fc-daygrid-week-number:hover,
+:host-context(.dark) ::ng-deep .fc .fc-daygrid-week-number:focus-visible,
+:host-context(.dark-theme) ::ng-deep .fc .fc-daygrid-week-number:hover,
+:host-context(.dark-theme) ::ng-deep .fc .fc-daygrid-week-number:focus-visible {
+  border-color: #e8d84d !important;
+  background: rgba(232, 216, 77, 0.16) !important;
+  box-shadow: 0 0 14px rgba(232, 216, 77, 0.22);
+}
+
+:host-context(.dark) ::ng-deep .fc .calendar-week-select,
+:host-context(.dark-theme) ::ng-deep .fc .calendar-week-select {
+  color: #bcb39b !important;
+}
+
+:host-context(.dark) ::ng-deep .fc .fc-daygrid-week-number:hover .calendar-week-select,
+:host-context(.dark) ::ng-deep .fc .fc-daygrid-week-number:focus-visible .calendar-week-select,
+:host-context(.dark-theme) ::ng-deep .fc .fc-daygrid-week-number:hover .calendar-week-select,
+:host-context(.dark-theme) ::ng-deep .fc .fc-daygrid-week-number:focus-visible .calendar-week-select {
+  color: #fff174 !important;
+}
+
 :host ::ng-deep .fc .fc-timegrid-slot,
 :host ::ng-deep .fc .fc-daygrid-day {
   transition: background 180ms ease;
@@ -1040,6 +1116,20 @@ full-calendar {
   border-color: rgba(169, 134, 67, 0.3);
   background: linear-gradient(145deg, var(--color-surface-soft), var(--color-surface));
   box-shadow: inset 3px 0 var(--color-accent);
+}
+
+:host ::ng-deep .policy-checkbox .p-checkbox-box {
+  width: 22px;
+  height: 22px;
+  border-color: var(--color-border);
+  border-radius: 7px;
+  background: var(--color-surface);
+}
+
+:host ::ng-deep .policy-checkbox .p-checkbox-checked .p-checkbox-box {
+  border-color: var(--color-accent);
+  background: var(--color-primary);
+  color: var(--color-accent-light);
 }
 
 :host-context(.dark) .calendar-card,
