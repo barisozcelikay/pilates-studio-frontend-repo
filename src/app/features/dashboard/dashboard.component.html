@@ -2,7 +2,7 @@
   <div class="member-home">
     <section class="member-welcome">
       <div class="member-welcome__copy">
-        <span class="page-eyebrow">OLIVE MEMBER</span>
+        <span class="page-eyebrow">ÜYE PANELİ</span>
         <h1>Hoş geldin, {{ currentAccount?.firstName || 'Olive üyesi' }}.</h1>
         <p>
           Bu hafta kendine ayırdığın zamanı, yaklaşan dersleri ve stüdyo akışını burada
@@ -18,7 +18,7 @@
         </div>
       </div>
       <div class="member-next" [class.member-next--empty]="!nextMemberLesson">
-        <span class="member-next__eyebrow">SIRADAKİ AKIŞ</span>
+        <span class="member-next__eyebrow">YAKLAŞAN DERS</span>
         @if (nextMemberLesson; as lesson) {
           <time
             >{{ lesson.startAt | date: 'EEEE'
@@ -43,8 +43,8 @@
       <article>
         <i class="pi pi-calendar"></i>
         <div>
-          <small>Bu haftaki dersler</small><strong>{{ memberLessons.length }}</strong
-          ><span>Programdaki aktif ders</span>
+          <small>Bu haftanın programı</small><strong>{{ memberLessons.length }}</strong
+          ><span>Stüdyodaki aktif ders</span>
         </div>
       </article>
       <article>
@@ -54,16 +54,47 @@
           ><span>Rezervasyona uygun</span>
         </div>
       </article>
-      <article class="member-ritual">
-        <i class="pi pi-heart"></i>
+      <article>
+        <i class="pi pi-replay"></i>
         <div>
-          <small>Bugünün ritüeli</small><strong>Nefes · Denge</strong
-          ><span>Kendine ayırdığın zaman değerli</span>
+          <small>Kalan ders iptal hakkı</small
+          ><strong>{{ remainingCancellationRightCount ?? '—' }}</strong
+          ><span>Üyeliğinden kalan</span>
         </div>
       </article>
     </section>
 
-    <p class="dashboard-error" *ngIf="loadError">{{ loadError }}</p>
+    @if (loadError) {
+      <p class="dashboard-error">{{ loadError }}</p>
+    }
+
+    @if (todayMemberLessons.length) {
+      <section class="member-today-panel">
+        <header>
+          <span class="page-eyebrow">BUGÜN</span>
+          <h2>Bugünkü derslerin</h2>
+        </header>
+        <div class="member-lesson-list">
+          @for (lesson of todayMemberLessons; track lesson.id) {
+            <a routerLink="/calendar" class="member-lesson-card member-lesson-card--today">
+              <time
+                ><strong>{{ lesson.startAt | date: 'HH:mm' }}</strong
+                ><span>bugün</span></time
+              >
+              <div class="member-lesson-card__body">
+                <h3>{{ lesson.name }}</h3>
+                <p>{{ lesson.instructorNames.join(', ') || 'Olive Studio' }}</p>
+                <div class="member-capacity"><i [style.width.%]="lessonOccupancy(lesson)"></i></div>
+              </div>
+              <span class="member-lesson-card__count"
+                >{{ (lesson.capacity ?? 0) - lesson.reservationCount }} yer</span
+              >
+              <i class="pi pi-chevron-right"></i>
+            </a>
+          }
+        </div>
+      </section>
+    }
 
     <section class="member-content-grid">
       <article class="member-schedule-panel">
@@ -112,92 +143,196 @@
       </aside>
     </section>
   </div>
-} @else {
-  <div class="dashboard-home">
-    <div class="dashboard-heading">
+} @else if (isInstructor) {
+  <div class="dashboard-home instructor-home">
+    <section class="role-hero role-hero--instructor">
       <div>
-        <span class="page-eyebrow">STÜDYO ÖZETİ</span>
-        <h1>Günaydın, Barış</h1>
-        <p>{{ today | date: 'd MMMM EEEE' }} · Stüdyonuzdaki güncel hareketler</p>
+        <span class="page-eyebrow">EĞİTMEN PANELİ</span>
+        <h1>Merhaba, {{ currentAccount?.firstName || 'eğitmenimiz' }}.</h1>
+        <p>Stüdyonun haftalık akışı ve derslerin tek bakışta burada.</p>
+        <div class="role-hero__actions">
+          <a routerLink="/calendar" class="role-action role-action--primary"
+            ><i class="pi pi-calendar"></i>Takvimi aç</a
+          >
+          <a routerLink="/lessons" class="role-action role-action--quiet"
+            >Dersleri yönet <i class="pi pi-arrow-up-right"></i
+          ></a>
+        </div>
       </div>
-    </div>
+      <div class="role-hero__seal" aria-hidden="true"><i class="pi pi-sparkles"></i></div>
+    </section>
 
-    <section class="metric-grid">
+    @if (loadError) {
+      <p class="dashboard-error">{{ loadError }}</p>
+    }
+
+    <section class="instructor-stat-grid" aria-label="Haftalık program özeti">
+      <article>
+        <span><i class="pi pi-calendar"></i>BU HAFTA</span
+        ><strong>{{ instructorLessons.length }}</strong
+        ><small>Stüdyoda planlanan ders</small>
+      </article>
+      <article>
+        <span><i class="pi pi-sun"></i>BUGÜN</span><strong>{{ todayInstructorLessonCount }}</strong
+        ><small>Stüdyoda gerçekleşecek ders</small>
+      </article>
+      <article class="instructor-stat-grid__note">
+        <span><i class="pi pi-heart"></i>OLIVE NOTU</span>
+        <p>Her derste güvenli hareket ve kişisel ilgi önceliğimiz.</p>
+      </article>
+    </section>
+
+    <section class="panel instructor-schedule">
+      <div class="panel-header">
+        <div>
+          <span class="page-eyebrow">STÜDYO PROGRAMI</span>
+          <h2>Yaklaşan dersler</h2>
+          <p>Bu haftanın aktif dersleri</p>
+        </div>
+        <a routerLink="/calendar">Tüm takvim <i class="pi pi-arrow-up-right"></i></a>
+      </div>
+      <div class="instructor-lesson-list">
+        @for (lesson of upcomingInstructorLessons; track lesson.id) {
+          <a [routerLink]="['/lessons', lesson.id]" class="instructor-lesson-row">
+            <time
+              ><strong>{{ lesson.startAt | date: 'dd' }}</strong
+              ><span>{{ lesson.startAt | date: 'MMM' }}</span></time
+            >
+            <div>
+              <h3>{{ lesson.name }}</h3>
+              <p>
+                {{ lesson.startAt | date: 'EEEE, HH:mm' }} ·
+                {{ lesson.instructorNames.join(', ') || 'Eğitmen atanmamış' }}
+              </p>
+              <p class="instructor-lesson-row__participants">
+                <i class="pi pi-users"></i>
+                @if (participantsFor(lesson).length) {
+                  {{ participantsFor(lesson).join(', ') }}
+                } @else {
+                  Henüz katılımcı yok
+                }
+              </p>
+            </div>
+            <span class="instructor-lesson-row__capacity"
+              >{{ lesson.reservationCount }} / {{ lesson.capacity }} katılımcı</span
+            >
+            <i class="pi pi-arrow-up-right"></i>
+          </a>
+        } @empty {
+          <div class="member-empty">
+            <i class="pi pi-calendar-times"></i>
+            <h3>Yaklaşan ders yok</h3>
+            <p>Yeni dersler eklendiğinde burada görünecek.</p>
+          </div>
+        }
+      </div>
+    </section>
+  </div>
+} @else if (isAdmin) {
+  <div class="dashboard-home">
+    <section class="role-hero role-hero--admin">
+      <div>
+        <span class="page-eyebrow">YÖNETİM PANELİ</span>
+        <h1>Merhaba, {{ currentAccount?.firstName || 'yönetici' }}.</h1>
+        <p>{{ today | date: 'd MMMM EEEE' }} · Stüdyonun bugünkü görünümü</p>
+        <div class="role-hero__actions">
+          <a routerLink="/calendar" class="role-action role-action--primary"
+            ><i class="pi pi-calendar"></i>Takvimi aç</a
+          >
+          <a routerLink="/members" class="role-action role-action--quiet"
+            >Üyelere git <i class="pi pi-arrow-up-right"></i
+          ></a>
+        </div>
+      </div>
+      <div class="role-hero__seal" aria-hidden="true"><i class="pi pi-chart-line"></i></div>
+    </section>
+
+    @if (loadError) {
+      <p class="dashboard-error">{{ loadError }}</p>
+    }
+
+    <section class="metric-grid" aria-label="Stüdyo performans özeti">
       <article class="metric-card">
         <span class="metric-icon members"><i class="pi pi-users"></i></span>
         <div>
-          <small>Aktif Üyeler</small><strong>{{ summary?.activeMemberCount ?? '-' }}</strong
+          <small>Aktif üyeler</small><strong>{{ summary?.activeMemberCount ?? '—' }}</strong
           ><em>Bugün geçerli üyelikler</em>
         </div>
       </article>
       <article class="metric-card">
         <span class="metric-icon bookings"><i class="pi pi-check-circle"></i></span>
         <div>
-          <small>Bugünkü Rezervasyon</small
-          ><strong>{{ summary?.todayReservationCount ?? '-' }}</strong
+          <small>Bugünkü rezervasyon</small
+          ><strong>{{ summary?.todayReservationCount ?? '—' }}</strong
           ><em>Onaylanan ve katılan rezervasyonlar</em>
         </div>
       </article>
       <article class="metric-card">
         <span class="metric-icon revenue"><i class="pi pi-wallet"></i></span>
         <div>
-          <small>Aylık Gelir</small
-          ><strong>{{ summary ? (summary.monthlyRevenue | number: '1.2-2') + ' ₺' : '-' }}</strong
+          <small>Aylık gelir</small
+          ><strong>{{ summary ? (summary.monthlyRevenue | number: '1.2-2') + ' ₺' : '—' }}</strong
           ><em>Bu ay alınan ödemeler</em>
         </div>
       </article>
     </section>
-    <p class="dashboard-error" *ngIf="loadError">{{ loadError }}</p>
-
     <section class="dashboard-grid">
       <article class="panel schedule-panel">
         <div class="panel-header">
           <div>
-            <h2>Bugünün Programı</h2>
+            <span class="page-eyebrow">OPERASYON</span>
+            <h2>Bugünün programı</h2>
             <p>{{ today | date: 'd MMMM EEEE' }}</p>
           </div>
-          <a routerLink="/calendar">Takvimi Gör</a>
+          <a routerLink="/calendar">Takvimi gör <i class="pi pi-arrow-up-right"></i></a>
         </div>
-        <div class="lesson-row" *ngFor="let lesson of summary?.todayLessons">
-          <time>{{ lesson.startAt | date: 'HH:mm' }}</time
-          ><span class="lesson-dot"></span>
-          <div>
-            <strong>{{ lesson.name }}</strong
-            ><small
-              >{{ lesson.instructorName }} · {{ lesson.reservationCount }} /
-              {{ lesson.capacity }} katılımcı</small
-            >
+        @for (lesson of summary?.todayLessons; track lesson.startAt) {
+          <div class="lesson-row">
+            <time>{{ lesson.startAt | date: 'HH:mm' }}</time
+            ><span class="lesson-dot"></span>
+            <div>
+              <strong>{{ lesson.name }}</strong
+              ><small
+                >{{ lesson.instructorName }} · {{ lesson.reservationCount }} /
+                {{ lesson.capacity }} katılımcı</small
+              >
+            </div>
+            <b>{{ lesson.startAt | date: 'HH:mm' }} – {{ lesson.endAt | date: 'HH:mm' }}</b>
           </div>
-          <b>{{ lesson.startAt | date: 'HH:mm' }} – {{ lesson.endAt | date: 'HH:mm' }}</b>
-        </div>
-        <p class="panel-empty" *ngIf="summary && !summary.todayLessons.length">
-          Bugün planlanmış ders bulunmuyor.
-        </p>
+        }
+        @if (summary && !summary.todayLessons.length) {
+          <p class="panel-empty">Bugün planlanmış ders bulunmuyor.</p>
+        }
       </article>
       <article class="panel activity-panel">
         <div class="panel-header">
           <div>
-            <h2>Son Hareketler</h2>
-            <p>Stüdyo akışı</p>
+            <span class="page-eyebrow">YALNIZCA YÖNETİM</span>
+            <h2>Son hareketler</h2>
+            <p>Üyelik, ödeme ve rezervasyon kayıtları</p>
           </div>
           <span class="panel-caption">Son 5 kayıt</span>
         </div>
-        <div
-          class="activity"
-          *ngFor="let activity of summary?.recentActivities"
-          [class]="'activity activity--' + activity.type.toLowerCase()"
-        >
-          <i class="pi" [class]="'pi ' + activity.icon"></i>
-          <p>
-            <span class="activity-type">{{ activityTypeLabel(activity.type) }}</span
-            >{{ activity.description
-            }}<small>{{ activity.occurredAt | date: 'd MMM, HH:mm' }}</small>
-          </p>
-        </div>
-        <p class="panel-empty" *ngIf="summary && !summary.recentActivities.length">
-          Henüz hareket bulunmuyor.
-        </p>
+        @for (activity of summary?.recentActivities; track activity.occurredAt) {
+          <div class="activity" [class]="'activity activity--' + activity.type.toLowerCase()">
+            <i class="pi" [class]="'pi ' + activity.icon"></i>
+            <p>
+              <span class="activity-type">{{ activityTypeLabel(activity.type) }}</span
+              >{{ activity.description
+              }}<small>{{ activity.occurredAt | date: 'd MMM, HH:mm' }}</small>
+            </p>
+          </div>
+        }
+        @if (summary && !summary.recentActivities.length) {
+          <p class="panel-empty">Henüz hareket bulunmuyor.</p>
+        }
       </article>
     </section>
+  </div>
+} @else {
+  <div class="dashboard-home">
+    <p class="dashboard-error">
+      Bu panel için geçerli bir rol bulunamadı. Lütfen yeniden giriş yapın.
+    </p>
   </div>
 }
