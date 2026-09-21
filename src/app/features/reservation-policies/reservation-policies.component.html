@@ -32,9 +32,6 @@
           <tr>
             <td>
               <strong>{{ policy.name }}</strong>
-              @if (policy.defaultPolicy) {
-                <span class="default-policy-badge"><i class="pi pi-star-fill"></i> Varsayılan</span>
-              }
             </td>
             <td>
               {{
@@ -153,29 +150,8 @@
 
     <div class="policy-option policy-option--compact">
       <div class="policy-option__header">
-        <div>
-          <strong>Varsayılan kural</strong
-          ><span>Özel kural seçilmeyen derslere otomatik uygulanır.</span>
-        </div>
-        <p-checkbox
-          inputId="default-policy"
-          [(ngModel)]="form.defaultPolicy"
-          [binary]="true"
-          [disabled]="editing && form.defaultPolicy"
-          (onChange)="onDefaultPolicyChange()"
-        />
-      </div>
-    </div>
-
-    <div class="policy-option policy-option--compact">
-      <div class="policy-option__header">
         <div><strong>Aktif</strong><span>Pasif kurallar yeni derslerde kullanılamaz.</span></div>
-        <p-checkbox
-          inputId="policy-active"
-          [(ngModel)]="form.active"
-          [binary]="true"
-          [disabled]="form.defaultPolicy"
-        />
+        <p-checkbox inputId="policy-active" [(ngModel)]="form.active" [binary]="true" />
       </div>
     </div>
   </div>

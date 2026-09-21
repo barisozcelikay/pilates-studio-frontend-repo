@@ -12,6 +12,7 @@ import { MultiSelect } from 'primeng/multiselect';
 import { DrawerComponent } from '../../shared/component/drawer/drawer.component';
 import { ConfirmDialogComponent } from '../../shared/component/confirm-dialog/confirm-dialog.component';
 import { DatePicker } from 'primeng/datepicker';
+import { CheckboxModule } from 'primeng/checkbox';
 import { InstructorDto } from '../instructors/model/instructor-dto';
 import { InstructorService } from '../instructors/service/instructor-service';
 import { RouterLink } from '@angular/router';
@@ -36,9 +37,11 @@ import {
     DrawerComponent,
     ConfirmDialogComponent,
     DatePicker,
+    CheckboxModule,
     RouterLink,
   ],
   templateUrl: './lessons.component.html',
+  styleUrl: './lessons.component.scss',
 })
 export class LessonsComponent extends BaseComponent<LessonDto> {
   instructors: InstructorDto[] = [];
@@ -47,6 +50,7 @@ export class LessonsComponent extends BaseComponent<LessonDto> {
   services: StudioServiceDto[] = [];
   selectedServiceIds: number[] = [];
   reservationPolicies: ReservationPolicyDto[] = [];
+  useReservationPolicy = false;
   readonly statusOptions = [
     { label: 'Aktif', value: 'ACTIVE' },
     { label: 'İptal Edildi', value: 'CANCELLED' },
@@ -100,9 +104,15 @@ export class LessonsComponent extends BaseComponent<LessonDto> {
     this.selectedServiceIds = [...lesson.serviceIds];
     this.form.startAt = lesson.startAt ? new Date(lesson.startAt) : null;
     this.form.endAt = lesson.endAt ? new Date(lesson.endAt) : null;
+    this.useReservationPolicy = lesson.reservationPolicyId != null;
   }
 
   protected override save(): void {
+    if (this.useReservationPolicy && this.form.reservationPolicyId == null) {
+      this.toastService.error('Rezervasyon kuralı seçin.');
+      return;
+    }
+    if (!this.useReservationPolicy) this.form.reservationPolicyId = null;
     this.form.instructorIds = [...this.selectedInstructorIds];
     this.form.serviceIds = [...this.selectedServiceIds];
     this.form.startAt = this.toIsoDateTime(this.form.startAt);
@@ -115,6 +125,11 @@ export class LessonsComponent extends BaseComponent<LessonDto> {
     this.selectedInstructorIds = [];
     this.selectedServiceIds = [];
     this.form.reservationPolicyId = null;
+    this.useReservationPolicy = false;
+  }
+
+  onReservationPolicyToggle(): void {
+    if (!this.useReservationPolicy) this.form.reservationPolicyId = null;
   }
 
   private toIsoDateTime(value: Date | string | null): string {

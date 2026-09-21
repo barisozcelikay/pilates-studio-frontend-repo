@@ -12,7 +12,6 @@ export class ReservationPolicyDto extends BaseDto {
   cancellationDeadlineMinutes = 240;
   latestReservationEnabled = true;
   latestReservationMinutes = 10;
-  defaultPolicy = false;
   active = true;
 }
 
