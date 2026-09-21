@@ -147,9 +147,9 @@
 
           @if (userMenuOpen) {
             <div class="user-menu">
-              <button type="button">
-                <i class="pi pi-cog"></i>
-                <span>Ayarlar</span>
+              <button type="button" (click)="openChangePassword()">
+                <i class="pi pi-lock"></i>
+                <span>Şifre Değiştir</span>
               </button>
 
               <div class="user-menu-divider"></div>
@@ -171,3 +171,11 @@
     </section>
   </main>
 </div>
+
+<app-drawer
+  [(visible)]="changePasswordVisible"
+  title="Şifre Değiştir"
+  width="420px"
+>
+  <app-change-password (done)="changePasswordVisible = false"></app-change-password>
+</app-drawer>

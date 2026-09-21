@@ -2,6 +2,8 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { AccountDto } from '../../../core/auth/model/account-dto';
 import { AuthService } from '../../../core/auth/service/auth-service';
+import { ChangePasswordComponent } from '../../auth/change-password/change-password.component';
+import { DrawerComponent } from '../../../shared/component/drawer/drawer.component';
 import { MenuDto } from '../../menu-settings/model/menu-dto';
 import { MenuService } from '../../menu-settings/service/menu-service';
 
@@ -10,13 +12,14 @@ import { MenuService } from '../../menu-settings/service/menu-service';
   standalone: true,
   templateUrl: './main-layout.component.html',
   styleUrl: './main-layout.component.scss',
-  imports: [RouterLink, RouterLinkActive, RouterOutlet],
+  imports: [RouterLink, RouterLinkActive, RouterOutlet, DrawerComponent, ChangePasswordComponent],
 })
 export class MainLayoutComponent implements OnInit {
   sidebarOpen = false;
   activeRole = '';
   currentAccount: AccountDto | null = null;
   userMenuOpen = false;
+  changePasswordVisible = false;
   menuItemModels: MenuDto[] = [];
   expandedMenus = new Set<number>();
   isDarkTheme = false;
@@ -82,6 +85,11 @@ export class MainLayoutComponent implements OnInit {
 
   toggleUserMenu(): void {
     this.userMenuOpen = !this.userMenuOpen;
+  }
+
+  openChangePassword(): void {
+    this.userMenuOpen = false;
+    this.changePasswordVisible = true;
   }
 
   logout(): void {

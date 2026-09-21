@@ -25,11 +25,7 @@
     </button>
   </div>
 
-  <div
-    class="card calendar-card"
-    [class.calendar-card--creator]="canCreateLesson"
-    aria-label="Ders takvimi"
-  >
+  <div class="card calendar-card" aria-label="Ders takvimi">
     <div class="calendar-filters">
       <label for="calendar-service-filter">
         <i class="pi pi-filter" aria-hidden="true"></i>
@@ -46,7 +42,7 @@
         ariaLabel="Takvimi hizmete göre filtrele"
       />
     </div>
-    <full-calendar [options]="calendarOptions"> </full-calendar>
+    <full-calendar #calendar [options]="calendarOptions"> </full-calendar>
   </div>
 </div>
 
@@ -130,12 +126,15 @@
 </app-drawer>
 
 <app-drawer [(visible)]="lessonDrawerVisible" title="Takvimden Ders Oluştur">
-  <div class="form calendar-lesson-form">
+  <div class="form calendar-lesson-form" *ngIf="lessonDrawerVisible">
     <div class="calendar-form-intro">
       <i class="pi pi-calendar-plus"></i>
       <div>
         <strong>Yeni ders planla</strong
-        ><span>Takvimde seçtiğiniz tarih ve saat otomatik olarak dolduruldu.</span>
+        ><span
+          >Başlangıç saati seçtiğiniz zamana göre otomatik dolduruldu, dilediğiniz gibi
+          değiştirebilirsiniz.</span
+        >
       </div>
     </div>
 
@@ -169,6 +168,7 @@
           [(ngModel)]="lessonForm.startAt"
           [showTime]="true"
           [showIcon]="true"
+          [showOnFocus]="false"
           [stepMinute]="30"
           hourFormat="24"
           dateFormat="dd.mm.yy"
@@ -183,6 +183,7 @@
           [(ngModel)]="lessonForm.endAt"
           [showTime]="true"
           [showIcon]="true"
+          [showOnFocus]="false"
           [stepMinute]="30"
           hourFormat="24"
           dateFormat="dd.mm.yy"
@@ -192,7 +193,7 @@
       </div>
     </div>
     <small class="calendar-hours-help"
-      ><i class="pi pi-clock"></i>Dersler yalnızca 07:00–22:00 arasında, 30 dakikalık adımlarla
+      ><i class="pi pi-clock"></i>Dersler yalnızca 09:00–20:00 arasında, 30 dakikalık adımlarla
       planlanabilir.</small
     >
 
@@ -223,19 +224,31 @@
       />
     </div>
 
-    <div class="form-group">
-      <label class="form-label" for="calendar-reservation-policy">Rezervasyon Kuralı</label>
-      <p-select
-        inputId="calendar-reservation-policy"
-        [options]="reservationPolicies"
-        optionLabel="name"
-        optionValue="id"
-        [(ngModel)]="lessonForm.reservationPolicyId"
-        placeholder="Varsayılan kural"
-        appendTo="body"
+    <div class="form-checkbox policy-checkbox">
+      <p-checkbox
+        inputId="calendar-use-reservation-policy"
+        [(ngModel)]="useReservationPolicy"
+        [binary]="true"
+        (onChange)="onReservationPolicyToggle()"
       />
-      <small class="form-help">Seçilmezse varsayılan aktif kural uygulanır.</small>
+      <label for="calendar-use-reservation-policy" class="form-label"
+        >Rezervasyon kuralı kullan</label
+      >
     </div>
+    @if (useReservationPolicy) {
+      <div class="form-group">
+        <label class="form-label" for="calendar-reservation-policy">Rezervasyon Kuralı</label>
+        <p-select
+          inputId="calendar-reservation-policy"
+          [options]="reservationPolicies"
+          optionLabel="name"
+          optionValue="id"
+          [(ngModel)]="lessonForm.reservationPolicyId"
+          placeholder="Kural seçin"
+          appendTo="body"
+        />
+      </div>
+    }
 
     <div class="form-group">
       <label class="form-label" for="calendar-lesson-services">Hizmetler</label>

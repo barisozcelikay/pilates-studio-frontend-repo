@@ -36,8 +36,4 @@ export class ReservationPoliciesComponent extends BaseComponent<ReservationPolic
     this.form.latestReservationEnabled = true;
     this.form.latestReservationMinutes = 10;
   }
-
-  onDefaultPolicyChange(): void {
-    if (this.form.defaultPolicy) this.form.active = true;
-  }
 }

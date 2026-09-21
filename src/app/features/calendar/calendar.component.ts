@@ -1,18 +1,18 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { DatePipe, NgIf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { FullCalendarModule } from '@fullcalendar/angular';
+import { FullCalendarComponent, FullCalendarModule } from '@fullcalendar/angular';
 
 import { CalendarOptions, EventClickArg, EventContentArg, EventInput } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
-import interactionPlugin from '@fullcalendar/interaction';
-import { DateClickArg } from '@fullcalendar/interaction';
+import interactionPlugin, { DateClickArg } from '@fullcalendar/interaction';
 import { CalendarService } from './service/calendar-service';
 import { DrawerComponent } from '../../shared/component/drawer/drawer.component';
 import { Select } from 'primeng/select';
 import { MultiSelect } from 'primeng/multiselect';
 import { DatePicker } from 'primeng/datepicker';
+import { CheckboxModule } from 'primeng/checkbox';
 import { InputTextModule } from 'primeng/inputtext';
 import { TextareaModule } from 'primeng/textarea';
 import { LessonDto } from '../lessons/model/lesson-dto';
@@ -39,6 +39,7 @@ import {
     Select,
     MultiSelect,
     DatePicker,
+    CheckboxModule,
     InputTextModule,
     TextareaModule,
     FormsModule,
@@ -49,12 +50,14 @@ import {
   styleUrl: './calendar.component.scss',
 })
 export class CalendarComponent implements OnInit {
+  @ViewChild('calendar') calendarRef?: FullCalendarComponent;
+
   calendarOptions: CalendarOptions = {
     plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
 
     initialView: 'timeGridWeek',
 
-    height: 700,
+    height: 560,
 
     locale: 'tr',
     firstDay: 1,
@@ -62,16 +65,34 @@ export class CalendarComponent implements OnInit {
     nowIndicator: true,
     allDaySlot: false,
 
-    slotMinTime: '07:00:00',
-    slotMaxTime: '22:00:00',
-    slotDuration: '00:30:00',
+    weekNumbers: false,
+    navLinks: true,
+    navLinkWeekClick: (weekStart) => {
+      this.calendarRef?.getApi().changeView('timeGridWeek', weekStart);
+    },
+    weekNumberContent: () => {
+      const icon = document.createElement('i');
+      icon.className = 'pi pi-angle-right calendar-week-select';
+      icon.setAttribute('title', 'Bu haftayı görüntüle');
+      icon.setAttribute('aria-label', 'Bu haftayı görüntüle');
+      return { domNodes: [icon] };
+    },
+    views: {
+      dayGridMonth: {
+        weekNumbers: true,
+      },
+    },
+
+    slotMinTime: '09:00:00',
+    slotMaxTime: '20:00:00',
+    slotDuration: '01:00:00',
     slotLabelInterval: '01:00:00',
-    scrollTime: '07:00:00',
+    scrollTime: '09:00:00',
     scrollTimeReset: false,
     businessHours: {
       daysOfWeek: [1, 2, 3, 4, 5, 6, 0],
-      startTime: '07:00',
-      endTime: '22:00',
+      startTime: '09:00',
+      endTime: '20:00',
     },
 
     expandRows: true,
@@ -95,7 +116,7 @@ export class CalendarComponent implements OnInit {
       if (event.event.extendedProps['isUnavailable']) return;
       this.openReservationDrawer(event);
     },
-    dateClick: (event) => this.openLessonDrawerFromDate(event),
+    dateClick: (event) => this.handleDateClick(event),
   };
 
   lessons: LessonDto[] = [];
@@ -110,6 +131,7 @@ export class CalendarComponent implements OnInit {
   lessonSaving = false;
   lessonError = '';
   lessonForm = new LessonDto();
+  useReservationPolicy = false;
   instructors: InstructorDto[] = [];
   instructorOptions: { label: string; value: number }[] = [];
   services: StudioServiceDto[] = [];
@@ -160,15 +182,27 @@ export class CalendarComponent implements OnInit {
     this.prepareLessonForm(start);
   }
 
-  openLessonDrawerFromDate(event: DateClickArg): void {
+  handleDateClick(event: DateClickArg): void {
+    if (event.view.type === 'dayGridMonth') {
+      event.view.calendar.changeView('timeGridDay', event.date);
+      return;
+    }
+
     if (!this.canCreateLesson) return;
     const start = new Date(event.date);
     if (event.allDay) start.setHours(9, 0, 0, 0);
-    this.prepareLessonForm(start);
+    // Deferred so the drawer's date pickers are created outside the click event
+    // that triggered this handler — creating them synchronously caused PrimeNG's
+    // datepicker overlay to pop open immediately on the same click.
+    setTimeout(() => this.prepareLessonForm(start));
   }
 
   saveLesson(): void {
     if (!this.canCreateLesson || this.lessonSaving) return;
+    if (this.useReservationPolicy && this.lessonForm.reservationPolicyId == null) {
+      this.lessonError = 'Rezervasyon kuralı seçin.';
+      return;
+    }
     if (
       !this.lessonForm.name.trim() ||
       !this.lessonForm.startAt ||
@@ -185,13 +219,14 @@ export class CalendarComponent implements OnInit {
     if (
       !this.isWithinStudioHours(new Date(this.lessonForm.startAt), new Date(this.lessonForm.endAt))
     ) {
-      this.lessonError = 'Dersler aynı gün içinde 07:00–22:00 saatleri arasında planlanmalıdır.';
+      this.lessonError = 'Dersler aynı gün içinde 09:00–20:00 saatleri arasında planlanmalıdır.';
       return;
     }
 
     this.lessonSaving = true;
     this.lessonError = '';
     const request = Object.assign(new LessonDto(), this.lessonForm, {
+      reservationPolicyId: this.useReservationPolicy ? this.lessonForm.reservationPolicyId : null,
       instructorIds: [...this.selectedInstructorIds],
       serviceIds: [...this.selectedServiceIds],
       startAt: new Date(this.lessonForm.startAt).toISOString(),
@@ -212,6 +247,10 @@ export class CalendarComponent implements OnInit {
     });
   }
 
+  onReservationPolicyToggle(): void {
+    if (!this.useReservationPolicy) this.lessonForm.reservationPolicyId = null;
+  }
+
   normalizeLessonTime(field: 'start' | 'end'): void {
     const value = field === 'start' ? this.lessonForm.startAt : this.lessonForm.endAt;
     if (!value) return;
@@ -219,26 +258,26 @@ export class CalendarComponent implements OnInit {
     const minutes = date.getHours() * 60 + date.getMinutes();
 
     if (field === 'start') {
-      if (minutes < 7 * 60) date.setHours(7, 0, 0, 0);
-      if (minutes >= 22 * 60) date.setHours(21, 0, 0, 0);
+      if (minutes < 9 * 60) date.setHours(9, 0, 0, 0);
+      if (minutes >= 20 * 60) date.setHours(19, 0, 0, 0);
       this.lessonForm.startAt = date;
       const end = this.lessonForm.endAt ? new Date(this.lessonForm.endAt) : new Date(date);
       if (end.getTime() <= date.getTime() || !this.isWithinStudioHours(date, end)) {
         end.setTime(date.getTime() + 60 * 60 * 1000);
-        if (end.getHours() > 22 || (end.getHours() === 22 && end.getMinutes() > 0))
-          end.setHours(22, 0, 0, 0);
+        if (end.getHours() > 20 || (end.getHours() === 20 && end.getMinutes() > 0))
+          end.setHours(20, 0, 0, 0);
         this.lessonForm.endAt = end;
       }
       return;
     }
 
-    if (minutes < 7 * 60) date.setHours(7, 30, 0, 0);
-    if (minutes > 22 * 60) date.setHours(22, 0, 0, 0);
+    if (minutes < 9 * 60) date.setHours(9, 30, 0, 0);
+    if (minutes > 20 * 60) date.setHours(20, 0, 0, 0);
     const start = this.lessonForm.startAt ? new Date(this.lessonForm.startAt) : null;
     if (start && date.getTime() <= start.getTime()) {
       date.setTime(start.getTime() + 30 * 60 * 1000);
-      if (date.getHours() > 22 || (date.getHours() === 22 && date.getMinutes() > 0))
-        date.setHours(22, 0, 0, 0);
+      if (date.getHours() > 20 || (date.getHours() === 20 && date.getMinutes() > 0))
+        date.setHours(20, 0, 0, 0);
     }
     this.lessonForm.endAt = date;
   }
@@ -431,8 +470,8 @@ export class CalendarComponent implements OnInit {
   private prepareLessonForm(start: Date): void {
     const normalizedStart = new Date(start);
     const startMinutes = normalizedStart.getHours() * 60 + normalizedStart.getMinutes();
-    if (startMinutes < 7 * 60) normalizedStart.setHours(7, 0, 0, 0);
-    if (startMinutes >= 22 * 60) normalizedStart.setHours(21, 0, 0, 0);
+    if (startMinutes < 9 * 60) normalizedStart.setHours(9, 0, 0, 0);
+    if (startMinutes >= 20 * 60) normalizedStart.setHours(19, 0, 0, 0);
     const end = new Date(normalizedStart.getTime() + 60 * 60 * 1000);
     this.lessonForm = Object.assign(new LessonDto(), {
       startAt: normalizedStart,
@@ -443,6 +482,7 @@ export class CalendarComponent implements OnInit {
     });
     this.selectedInstructorIds = [];
     this.selectedServiceIds = [];
+    this.useReservationPolicy = false;
     this.lessonError = '';
     this.lessonDrawerVisible = true;
     this.cdr.detectChanges();
@@ -485,7 +525,7 @@ export class CalendarComponent implements OnInit {
       start.getDate() === end.getDate();
     const startMinutes = start.getHours() * 60 + start.getMinutes();
     const endMinutes = end.getHours() * 60 + end.getMinutes();
-    return sameDay && startMinutes >= 7 * 60 && startMinutes < 22 * 60 && endMinutes <= 22 * 60;
+    return sameDay && startMinutes >= 9 * 60 && startMinutes < 20 * 60 && endMinutes <= 20 * 60;
   }
 
   private renderLessonEvent(event: EventContentArg): { domNodes: HTMLElement[] } {
@@ -497,8 +537,11 @@ export class CalendarComponent implements OnInit {
     title.textContent = event.event.title;
     root.append(title);
 
-    const services = event.event.extendedProps['serviceNames'] as string[] | undefined;
-    if (services?.length) {
+    const lessonTitle = event.event.title.trim().toLocaleLowerCase('tr');
+    const services = (
+      (event.event.extendedProps['serviceNames'] as string[] | undefined) ?? []
+    ).filter((service) => service.trim().toLocaleLowerCase('tr') !== lessonTitle);
+    if (services.length) {
       const chips = document.createElement('div');
       chips.className = 'calendar-lesson-event__chips';
       services.forEach((service, index) => {

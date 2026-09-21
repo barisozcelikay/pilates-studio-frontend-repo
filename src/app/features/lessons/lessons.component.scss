@@ -1,0 +1,13 @@
+:host ::ng-deep .policy-checkbox .p-checkbox-box {
+  width: 22px;
+  height: 22px;
+  border-color: var(--color-border);
+  border-radius: 7px;
+  background: var(--color-surface);
+}
+
+:host ::ng-deep .policy-checkbox .p-checkbox-checked .p-checkbox-box {
+  border-color: var(--color-accent);
+  background: var(--color-primary);
+  color: var(--color-accent-light);
+}

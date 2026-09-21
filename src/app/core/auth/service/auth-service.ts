@@ -48,6 +48,13 @@ export class AuthService {
     return this.http.post<void>(`${this.apiUrl}/set-password`, request);
   }
 
+  changePassword(currentPassword: string, newPassword: string): Observable<void> {
+    return this.http.put<void>(`${this.apiUrl.replace('/auth', '')}/accounts/me/password`, {
+      currentPassword,
+      newPassword,
+    });
+  }
+
   logout(): void {
     localStorage.removeItem('access_token');
   }

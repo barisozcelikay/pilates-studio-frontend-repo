@@ -204,18 +204,31 @@
       />
     </div>
 
-    <div class="form-group">
-      <label class="form-label" for="lesson-reservation-policy">Rezervasyon Kuralı</label>
-      <p-select
-        inputId="lesson-reservation-policy"
-        [options]="reservationPolicies"
-        optionLabel="name"
-        optionValue="id"
-        [(ngModel)]="form.reservationPolicyId"
-        placeholder="Varsayılan kural"
-        appendTo="body"
+    <div class="form-checkbox policy-checkbox">
+      <p-checkbox
+        inputId="lesson-use-reservation-policy"
+        [(ngModel)]="useReservationPolicy"
+        [binary]="true"
+        (onChange)="onReservationPolicyToggle()"
       />
+      <label for="lesson-use-reservation-policy" class="form-label"
+        >Rezervasyon kuralı kullan</label
+      >
     </div>
+    @if (useReservationPolicy) {
+      <div class="form-group">
+        <label class="form-label" for="lesson-reservation-policy">Rezervasyon Kuralı</label>
+        <p-select
+          inputId="lesson-reservation-policy"
+          [options]="reservationPolicies"
+          optionLabel="name"
+          optionValue="id"
+          [(ngModel)]="form.reservationPolicyId"
+          placeholder="Kural seçin"
+          appendTo="body"
+        />
+      </div>
+    }
 
     <div class="form-group">
       <label class="form-label" for="lesson-services">Hizmetler</label>
