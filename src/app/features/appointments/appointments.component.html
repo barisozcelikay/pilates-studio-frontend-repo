@@ -1,0 +1,198 @@
+<div class="page appointments-page">
+  <div class="page-header">
+    <div class="page-header-content">
+      <span class="page-eyebrow">GÖRÜŞMELER</span>
+      <h1 class="page-title">Randevular</h1>
+      <p class="page-description">Müşteriyle görüşen kişi randevuyu burada kaydeder ve takip eder.</p>
+    </div>
+    <button class="primary-button" (click)="openCreateForm()">
+      <i class="pi pi-plus"></i> Yeni Randevu
+    </button>
+  </div>
+
+  <div class="filter-bar">
+    <div class="filter-bar__quick">
+      @for (range of quickRanges; track range.value) {
+        <button
+          type="button"
+          class="quick-chip"
+          [class.quick-chip--active]="activeRange === range.value"
+          (click)="selectQuickRange(range.value)"
+        >
+          <i [class]="range.icon"></i>
+          {{ range.label }}
+        </button>
+      }
+    </div>
+
+    <div class="filter-bar__divider"></div>
+
+    <div class="filter-bar__custom">
+      <div class="filter-field">
+        <label class="form-label" for="appointment-filter-from">Başlangıç</label>
+        <p-datepicker
+          inputId="appointment-filter-from"
+          [(ngModel)]="filterFrom"
+          [showIcon]="true"
+          [showOnFocus]="true"
+          dateFormat="dd.mm.yy"
+          appendTo="body"
+          (onSelect)="onCustomDateChange()"
+          (onClear)="onCustomDateChange()"
+          [showClear]="true"
+        />
+      </div>
+      <div class="filter-field">
+        <label class="form-label" for="appointment-filter-to">Bitiş</label>
+        <p-datepicker
+          inputId="appointment-filter-to"
+          [(ngModel)]="filterTo"
+          [showIcon]="true"
+          [showOnFocus]="true"
+          dateFormat="dd.mm.yy"
+          appendTo="body"
+          (onSelect)="onCustomDateChange()"
+          (onClear)="onCustomDateChange()"
+          [showClear]="true"
+        />
+      </div>
+      @if (filterFrom || filterTo) {
+        <button type="button" class="filter-clear" title="Filtreyi temizle" (click)="clearFilter()">
+          <i class="pi pi-times"></i>
+        </button>
+      }
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="table-container">
+      <p-table
+        class="data-table"
+        [value]="items"
+        [loading]="loading"
+        [paginator]="true"
+        [rows]="10"
+        [rowsPerPageOptions]="[10, 20, 50]"
+      >
+        <ng-template #header>
+          <tr>
+            <th>Kişi</th>
+            <th>İletişim</th>
+            <th pSortableColumn="appointmentAt">Randevu Tarihi</th>
+            <th>Not</th>
+            <th>Durum</th>
+            <th>İşlemler</th>
+          </tr>
+        </ng-template>
+        <ng-template #body let-appointment>
+          <tr>
+            <td>
+              <strong>{{ appointment.fullName }}</strong>
+            </td>
+            <td>
+              <a [href]="'mailto:' + appointment.email">{{ appointment.email }}</a>
+              <a [href]="'tel:' + appointment.phone">{{ appointment.phone }}</a>
+            </td>
+            <td>{{ appointment.appointmentAt | date: 'dd.MM.yyyy HH:mm' }}</td>
+            <td>
+              <p class="appointment-note" [title]="appointment.note">{{ appointment.note || '—' }}</p>
+            </td>
+            <td>
+              <span
+                class="status-badge"
+                [class.status-badge--contacted]="appointment.status === 'CONTACTED'"
+                [class.status-badge--cancelled]="appointment.status === 'CANCELLED'"
+              >
+                {{ statusLabel(appointment.status) }}
+              </span>
+            </td>
+            <td>
+              <div class="table-actions">
+                <button
+                  class="table-action table-action-edit"
+                  title="Düzenle"
+                  (click)="openEditForm(appointment)"
+                >
+                  <i class="pi pi-pencil"></i>
+                </button>
+                <button
+                  class="table-action table-action-delete"
+                  title="Sil"
+                  (click)="confirmDelete(appointment)"
+                >
+                  <i class="pi pi-trash"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template #emptymessage>
+          <tr>
+            <td colspan="6" class="table-empty">Henüz randevu bulunmuyor.</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>
+
+<app-drawer [(visible)]="drawerVisible" [title]="editing ? 'Randevuyu Düzenle' : 'Yeni Randevu'">
+  <div class="form">
+    <div class="form-group">
+      <label class="form-label">Ad Soyad</label>
+      <input pInputText [(ngModel)]="form.fullName" />
+    </div>
+    <div class="form-group">
+      <label class="form-label">Telefon</label>
+      <input pInputText [(ngModel)]="form.phone" />
+    </div>
+    <div class="form-group">
+      <label class="form-label">E-posta</label>
+      <input pInputText [(ngModel)]="form.email" />
+    </div>
+    <div class="form-group">
+      <label class="form-label" for="appointment-at">Randevu Tarihi ve Saati</label>
+      <p-datepicker
+        inputId="appointment-at"
+        [(ngModel)]="appointmentAtInput"
+        [showTime]="true"
+        [showIcon]="true"
+        [showOnFocus]="true"
+        [stepMinute]="1"
+        hourFormat="24"
+        dateFormat="dd.mm.yy"
+        appendTo="body"
+      />
+    </div>
+    <div class="form-group">
+      <label class="form-label">Not</label>
+      <input pInputText [(ngModel)]="form.note" />
+    </div>
+    @if (editing) {
+      <div class="form-group">
+        <label class="form-label" for="appointment-status">Durum</label>
+        <p-select
+          inputId="appointment-status"
+          [options]="statuses"
+          optionLabel="label"
+          optionValue="value"
+          [(ngModel)]="form.status"
+        />
+      </div>
+    }
+  </div>
+  <div drawer-footer>
+    <div class="button-group">
+      <button class="secondary-button" (click)="drawerVisible = false">İptal</button>
+      <button class="primary-button" (click)="save()">Kaydet</button>
+    </div>
+  </div>
+</app-drawer>
+
+<app-confirm-dialog
+  [(visible)]="confirmVisible"
+  title="Randevuyu Sil"
+  [message]="itemToDelete ? itemToDelete.fullName + ' kişisinin randevusu silinsin mi?' : ''"
+  confirmText="Sil"
+  (confirm)="delete()"
+/>

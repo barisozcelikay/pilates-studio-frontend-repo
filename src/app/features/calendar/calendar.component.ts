@@ -97,16 +97,18 @@ export class CalendarComponent implements OnInit {
 
     expandRows: true,
 
-    headerToolbar: {
-      left: 'prev,next today',
-      center: 'title',
-      right: 'dayGridMonth,timeGridWeek,timeGridDay',
-    },
+    headerToolbar: false,
     buttonText: {
       today: 'Bugün',
       month: 'Ay',
       week: 'Hafta',
       day: 'Gün',
+    },
+
+    datesSet: (info) => {
+      this.calendarTitle = info.view.title;
+      this.activeView = info.view.type;
+      this.cdr.markForCheck();
     },
 
     events: [],
@@ -118,6 +120,14 @@ export class CalendarComponent implements OnInit {
     },
     dateClick: (event) => this.handleDateClick(event),
   };
+
+  calendarTitle = '';
+  activeView = 'timeGridWeek';
+  availableViews: Array<{ value: string; label: string; icon: string }> = [
+    { value: 'dayGridMonth', label: 'Ay', icon: 'pi pi-calendar' },
+    { value: 'timeGridWeek', label: 'Hafta', icon: 'pi pi-table' },
+    { value: 'timeGridDay', label: 'Gün', icon: 'pi pi-calendar-clock' },
+  ];
 
   lessons: LessonDto[] = [];
   members: MemberDto[] = [];
@@ -458,13 +468,29 @@ export class CalendarComponent implements OnInit {
     this.calendarOptions = {
       ...this.calendarOptions,
       initialView: 'timeGridWeek',
-      headerToolbar: {
-        left: 'today',
-        center: 'title',
-        right: 'timeGridWeek,timeGridDay',
-      },
+      headerToolbar: false,
       validRange: { start: weekStart, end: weekEnd },
     };
+    this.availableViews = [
+      { value: 'timeGridWeek', label: 'Hafta', icon: 'pi pi-table' },
+      { value: 'timeGridDay', label: 'Gün', icon: 'pi pi-calendar-clock' },
+    ];
+  }
+
+  goToday(): void {
+    this.calendarRef?.getApi().today();
+  }
+
+  goPrev(): void {
+    this.calendarRef?.getApi().prev();
+  }
+
+  goNext(): void {
+    this.calendarRef?.getApi().next();
+  }
+
+  changeView(view: string): void {
+    this.calendarRef?.getApi().changeView(view);
   }
 
   private prepareLessonForm(start: Date): void {

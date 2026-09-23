@@ -158,10 +158,17 @@ export const routes: Routes = [
           ),
       },
       {
-        path: 'settings/contact-requests',
+        path: 'meetings/contact-requests',
         loadComponent: () =>
           import('./features/contact-requests/contact-requests.component').then(
             (m) => m.ContactRequestsComponent,
+          ),
+      },
+      {
+        path: 'meetings/appointments',
+        loadComponent: () =>
+          import('./features/appointments/appointments.component').then(
+            (m) => m.AppointmentsComponent,
           ),
       },
     ],
