@@ -251,34 +251,6 @@
     }
   </section>
 
-  @if (instagramPosts.length) {
-    <section id="instagram" class="instagram-feed section">
-      <div class="section-heading" data-reveal>
-        <div>
-          <p class="eyebrow eyebrow--dark"><i></i> Instagram</p>
-          <h2>Son paylaşımlarımız<br /><em>&#64;olive.pilatesstudio.</em></h2>
-        </div>
-        <a [href]="instagramUrl" target="_blank" rel="noopener noreferrer"
-          >Instagram’da takip et <span>↗</span></a
-        >
-      </div>
-      <div class="instagram-feed__grid">
-        @for (post of instagramPosts; track post.permalink) {
-          <a
-            class="instagram-feed__item"
-            [href]="post.permalink"
-            target="_blank"
-            rel="noopener noreferrer"
-            data-reveal
-          >
-            <img [src]="post.imageUrl" [alt]="post.caption || 'Instagram paylaşımı'" loading="lazy" />
-            <span aria-hidden="true">↗</span>
-          </a>
-        }
-      </div>
-    </section>
-  }
-
   <section class="quote">
     <div data-reveal>
       <span aria-hidden="true">“</span>

@@ -17,7 +17,6 @@ import {
   ContactRequestService,
 } from '../contact-requests/contact-request.service';
 import { GoogleReview, GoogleReviewsService } from './service/google-reviews-service';
-import { InstagramMedia, InstagramService } from './service/instagram-service';
 
 interface Lesson {
   title: string;
@@ -61,7 +60,6 @@ export class StudioHomeComponent implements OnInit, AfterViewInit, OnDestroy {
   readonly hasLiveReviews: boolean;
 
   reviews: GoogleReview[] = [];
-  instagramPosts: InstagramMedia[] = [];
 
   readonly lessons: Lesson[] = [
     {
@@ -139,7 +137,6 @@ export class StudioHomeComponent implements OnInit, AfterViewInit, OnDestroy {
     private readonly sanitizer: DomSanitizer,
     private readonly seoService: SeoService,
     private readonly googleReviewsService: GoogleReviewsService,
-    private readonly instagramService: InstagramService,
   ) {
     const query = encodeURIComponent(this.mapSearchLabel);
     this.mapEmbedUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
@@ -169,15 +166,6 @@ export class StudioHomeComponent implements OnInit, AfterViewInit, OnDestroy {
         this.reviews = reviews;
       });
     }
-
-    this.instagramService.findRecentMedia().subscribe({
-      next: (posts) => {
-        this.instagramPosts = posts;
-      },
-      error: () => {
-        this.instagramPosts = [];
-      },
-    });
   }
 
   @HostListener('window:scroll')
