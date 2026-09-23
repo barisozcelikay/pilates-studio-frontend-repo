@@ -265,14 +265,18 @@ export class StudioHomeComponent implements OnInit, AfterViewInit, OnDestroy {
         this.contactForm = this.emptyContactForm();
         this.toastService.success('Talebiniz alındı. En kısa sürede sizinle iletişime geçeceğiz.');
       },
-      error: () => {
+      error: (error) => {
         this.contactSubmitting = false;
-        this.toastService.error('Talebiniz gönderilemedi. Lütfen tekrar deneyin.');
+        const message =
+          error?.status === 429
+            ? 'Çok fazla talep gönderildi. Lütfen bir süre sonra tekrar deneyin.'
+            : 'Talebiniz gönderilemedi. Lütfen tekrar deneyin.';
+        this.toastService.error(message);
       },
     });
   }
 
   private emptyContactForm(): ContactRequestPayload {
-    return { fullName: '', email: '', phone: '', note: '' };
+    return { fullName: '', email: '', phone: '', note: '', website: '' };
   }
 }
