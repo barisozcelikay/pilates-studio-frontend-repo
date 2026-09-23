@@ -1,13 +1,23 @@
-import { AfterViewInit, Component, ElementRef, HostListener, OnDestroy } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  HostListener,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { RouterLink } from '@angular/router';
 
+import { SeoService } from '../../shared/service/seo-service';
 import { ToastService } from '../../shared/service/toast-service';
 import {
   ContactRequestPayload,
   ContactRequestService,
 } from '../contact-requests/contact-request.service';
+import { GoogleReview, GoogleReviewsService } from './service/google-reviews-service';
+import { InstagramMedia, InstagramService } from './service/instagram-service';
 
 interface Lesson {
   title: string;
@@ -30,7 +40,7 @@ const SECTION_IDS = ['anasayfa', 'hakkimizda', 'dersler', 'yaklasim', 'konum', '
   templateUrl: './studio-home.component.html',
   styleUrl: './studio-home.component.scss',
 })
-export class StudioHomeComponent implements AfterViewInit, OnDestroy {
+export class StudioHomeComponent implements OnInit, AfterViewInit, OnDestroy {
   mobileMenuOpen = false;
   headerCompact = false;
   headerHidden = false;
@@ -42,11 +52,16 @@ export class StudioHomeComponent implements AfterViewInit, OnDestroy {
   readonly logoUrl = '/images/olive-brand-lockup-dark.svg';
   readonly mapMarkUrl = '/images/olive-brand-mark-dark.svg';
   readonly studioSignUrl = '/images/olive-studio-sign-v1.jpg';
-  readonly instagramUrl = 'https://www.instagram.com/beyzadoespilates/';
+  readonly instagramUrl = 'https://www.instagram.com/olive.pilatesstudio/';
   readonly address = 'İncek, 3035. Cadde 143/2, 06830 Gölbaşı/Ankara';
   readonly mapSearchLabel = this.address;
   readonly mapEmbedUrl: SafeResourceUrl;
   readonly directionsUrl: string;
+  readonly googleReviewsUrl: string;
+  readonly hasLiveReviews: boolean;
+
+  reviews: GoogleReview[] = [];
+  instagramPosts: InstagramMedia[] = [];
 
   readonly lessons: Lesson[] = [
     {
@@ -122,6 +137,9 @@ export class StudioHomeComponent implements AfterViewInit, OnDestroy {
     private readonly contactRequestService: ContactRequestService,
     private readonly toastService: ToastService,
     private readonly sanitizer: DomSanitizer,
+    private readonly seoService: SeoService,
+    private readonly googleReviewsService: GoogleReviewsService,
+    private readonly instagramService: InstagramService,
   ) {
     const query = encodeURIComponent(this.mapSearchLabel);
     this.mapEmbedUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
@@ -134,6 +152,32 @@ export class StudioHomeComponent implements AfterViewInit, OnDestroy {
     this.directionsUrl = isAppleMobile
       ? `https://maps.apple.com/?daddr=${query}`
       : `https://www.google.com/maps/dir/?api=1&destination=${query}`;
+    this.googleReviewsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent('Olive Pilates Studio ' + this.address)}`;
+    this.hasLiveReviews = this.googleReviewsService.isConfigured();
+  }
+
+  ngOnInit(): void {
+    this.seoService.set({
+      title: 'Olive Pilates | İncek, Gölbaşı Ankara Reformer Pilates Stüdyosu',
+      description:
+        "Olive Pilates Studio, İncek/Gölbaşı Ankara'da reformer pilates, Cadillac, mat pilates ve birebir dersler sunan butik stüdyo. Stüdyomuzu ve derslerimizi keşfedin.",
+      path: '/',
+    });
+
+    if (this.hasLiveReviews) {
+      this.googleReviewsService.findReviews().then((reviews) => {
+        this.reviews = reviews;
+      });
+    }
+
+    this.instagramService.findRecentMedia().subscribe({
+      next: (posts) => {
+        this.instagramPosts = posts;
+      },
+      error: () => {
+        this.instagramPosts = [];
+      },
+    });
   }
 
   @HostListener('window:scroll')

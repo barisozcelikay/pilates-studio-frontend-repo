@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { finalize } from 'rxjs';
 import { RouterLink } from '@angular/router';
@@ -9,6 +9,7 @@ import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 
 import { AuthService } from '../../../core/auth/service/auth-service';
+import { SeoService } from '../../../shared/service/seo-service';
 
 @Component({
   selector: 'app-forgot-password',
@@ -18,7 +19,7 @@ import { AuthService } from '../../../core/auth/service/auth-service';
   templateUrl: './forgot-password.component.html',
   styleUrl: './forgot-password.component.scss',
 })
-export class ForgotPasswordComponent {
+export class ForgotPasswordComponent implements OnInit {
   loading = false;
   submitted = false;
 
@@ -28,9 +29,19 @@ export class ForgotPasswordComponent {
     private readonly formBuilder: FormBuilder,
     private readonly authService: AuthService,
     private readonly messageService: MessageService,
+    private readonly seoService: SeoService,
   ) {
     this.forgotPasswordForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
+    });
+  }
+
+  ngOnInit(): void {
+    this.seoService.set({
+      title: 'Şifremi Unuttum',
+      description: 'Olive Pilates Studio üyelik hesabınız için şifre yenileme bağlantısı talep edin.',
+      path: '/forgot-password',
+      noindex: true,
     });
   }
 

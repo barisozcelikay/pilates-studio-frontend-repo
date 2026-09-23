@@ -11,7 +11,7 @@
       (click)="scrollToSection($event, 'anasayfa')"
       aria-label="Olive Pilates Studio ana sayfa"
     >
-      <img [src]="logoUrl" alt="" />
+      <img [src]="logoUrl" alt="Olive Pilates Studio" />
     </a>
 
     <nav class="header__nav" aria-label="Ana menü">
@@ -202,6 +202,83 @@
     </div>
   </section>
 
+  <section id="yorumlar" class="reviews section section--cream">
+    @if (reviews.length) {
+      <div class="reviews__heading" data-reveal>
+        <p class="eyebrow eyebrow--dark"><i></i> Değerlendirmeler</p>
+        <h2>Olive’i deneyimleyenlerin<br /><em>Google yorumları.</em></h2>
+      </div>
+      <div class="reviews__grid">
+        @for (review of reviews; track review.authorName + review.relativeTime) {
+          <article class="review-card" data-reveal>
+            <div class="review-card__head">
+              <img [src]="review.authorPhotoUrl" [alt]="review.authorName" />
+              <div>
+                <strong>{{ review.authorName }}</strong>
+                <span class="review-card__stars" aria-hidden="true">{{
+                  '★★★★★'.slice(0, review.rating)
+                }}</span>
+              </div>
+            </div>
+            <p>{{ review.text }}</p>
+            <small>{{ review.relativeTime }}</small>
+          </article>
+        }
+      </div>
+      <a
+        class="button button--dark reviews__cta"
+        [href]="googleReviewsUrl"
+        target="_blank"
+        rel="noopener noreferrer"
+        >Tüm yorumları gör <span>↗</span></a
+      >
+    } @else {
+      <div class="reviews__card" data-reveal>
+        <p class="eyebrow eyebrow--dark"><i></i> Değerlendirmeler</p>
+        <h2>Olive’i deneyimleyenlerin<br /><em>Google yorumları.</em></h2>
+        <p class="reviews__lead">
+          Stüdyomuzu ziyaret eden misafirlerimizin gerçek değerlendirmelerini Google üzerinden
+          okuyabilir, siz de deneyiminizi paylaşabilirsiniz.
+        </p>
+        <a
+          class="button button--dark"
+          [href]="googleReviewsUrl"
+          target="_blank"
+          rel="noopener noreferrer"
+          >Google yorumlarını gör <span>↗</span></a
+        >
+      </div>
+    }
+  </section>
+
+  @if (instagramPosts.length) {
+    <section id="instagram" class="instagram-feed section">
+      <div class="section-heading" data-reveal>
+        <div>
+          <p class="eyebrow eyebrow--dark"><i></i> Instagram</p>
+          <h2>Son paylaşımlarımız<br /><em>&#64;olive.pilatesstudio.</em></h2>
+        </div>
+        <a [href]="instagramUrl" target="_blank" rel="noopener noreferrer"
+          >Instagram’da takip et <span>↗</span></a
+        >
+      </div>
+      <div class="instagram-feed__grid">
+        @for (post of instagramPosts; track post.permalink) {
+          <a
+            class="instagram-feed__item"
+            [href]="post.permalink"
+            target="_blank"
+            rel="noopener noreferrer"
+            data-reveal
+          >
+            <img [src]="post.imageUrl" [alt]="post.caption || 'Instagram paylaşımı'" loading="lazy" />
+            <span aria-hidden="true">↗</span>
+          </a>
+        }
+      </div>
+    </section>
+  }
+
   <section class="quote">
     <div data-reveal>
       <span aria-hidden="true">“</span>
@@ -253,7 +330,7 @@
       </p>
       <a [href]="instagramUrl" target="_blank" rel="noopener noreferrer" class="instagram-link"
         ><span>◎</span>
-        <div><small>Instagram</small><b>&#64;beyzadoespilates</b></div>
+        <div><small>Instagram</small><b>&#64;olive.pilatesstudio</b></div>
         <i>↗</i></a
       >
     </div>
@@ -337,7 +414,8 @@
       <a href="#hakkimizda" (click)="scrollToSection($event, 'hakkimizda')">Hakkımızda</a
       ><a href="#dersler" (click)="scrollToSection($event, 'dersler')">Dersler</a
       ><a href="#konum" (click)="scrollToSection($event, 'konum')">Konum</a
-      ><a routerLink="/login">Üye girişi</a>
+      ><a routerLink="/login">Üye girişi</a
+      ><a routerLink="/gizlilik-politikasi">Gizlilik Politikası</a>
     </nav>
     <span>© 2026 Olive Pilates Studio</span>
   </footer>
