@@ -30,15 +30,7 @@ interface Lesson {
   comingSoon?: boolean;
 }
 
-const SECTION_IDS = [
-  'anasayfa',
-  'hakkimizda',
-  'dersler',
-  'yaklasim',
-  'yorumlar',
-  'konum',
-  'iletisim',
-];
+const SECTION_IDS = ['anasayfa', 'hakkimizda', 'dersler', 'yaklasim', 'konum', 'iletisim'];
 
 @Component({
   selector: 'app-studio-home',
@@ -235,10 +227,7 @@ export class StudioHomeComponent implements OnInit, AfterViewInit, OnDestroy {
     const initialSection = window.location.hash.slice(1);
     if (SECTION_IDS.includes(initialSection)) {
       requestAnimationFrame(() => {
-        const target = document.getElementById(initialSection);
-        if (!target) return;
-        const top = target.getBoundingClientRect().top + window.scrollY - this.headerOffset();
-        window.scrollTo({ top, behavior: 'auto' });
+        document.getElementById(initialSection)?.scrollIntoView({ behavior: 'auto', block: 'start' });
       });
     }
   }
@@ -252,18 +241,8 @@ export class StudioHomeComponent implements OnInit, AfterViewInit, OnDestroy {
     event.preventDefault();
     this.mobileMenuOpen = false;
     this.headerHidden = false;
-
-    const target = document.getElementById(sectionId);
-    if (target) {
-      const top = target.getBoundingClientRect().top + window.scrollY - this.headerOffset();
-      window.scrollTo({ top, behavior: 'smooth' });
-    }
+    document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     history.replaceState(null, '', sectionId === 'anasayfa' ? '/' : `/#${sectionId}`);
-  }
-
-  private headerOffset(): number {
-    const header = this.elementRef.nativeElement.querySelector<HTMLElement>('.header');
-    return header ? header.offsetHeight : 0;
   }
 
   submitContactRequest(): void {
@@ -286,18 +265,14 @@ export class StudioHomeComponent implements OnInit, AfterViewInit, OnDestroy {
         this.contactForm = this.emptyContactForm();
         this.toastService.success('Talebiniz alındı. En kısa sürede sizinle iletişime geçeceğiz.');
       },
-      error: (error) => {
+      error: () => {
         this.contactSubmitting = false;
-        const message =
-          error?.status === 429
-            ? 'Çok fazla talep gönderildi. Lütfen bir süre sonra tekrar deneyin.'
-            : 'Talebiniz gönderilemedi. Lütfen tekrar deneyin.';
-        this.toastService.error(message);
+        this.toastService.error('Talebiniz gönderilemedi. Lütfen tekrar deneyin.');
       },
     });
   }
 
   private emptyContactForm(): ContactRequestPayload {
-    return { fullName: '', email: '', phone: '', note: '', website: '' };
+    return { fullName: '', email: '', phone: '', note: '' };
   }
 }

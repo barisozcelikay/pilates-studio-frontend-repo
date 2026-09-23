@@ -13,8 +13,6 @@ export interface ContactRequestPayload {
   email: string;
   phone: string;
   note: string;
-  /** Honeypot: must stay empty. Hidden from real visitors via CSS. */
-  website?: string;
 }
 
 export class ContactRequestDto extends BaseDto implements ContactRequestPayload {
