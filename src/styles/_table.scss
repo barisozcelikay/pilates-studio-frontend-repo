@@ -27,6 +27,24 @@
     white-space: nowrap;
   }
 
+  .p-datatable-thead > tr > th.p-datatable-sortable-column {
+    cursor: pointer;
+    background: var(--color-surface-soft) !important;
+    color: var(--color-text-secondary) !important;
+    transition: background-color 0.15s ease, color 0.15s ease;
+
+    &.p-datatable-sortable-column-highlight {
+      background: var(--color-surface-soft) !important;
+      color: var(--color-text-secondary) !important;
+    }
+
+    &:hover,
+    &:focus-visible {
+      background: var(--color-border-light) !important;
+      color: var(--color-primary) !important;
+    }
+  }
+
   .p-datatable-tbody > tr {
     background: var(--color-surface);
 

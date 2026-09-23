@@ -25,23 +25,57 @@
     </button>
   </div>
 
-  <div class="card calendar-card" aria-label="Ders takvimi">
-    <div class="calendar-filters">
-      <label for="calendar-service-filter">
-        <i class="pi pi-filter" aria-hidden="true"></i>
-        Hizmet
-      </label>
-      <p-select
-        inputId="calendar-service-filter"
-        [options]="serviceFilterOptions"
-        optionLabel="label"
-        optionValue="value"
-        [(ngModel)]="selectedServiceFilter"
-        (onChange)="applyServiceFilter()"
-        appendTo="body"
-        ariaLabel="Takvimi hizmete göre filtrele"
-      />
+  <div class="filter-bar calendar-toolbar">
+    <div class="filter-bar__quick">
+      @for (view of availableViews; track view.value) {
+        <button
+          type="button"
+          class="quick-chip"
+          [class.quick-chip--active]="activeView === view.value"
+          (click)="changeView(view.value)"
+        >
+          <i [class]="view.icon"></i>
+          {{ view.label }}
+        </button>
+      }
     </div>
+
+    <div class="filter-bar__divider"></div>
+
+    <div class="calendar-toolbar__nav">
+      <button type="button" class="calendar-nav-button" title="Önceki" (click)="goPrev()">
+        <i class="pi pi-chevron-left"></i>
+      </button>
+      <button type="button" class="calendar-nav-button calendar-nav-button--today" (click)="goToday()">
+        Bugün
+      </button>
+      <button type="button" class="calendar-nav-button" title="Sonraki" (click)="goNext()">
+        <i class="pi pi-chevron-right"></i>
+      </button>
+      <span class="calendar-toolbar__title">{{ calendarTitle }}</span>
+    </div>
+
+    <div class="filter-bar__custom">
+      <div class="filter-field">
+        <label class="form-label">Hizmet</label>
+        <div class="filter-input">
+          <i class="pi pi-filter"></i>
+          <p-select
+            inputId="calendar-service-filter"
+            [options]="serviceFilterOptions"
+            optionLabel="label"
+            optionValue="value"
+            [(ngModel)]="selectedServiceFilter"
+            (onChange)="applyServiceFilter()"
+            appendTo="body"
+            ariaLabel="Takvimi hizmete göre filtrele"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card calendar-card" aria-label="Ders takvimi">
     <full-calendar #calendar [options]="calendarOptions"> </full-calendar>
   </div>
 </div>
