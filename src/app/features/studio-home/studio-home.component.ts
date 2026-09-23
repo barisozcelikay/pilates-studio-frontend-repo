@@ -30,7 +30,15 @@ interface Lesson {
   comingSoon?: boolean;
 }
 
-const SECTION_IDS = ['anasayfa', 'hakkimizda', 'dersler', 'yaklasim', 'konum', 'iletisim'];
+const SECTION_IDS = [
+  'anasayfa',
+  'hakkimizda',
+  'dersler',
+  'yaklasim',
+  'yorumlar',
+  'konum',
+  'iletisim',
+];
 
 @Component({
   selector: 'app-studio-home',
@@ -227,7 +235,10 @@ export class StudioHomeComponent implements OnInit, AfterViewInit, OnDestroy {
     const initialSection = window.location.hash.slice(1);
     if (SECTION_IDS.includes(initialSection)) {
       requestAnimationFrame(() => {
-        document.getElementById(initialSection)?.scrollIntoView({ behavior: 'auto', block: 'start' });
+        const target = document.getElementById(initialSection);
+        if (!target) return;
+        const top = target.getBoundingClientRect().top + window.scrollY - this.headerOffset();
+        window.scrollTo({ top, behavior: 'auto' });
       });
     }
   }
@@ -241,8 +252,18 @@ export class StudioHomeComponent implements OnInit, AfterViewInit, OnDestroy {
     event.preventDefault();
     this.mobileMenuOpen = false;
     this.headerHidden = false;
-    document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+    const target = document.getElementById(sectionId);
+    if (target) {
+      const top = target.getBoundingClientRect().top + window.scrollY - this.headerOffset();
+      window.scrollTo({ top, behavior: 'smooth' });
+    }
     history.replaceState(null, '', sectionId === 'anasayfa' ? '/' : `/#${sectionId}`);
+  }
+
+  private headerOffset(): number {
+    const header = this.elementRef.nativeElement.querySelector<HTMLElement>('.header');
+    return header ? header.offsetHeight : 0;
   }
 
   submitContactRequest(): void {
