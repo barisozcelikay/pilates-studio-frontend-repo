@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { finalize } from 'rxjs';
@@ -9,6 +9,7 @@ import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 
 import { AuthService } from '../../../core/auth/service/auth-service';
+import { SeoService } from '../../../shared/service/seo-service';
 
 @Component({
   selector: 'app-reset-password',
@@ -18,7 +19,7 @@ import { AuthService } from '../../../core/auth/service/auth-service';
   templateUrl: './reset-password.component.html',
   styleUrl: './reset-password.component.scss',
 })
-export class ResetPasswordComponent {
+export class ResetPasswordComponent implements OnInit {
   loading = false;
 
   token = '';
@@ -36,6 +37,7 @@ export class ResetPasswordComponent {
     private readonly route: ActivatedRoute,
     private readonly router: Router,
     private readonly messageService: MessageService,
+    private readonly seoService: SeoService,
   ) {
     this.resetPasswordForm = this.formBuilder.group({
       newPassword: ['', [Validators.required, Validators.minLength(8)]],
@@ -45,6 +47,15 @@ export class ResetPasswordComponent {
     this.token = this.route.snapshot.queryParamMap.get('token') ?? '';
 
     this.type = this.route.snapshot.queryParamMap.get('type') ?? '';
+  }
+
+  ngOnInit(): void {
+    this.seoService.set({
+      title: 'Şifre Belirle',
+      description: 'Olive Pilates Studio üyelik hesabınız için yeni şifre belirleyin.',
+      path: '/reset-password',
+      noindex: true,
+    });
   }
 
   resetPassword(): void {

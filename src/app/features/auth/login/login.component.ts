@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 
 import { MessageService } from 'primeng/api';
@@ -10,6 +10,7 @@ import { AuthService } from '../../../core/auth/service/auth-service';
 import { LoginRequest } from '../../../core/auth/model/login-request';
 import { Router, RouterLink } from '@angular/router';
 import { SelectRoleComponent } from './select-role/select-role.component';
+import { SeoService } from '../../../shared/service/seo-service';
 
 @Component({
   selector: 'app-login',
@@ -27,7 +28,7 @@ import { SelectRoleComponent } from './select-role/select-role.component';
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   loading = false;
 
   errorMessage = '';
@@ -45,11 +46,21 @@ export class LoginComponent {
     private readonly messageService: MessageService,
     private readonly router: Router,
     private readonly cdr: ChangeDetectorRef,
+    private readonly seoService: SeoService,
   ) {
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
 
       password: ['', Validators.required],
+    });
+  }
+
+  ngOnInit(): void {
+    this.seoService.set({
+      title: 'Üye Girişi',
+      description: 'Olive Pilates Studio üye, eğitmen ve yönetici paneline giriş yapın.',
+      path: '/login',
+      noindex: true,
     });
   }
 

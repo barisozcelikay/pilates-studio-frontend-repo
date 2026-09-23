@@ -1,0 +1,26 @@
+<main class="error-page">
+  <header class="error-page__header">
+    <a routerLink="/" class="error-page__brand" aria-label="Olive Pilates Studio ana sayfa">
+      <img src="/images/olive-brand-lockup-dark.svg" alt="Olive Pilates Studio" />
+    </a>
+  </header>
+
+  <div class="error-page__content">
+    <span class="error-page__eyebrow">Olive Pilates Studio</span>
+    <span class="error-page__code">401</span>
+    <h1>Erişim yetkiniz <em>yok.</em></h1>
+    @if (isAuthenticated) {
+      <p>Bu sayfayı görüntülemek için gerekli yetkiye sahip değilsiniz.</p>
+      <div class="error-page__actions">
+        <a routerLink="/dashboard" class="error-page__button">Panele git <span>→</span></a>
+        <a routerLink="/" class="error-page__link">Ana sayfaya dön ↗</a>
+      </div>
+    } @else {
+      <p>Bu sayfayı görüntülemek için giriş yapmanız veya farklı bir hesapla oturum açmanız gerekiyor.</p>
+      <div class="error-page__actions">
+        <a routerLink="/login" class="error-page__button">Giriş yap <span>→</span></a>
+        <a routerLink="/" class="error-page__link">Ana sayfaya dön ↗</a>
+      </div>
+    }
+  </div>
+</main>

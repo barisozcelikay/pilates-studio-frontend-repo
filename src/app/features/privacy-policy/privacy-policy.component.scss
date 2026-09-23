@@ -1,0 +1,112 @@
+:host {
+  display: block;
+  --ink: #151713;
+  --cream: #f3eddf;
+  --paper: #fbf8f1;
+  --sage: #75814f;
+  --gold: #c6a052;
+  --muted: #6c6b62;
+  --line: rgba(21, 23, 19, 0.15);
+  --serif: Fraunces, Georgia, 'Times New Roman', serif;
+  --sans: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+.policy {
+  min-height: 100vh;
+  background: var(--paper);
+  font-family: var(--sans);
+}
+
+.policy__header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.4rem clamp(1.25rem, 4vw, 3.75rem);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(21, 23, 19, 0.94);
+  backdrop-filter: blur(18px) saturate(130%);
+}
+
+.policy__brand img {
+  display: block;
+  width: clamp(9rem, 11vw, 10.5rem);
+  height: auto;
+}
+
+.policy__back {
+  color: rgba(251, 248, 241, 0.7);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  transition: color 180ms ease;
+}
+
+.policy__back:hover {
+  color: var(--gold);
+}
+
+.policy__content {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 56px 24px 96px;
+  color: var(--ink);
+}
+
+.policy__eyebrow {
+  margin: 0 0 8px;
+  color: var(--sage);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.policy__content h1 {
+  margin: 0 0 20px;
+  font-family: var(--serif);
+  font-size: 36px;
+  font-weight: 600;
+}
+
+.policy__lead {
+  margin: 0 0 36px;
+  color: var(--muted);
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.policy__content h2 {
+  margin: 36px 0 12px;
+  font-family: var(--serif);
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.policy__content p,
+.policy__content li {
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.65;
+}
+
+.policy__content ul {
+  margin: 0 0 16px;
+  padding-left: 20px;
+}
+
+.policy__content li {
+  margin-bottom: 6px;
+}
+
+.policy__content a {
+  color: var(--sage);
+  font-weight: 600;
+}
+
+.policy__content a:hover {
+  color: var(--gold);
+}
